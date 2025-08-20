@@ -151,11 +151,12 @@ html, body {
         padding: 12px 5px;
     }
 }
-/*
+
+
 .nav-item.active {
     background: #f16901;
+    color: white;
 }
-*/
 
 
  /* about page */
