@@ -13,6 +13,19 @@ html, body {
 }
 
 
+
+/* Progress bar styles */
+#progress-bar {
+ position: fixed;
+  top: 0;
+  left: 0;
+  height: 8px;
+  width: 0%;
+  background: #ff8400;
+  z-index: 9999;
+  transition: width 0.3s ease;
+}
+
 /*Home page styles*/
 .home_page {
   width: 100%;
@@ -26,7 +39,7 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%; 
-  background: rgba(31, 26, 26, 0.2); /* semi-transparent */
+  background: rgba(37, 124, 70, 0.2); /* semi-transparent */
   backdrop-filter: blur(5px);           /* frosted glass effect */
 }
 
@@ -159,10 +172,92 @@ html, body {
 }
 
 
+
+
+
+
  /* about page */
 
-.about {
+.about_page {
   width: 100%;
-  height: 100vh;
-  background-color: #f9f9f9;
+  height: 190vh;
+  background-color: #f6f6f6;
+  padding: 80px 20px;
+  color: rgb(4, 72, 24);
+}
+
+.about-container {
+  max-width: 85vw;       /* keeps container from being too wide */
+  margin: 0 auto;         /* centers container horizontally */
+  display: flex;          /* align items side by side */
+  align-items: center;    /* vertically align image & text */
+  justify-content: center;/* centers content inside */
+  gap: 80px;              /* space between text and image */
+  padding: 20px;
+  margin-top: 3%;
+  
+}
+
+
+.about-container div {
+  
+  display: flex;
+  flex-direction: column; /* stacks h2, p, img vertically */
+  align-items: flex-start;
+  
+}
+
+.about-container img {
+  flex: 1;
+  max-width: 80;
+  height: auto;
+  border-radius: 10px;  
+  
+  
+}
+
+.about-container div h2 {
+  text-align: center;
+  margin-bottom: 20px; /* space between h2 and paragraph */
+  font-size: 35px;
+  
+}
+
+.about-container p {
+  font-size: 14px;
+  text-align: left;
+  flex: 2;
+  max-width: 45vw;
+  line-height: 1.7;
+    
+}
+
+
+
+.mvv-block {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 10%;
+  max-width: 85vw;    /* align items side by side */
+  align-items: center;    /* vertically align image & text */
+  justify-content: center;
+  padding: 0 auto;
+  
+}
+
+.image-m img {
+  max-width: 90%;    /* set your desired width */
+  height: auto;    /* maintain aspect ratio */
+  border-radius: 8px; /* optional: rounded corners */
+ 
+}
+
+
+.content {
+  padding: 0% auto;
+  line-height: 1.7;
+}
+
+.content h3 {
+  font-size: 35px;
 }
