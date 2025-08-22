@@ -26,12 +26,52 @@ html, body {
   transition: width 0.3s ease;
 }
 
-/*Home page styles*/
+
+/* HOME PAGE container + slideshow */
 .home_page {
   width: 100%;
   height: 100vh;
-  background: url("img/psu_bg.jpg") center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+
+  /* creates its own stacking context so ::before can't fall behind the page */
+  isolation: isolate;
 }
+
+.home_page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* keep background behind content but above the page */
+  background-image: url("../img/psu_bg2.png"); /* <-- adjust path as needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: bgSlideshow 16s infinite steps(1); /* 6s per image, hard switch */
+}
+
+/* Make all direct children sit above the bg */
+.home_page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Slideshow keyframes */
+@keyframes bgSlideshow {
+  0%, 33.33% {
+    background-image: url("../img/psu_bg2.png");
+  }
+  33.34%, 66.66% {
+    background-image: url("../img/psu_bg.jpg");
+  }
+  66.67%, 100% {
+    background-image: url("../img/psu_bg3.jpg");
+  }
+}
+
+
+
+
 
 .overlay {
   position: absolute; /* overlay covers the parent */
@@ -180,7 +220,7 @@ html, body {
 
 .about_page {
   width: 100%;
-  height: 190vh;
+  height: 180vh;
   background-color: #f6f6f6;
   padding: 80px 20px;
   color: rgb(4, 72, 24);
@@ -260,4 +300,52 @@ html, body {
 
 .content h3 {
   font-size: 35px;
+}
+
+.content p {
+  font-size: 14px;
+  text-align: left;
+}
+
+
+
+.v-block {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 0 auto;
+  margin-top: 5%;
+  max-width: 85vw;    /* align items side by side */
+  align-items: center;    /* vertically align image & text */
+  justify-content: center;
+  padding: 0 auto;
+  
+}
+
+.image-v img {
+  max-width: 17vw;
+  height: 23vh;  /* maintain aspect ratio */
+  border-radius: 8px; /* optional: rounded corners */
+  margin-left: 30px; /* space between image and text */
+}
+
+
+.v-block .content {
+  padding: 0% auto;
+  line-height: 1.7;
+}
+
+.v-block .content h3 {
+  font-size: 35px;
+  text-align: right;
+}
+
+.v-block .content p {
+  font-size: 14px;
+  text-align: right;
+
+}
+
+.about_members{
+  margin-top: 10vh;
+  background-color: #f16901;
 }
