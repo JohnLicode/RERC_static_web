@@ -398,24 +398,73 @@ html, body {
 
 .members {
   display: flex;
-  gap: 20%;
+  gap: 10%;
   justify-content: center;
 }
 
 .member-card {
+  /* background-color: #eff7ee; */
+  
   text-align: center;
+  padding: 15px 15px; 
+  width: 70%;
+  border-radius: 5px;
+  transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  
 }
+
+.member-card h4 {
+  margin-top: 40px;
+  font-size: 20px;
+}
+
+.member-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 4px;
+  text-align: center;
+
+}
+
 
 .member-card img {
-  width: 150px;
-  height: 150px;
+  width: 165px;
+  height: 165px;
   border-radius: 50%;
   object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+  
+}
+
+.member-card:hover {
+  background-color: #d6ecd9;   /* change bg */
+  transform: scale(1.05);      /* zoom entire card */
+}
+
+
+.member-card:hover img {
+  animation: spin 1s linear infinite; /* fast infinite spin */
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg)  }
+  to { transform: rotate(360deg)  }
 }
 
 
 
 
+.member-card:hover {
+  transform: scale(1.05);
+  animation: rainbowBG 5s linear infinite;
+}
 
-
-
+/* Rainbow background keyframes */
+@keyframes rainbowBG {
+  0%   { background-color: rgb(255, 99, 132); }   /* pink/red */
+  20%  { background-color: rgb(255, 206, 86); }   /* yellow */
+  40%  { background-color: rgb(75, 192, 192); }   /* teal */
+  60%  { background-color: rgb(54, 162, 235); }   /* blue */
+  80%  { background-color: rgb(153, 102, 255); }  /* purple */
+  100% { background-color: rgb(255, 99, 132); }   /* back to pink */
+}
