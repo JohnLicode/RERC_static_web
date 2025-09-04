@@ -7,6 +7,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
     />
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <title>Contact Us - PSU RERC</title>
     <link rel="stylesheet" href="contacts.css" />
   </head>
@@ -86,7 +87,7 @@
             </div>
             <div class="contact-item">
               <span class="contact-label">Email:</span>
-              <span class="contact-value">campingtunisia@gmail.com</span>
+              <span class="contact-value">psurercsubmissions@psu.palawan.edu.ph</span>
             </div>
           </div>
 
@@ -246,19 +247,20 @@
     <script src="script.js"></script>
     <script>
       // Form submission handler
+      (function() {
+        emailjs.init("Gc0sDYLgrLtS6F5fv"); // Replace with your EmailJS Public Key
+      })();
+
       document.getElementById('contactForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Simple form validation and submission feedback
-        alert('Thank you for your message! We will get back to you soon.');
-        
-        // Reset form
+        emailjs.sendForm('service_jp8madi', 'template_aj8bedc', this)
+          .then(function() {
+            alert('Thank you for your message! We will get back to you soon.');
+          }, function(error) {
+            alert('Failed to send: ' + error.text);
+          });
         this.reset();
-      });
+});
 
       // Mobile menu functionality
       const burgerMenu = document.querySelector('.burger-menu');

@@ -75,4 +75,22 @@ document.addEventListener("DOMContentLoaded", function () {
       nav.classList.remove("move-to-top");
     }
   });
+    // --- Background Slideshow for .home_page ---
+  const bgImages = [
+    "img/psu_bg2.png",
+    "img/psu_bg.jpg",
+    "img/psu_bg3.jpg"
+  ];
+  let bgIndex = 0;
+  const homePage = document.querySelector(".home_page");
+  if (homePage) {
+    homePage.style.backgroundImage = `url('${bgImages[bgIndex]}')`;
+    homePage.style.backgroundSize = "cover";
+    homePage.style.backgroundPosition = "center";
+    homePage.style.backgroundRepeat = "no-repeat";
+    setInterval(() => {
+      bgIndex = (bgIndex + 1) % bgImages.length;
+      homePage.style.backgroundImage = `url('${bgImages[bgIndex]}')`;
+    }, 4000);
+  }
 });

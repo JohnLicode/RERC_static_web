@@ -8,7 +8,7 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
   background-color: #fff9f9;
   color: #ffffff;
 }
@@ -289,26 +289,33 @@ body {
   min-height: 150vh;
   background-color: #f6f6f6;
   padding: 80px 20px;
+  align-items: center;
+  justify-content: center;
   color: rgb(4, 72, 24);
 }
 
 .contacts-container {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
+  gap: 40px;
+  align-items: stretch;
 }
 
 /* Contact Info Section */
 .contact-info {
   background: rgb(4, 72, 24);
   color: white;
-  padding: 60px 40px;
+  padding: 30px 40px;
   border-radius: 15px;
+  min-height: unset;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 485px;
 }
 
 .contact-info::before {
@@ -331,7 +338,10 @@ body {
   font-size: 32px;
   font-weight: 300;
   margin-bottom: 10px;
+  margin-top: 1%;
   line-height: 1.2;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-underline {
@@ -342,14 +352,16 @@ body {
 }
 
 .contact-details {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 18px;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .contact-label {
@@ -365,7 +377,7 @@ body {
 .social-links {
   display: flex;
   gap: 15px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .social-icon {
@@ -392,14 +404,19 @@ body {
 /* Contact Form Section */
 .contact-form-container {
   background: white;
-  padding: 60px 40px;
+  padding: 28px 18px;
   border-radius: 15px;
+  min-height: unset;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 485px;
 }
 
 .form-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 .stay-contact {
@@ -419,7 +436,7 @@ body {
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 16px;
 }
 
 .form-group {
@@ -429,10 +446,10 @@ body {
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 18px 20px;
+  padding: 8px 12px;
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-size: 14px;
   background: #f8f9fa;
   color: rgb(4, 72, 24);
   transition: all 0.3s ease;
@@ -462,15 +479,15 @@ body {
 .submit-btn {
   background: #22c55e;
   color: white;
-  padding: 18px 30px;
+  padding: 10px 18px;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 10px;
+  margin-top: 4px;
 }
 
 .submit-btn:hover {
@@ -481,7 +498,7 @@ body {
 
 .form-footer {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .mostaql-badge {
@@ -732,13 +749,13 @@ body {
   /* Contacts Page Tablet */
   .contacts-container {
     grid-template-columns: 1fr;
-    gap: 40px;
-    max-width: 90vw;
+    gap: 30px;
+    max-width: 95vw;
   }
 
   .contact-info,
   .contact-form-container {
-    padding: 40px 30px;
+    padding: 28px 12px;
   }
 
   .contact-header h2 {
@@ -822,6 +839,7 @@ body {
 
   .contacts-container {
     max-width: 95vw;
+    grid-template-columns: 1fr;
     gap: 30px;
   }
 
@@ -834,7 +852,7 @@ body {
   }
 
   .contact-form-container {
-    padding: 40px 25px;
+    padding: 28px 12px;
   }
 
   .form-header h2 {
@@ -843,13 +861,13 @@ body {
 
   .form-group input,
   .form-group textarea {
-    padding: 15px 18px;
-    font-size: 14px;
+    padding: 10px 12px;
+    font-size: 13px;
   }
 
   .submit-btn {
-    padding: 15px 25px;
-    font-size: 14px;
+    padding: 10px 18px;
+    font-size: 13px;
   }
 
   .additional-info {
