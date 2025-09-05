@@ -554,6 +554,7 @@ body {
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid #f0f0f0;
+  gap: 20px;
 }
 
 .hours-item span:first-child {
