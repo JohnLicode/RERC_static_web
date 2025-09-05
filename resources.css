@@ -902,4 +902,28 @@ body {
     width: 100px;
     height: 100px;
   }
+
+  /* Back to Top Button -- Kevin*/
+#backToTop {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  padding: 14px 16px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+#backToTop:hover {
+  background-color: #45a049;
+}
+
 }

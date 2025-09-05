@@ -74,5 +74,25 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       nav.classList.remove("move-to-top");
     }
+
+// Back to Top button - Kevin
+const backToTopBtn = document.getElementById("backToTop");
+
+window.onscroll = function () {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    backToTopBtn.style.display = "block";
+  } else {
+    backToTopBtn.style.display = "none";
+  }
+};
+
+backToTopBtn.addEventListener("click", function () {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
+
   });
 });
