@@ -528,6 +528,9 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
+
+  justify-items: center; /* centers horizontally */
+  align-items: center;   /* centers vertically */
 }
 
 .office-hours h3,
@@ -573,6 +576,12 @@ body {
   margin-right: 8px;
   width: 20px;
 }
+
+.quick-links {
+  position: relative;
+  left: -50px; /* moves it 20px to the left */
+}
+
 
 .quick-links ul {
   list-style: none;
