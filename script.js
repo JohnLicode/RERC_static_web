@@ -441,5 +441,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-
-  // Background Slideshow for .home_page
+});
