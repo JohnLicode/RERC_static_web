@@ -1079,7 +1079,14 @@ body.no-scroll {
   color: #bbb;
 }
 
-
+/* ADD THIS: KEvin */
+#backToTop {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
 
 /* MOBILE RESPONSIVE STYLES */
 
@@ -1104,6 +1111,7 @@ body.no-scroll {
     font-size: 14px;
     padding: 12px 8px;
   }
+
 
   .home_page-logo {
     padding: 15px 20px;
@@ -1503,3 +1511,39 @@ body.no-scroll {
     height: 5px;
   }
 }
+
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: #1a5f3f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#backToTop.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#backToTop:hover {
+  background: #f16901;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
