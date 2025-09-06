@@ -1503,7 +1503,6 @@ body.no-scroll {
     width: 100px;
     height: 100px;
   }
-<<<<<<< HEAD
 
   /* Carousel Extra Small */
   .carousel {
@@ -1521,8 +1520,6 @@ body.no-scroll {
     width: 5px;
     height: 5px;
   }
-}
-=======
 }
 
 #backToTop {
@@ -1559,4 +1556,4 @@ body.no-scroll {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
->>>>>>> kevbranch
+
