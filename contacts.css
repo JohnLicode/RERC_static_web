@@ -13,7 +13,7 @@ body {
   color: #ffffff;
 }
 
-/* Progress bar styles 
+/* Progress bar styles */
 #progress-bar {
   position: fixed;
   top: 0;
@@ -24,7 +24,6 @@ body {
   z-index: 9999;
   transition: width 0.3s ease;
 }
-*/
 /* HOME PAGE container + slideshow */
 .home_page {
   width: 100%;
@@ -528,6 +527,9 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
+
+  justify-items: center; /* centers horizontally */
+  align-items: center;   /* centers vertically */
 }
 
 .office-hours h3,
@@ -551,6 +553,7 @@ body {
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid #f0f0f0;
+  gap: 20px;
 }
 
 .hours-item span:first-child {
@@ -573,6 +576,12 @@ body {
   margin-right: 8px;
   width: 20px;
 }
+
+.quick-links {
+  position: relative;
+  left: -50px; /* moves it 20px to the left */
+}
+
 
 .quick-links ul {
   list-style: none;
@@ -942,4 +951,39 @@ body {
     height: 40px;
     font-size: 16px;
   }
+}
+
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: #1a5f3f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#backToTop.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#backToTop:hover {
+  background: #f16901;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }

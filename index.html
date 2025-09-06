@@ -102,17 +102,58 @@
               procedures.
             </p>
           </div>
-          <div class="image-p">
-            <img
-              src="assets/urerc_proc.webp"
-              alt=""
-              width="97%"
-              height="auto"
-            />
-          </div>
         </div>
       </div>
     </section>
+
+<!-- Carousel Section with Process Flow Header -->
+  <section class="carousel-section">
+    <div class="process-flow-container">
+      <h3>Research Ethics Review Process Flow</h3>
+      <p>Navigate through the different application processes for research ethics review. Each diagram outlines the step-by-step procedures for various types of submissions.</p>
+    </div>
+
+    <div class="carousel">
+      <div class="carousel-container">
+        <!-- each image is one slide -->
+        <div class="carousel-slide">
+          <img src="img/initial-review.png" alt="Initial Review Process Flow" />
+          <div class="slide-caption">Initial Review</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="img/amendment-request.png" alt="Amendment Request Process Flow" />
+          <div class="slide-caption">Amendment Request Application</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="img/continuing-review.png" alt="Continuing Review Process Flow" />
+          <div class="slide-caption">Continuing Review Application</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="img/resubmission.png" alt="Resubmission Process Flow" />
+          <div class="slide-caption">Resubmission Process</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="img/RNESUSARSAE.png" alt="Clinical Trials Process Flow" />
+          <div class="slide-caption">Clinical Trials & Adverse Events</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+
+      <!-- Indicators -->
+      <div class="carousel-indicators"></div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <button class="lightbox-prev">&#10094;</button>
+    <img class="lightbox-image" src="" alt="Expanded View">
+    <button class="lightbox-next">&#10095;</button>
+  </div>
 
   <footer class="footer">
   <div class="footer-top">
@@ -142,6 +183,11 @@
   </div>
 </footer>
 
+  <button id="backToTop" title="Back to Top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+    <!-- ✅ END OF ADDITION -->
 
     <!-- Resources Section 
 
@@ -165,7 +211,7 @@
             <a href="files/consent-form.pdf" class="download-btn" download>Download</a>
           </div>
 
-         
+
           <div class="resource-card">
             <h3>Ethics Review Guidelines</h3>
             <p>Read the guidelines before submitting your documents for review.</p>
@@ -279,7 +325,6 @@
     </section>
 
   -->
-
     
 
     <script src="script.js"></script>
