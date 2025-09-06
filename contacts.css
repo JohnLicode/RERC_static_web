@@ -13,7 +13,7 @@ body {
   color: #ffffff;
 }
 
-/* Progress bar styles 
+/* Progress bar styles */
 #progress-bar {
   position: fixed;
   top: 0;
@@ -24,7 +24,6 @@ body {
   z-index: 9999;
   transition: width 0.3s ease;
 }
-*/
 /* HOME PAGE container + slideshow */
 .home_page {
   width: 100%;
