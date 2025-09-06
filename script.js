@@ -3,6 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const nav = document.querySelector(".bottom-nav");
   const navItems = document.querySelectorAll(".nav-item");
   const mobileNavItems = document.querySelectorAll(".mobile-nav-item");
+  // ✅ Get the back to top button
+  const backToTopButton = document.getElementById('backToTop');
+
+  // ✅ ADD THIS: Debug check - make sure button exists
+  if (backToTopButton) {
+    console.log("Back to top button found!");
+  } else {
+    console.log("Back to top button NOT found - check HTML!");
+  }
 
   function handleNavigation(targetId, clickedItem, items) {
     items.forEach((item) => item.classList.remove("active"));
@@ -40,6 +49,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // Highlight nav item on scroll + move nav + back to top button
+>>>>>>> kevbranch
   window.addEventListener("scroll", () => {
     let current = "";
     document.querySelectorAll("section").forEach(section => {
@@ -71,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 4000);
   }
 
+<<<<<<< HEAD
   // Carousel
   const carouselContainer = document.querySelector('.carousel-container');
   const slides = document.querySelectorAll('.carousel-slide');
@@ -111,9 +125,29 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isSwipe) {
       if (startX - e.changedTouches[0].clientX > 50) showSlide(index + 1);
       else if (e.changedTouches[0].clientX - startX > 50) showSlide(index - 1);
+=======
+    // Move nav from bottom to top once you scroll past hero
+    if (window.scrollY > window.innerHeight * 0.5) {
+      nav.classList.add("move-to-top");
+    } else {
+      nav.classList.remove("move-to-top");
+>>>>>>> kevbranch
+    }
+
+    // ✅ FIXED: Back to top button with lower threshold and safety check
+    if (backToTopButton) {
+      // Changed from 300px to 100px for easier testing
+      if (window.scrollY > 100) {
+        backToTopButton.classList.add('show');
+        console.log("Showing button at scroll:", window.scrollY); // Debug
+      } else {
+        backToTopButton.classList.remove('show');
+        console.log("Hiding button at scroll:", window.scrollY); // Debug
+      }
     }
   });
 
+<<<<<<< HEAD
   showSlide(0);
 
   // Lightbox functionality
@@ -397,4 +431,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize cursor style
   lightboxImg.style.cursor = "default";
+=======
+  // ✅ FIXED: Back to top button click with safety check
+  if (backToTopButton) {
+    backToTopButton.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent any default behavior
+      console.log("Back to top clicked!"); // Debug
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+  // Background Slideshow for .home_page
+  const bgImages = [
+    "img/psu_bg2.png",
+    "img/psu_bg.jpg",
+    "img/psu_bg3.jpg"
+  ];
+  let bgIndex = 0;
+  const homePage = document.querySelector(".home_page");
+  if (homePage) {
+    homePage.style.backgroundImage = `url('${bgImages[bgIndex]}')`;
+    homePage.style.backgroundSize = "cover";
+    homePage.style.backgroundPosition = "center";
+    homePage.style.backgroundRepeat = "no-repeat";
+    setInterval(() => {
+      bgIndex = (bgIndex + 1) % bgImages.length;
+      homePage.style.backgroundImage = `url('${bgImages[bgIndex]}')`;
+    }, 4000);
+  }
+>>>>>>> kevbranch
 });
