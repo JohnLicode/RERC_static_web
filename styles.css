@@ -1079,7 +1079,14 @@ body.no-scroll {
   color: #bbb;
 }
 
-
+/* ADD THIS: KEvin */
+#backToTop {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
 
 /* MOBILE RESPONSIVE STYLES */
 
@@ -1105,14 +1112,6 @@ body.no-scroll {
     padding: 12px 8px;
   }
 
-    /* ADD THIS: KEvin */
-#backToTop {
-    bottom: 20px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
-    font-size: 16px;
-  }
 
   .home_page-logo {
     padding: 15px 20px;
@@ -1258,15 +1257,6 @@ body.no-scroll {
   .burger-menu {
     top: 15px;
     right: 15px;
-  }
-
-  /* ADD THIS: Kevin */
-  #backToTop {
-    bottom: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    font-size: 14px;
   }
 
   .mobile-nav-menu {
