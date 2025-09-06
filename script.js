@@ -48,6 +48,42 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+  // Burger menu functionality
+  const burgerMenu = document.querySelector('.burger-menu');
+  const mobileNavMenu = document.querySelector('.mobile-nav-menu');
+  const navOverlay = document.querySelector('.nav-overlay');
+  const body = document.body;
+
+  burgerMenu.addEventListener('click', function() {
+    this.classList.toggle('active');
+    mobileNavMenu.classList.toggle('active');
+    navOverlay.classList.toggle('active');
+    body.classList.toggle('mobile-nav-open');
+  });
+
+  navOverlay.addEventListener('click', function() {
+    burgerMenu.classList.remove('active');
+    mobileNavMenu.classList.remove('active');
+    this.classList.remove('active');
+    body.classList.remove('mobile-nav-open');
+  });
+  // Get current page file name
+  const currentPage = window.location.pathname.split("/").pop();
+
+  // Select all desktop & mobile nav links
+  const menuLinks = document.querySelectorAll(".nav-item, .mobile-nav-item");
+
+  menuLinks.forEach(link => {
+      // Get file name from link href
+      const linkPage = link.getAttribute("href");
+
+      // If current page matches the link, highlight it
+      if (linkPage === currentPage) {
+          link.classList.add("active");
+      } else {
+          link.classList.remove("active");
+      }
+  });
 
   // FIXED: Highlight nav item on scroll + move nav + back to top button
   window.addEventListener("scroll", () => {
