@@ -495,4 +495,584 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
+    // Forms functionality
+    initializeFormsSections();
 });
+
+// Filter tags configuration
+const filterTags = [
+    { id: 'committee', label: 'Committee' },
+    { id: 'review', label: 'Review Process' },
+    { id: 'post-approval', label: 'Post-Approval' },
+    { id: 'assessment', label: 'Assessment' },
+    { id: 'meeting', label: 'Meetings' },
+    { id: 'communication', label: 'Communications' },
+    { id: 'site-visit', label: 'Site Visit' },
+    { id: 'queries', label: 'Queries & SOP' }
+];
+
+// Forms data object
+const formsData = {
+    "Section 1: Committee Management": {
+        forms: [
+            {
+                id: "1.1A",
+                title: "PSURERC Form 1.1A",
+                description: "Responsibilities and Qualifications of Members and Officers",
+                filename: "PSURERC-Form-1-1A.pdf",
+                tags: ["committee", "members", "qualifications", "officers"]
+            },
+            {
+                id: "1.1B",
+                title: "PSURERC Form 1.1B",
+                description: "Appointment Letter for Non-affiliate Non-Scientist Regular Member",
+                filename: "PSURERC-Form-1-1B.pdf",
+                tags: ["committee", "appointment", "non-affiliate", "non-scientist"]
+            },
+            {
+                id: "1.1C",
+                title: "PSURERC Form 1.1C",
+                description: "Appointment Letter for Non-affiliate Scientist Regular Member",
+                filename: "PSURERC-Form-1-1C.pdf",
+                tags: ["committee", "appointment", "non-affiliate", "scientist"]
+            },
+            {
+                id: "1.1D",
+                title: "PSURERC Form 1.1D",
+                description: "Appointment Letter for Affiliate Regular Member",
+                filename: "PSURERC-Form-1-1D.pdf",
+                tags: ["committee", "appointment", "affiliate"]
+            },
+            {
+                id: "1.1E",
+                title: "PSURERC Form 1.1E",
+                description: "Conflict of Interest Disclosure and Confidentiality Agreement",
+                filename: "PSURERC-Form-1-1E.pdf",
+                tags: ["committee", "disclosure", "confidentiality"]
+            },
+            {
+                id: "1.1F",
+                title: "PSURERC Form 1.1F",
+                description: "Curriculum Vitae of Members",
+                filename: "PSURERC-Form-1-1F.pdf",
+                tags: ["committee", "cv", "members"]
+            },
+            {
+                id: "1.1G",
+                title: "PSURERC Form 1.1G",
+                description: "Endorsement of Regular Members",
+                filename: "PSURERC-Form-1-1G.pdf",
+                tags: ["committee", "endorsement", "members"]
+            },
+            {
+                id: "1.2A",
+                title: "PSURERC Form 1.2A",
+                description: "Endorsement of Officers",
+                filename: "PSURERC-Form-1-2A.pdf",
+                tags: ["committee", "endorsement", "officers"]
+            },
+            {
+                id: "1.2B",
+                title: "PSURERC Form 1.2B",
+                description: "Appointment of Officers",
+                filename: "PSURERC-Form-1-2B.pdf",
+                tags: ["committee", "appointment", "officers"]
+            },
+            {
+                id: "1.3A",
+                title: "PSURERC Form 1.3A",
+                description: "Responsibilities and Qualifications of Independent Consultants",
+                filename: "PSURERC-Form-1-3A.pdf",
+                tags: ["committee", "consultants", "qualifications"]
+            },
+            {
+                id: "1.3B",
+                title: "PSURERC Form 1.3B",
+                description: "Appointment Letter for Non-affiliate Independent Consultants",
+                filename: "PSURERC-Form-1-3B.pdf",
+                tags: ["committee", "consultants", "appointment", "non-affiliate"]
+            },
+            {
+                id: "1.3C",
+                title: "PSURERC Form 1.3C",
+                description: "Appointment Letter for Affiliate Independent Consultants",
+                filename: "PSURERC-Form-1-3C.pdf",
+                tags: ["committee", "consultants", "appointment", "affiliate"]
+            },
+            {
+                id: "1.3D",
+                title: "PSURERC Form 1.3D",
+                description: "Endorsement of Independent Consultants",
+                filename: "PSURERC-Form-1-3D.pdf",
+                tags: ["committee", "consultants", "endorsement"]
+            }
+        ]
+    },
+
+    "Section 2: Protocol Review": {
+        forms: [
+            {
+                id: "2.1A",
+                title: "PSURERC Form 2.1A",
+                description: "Application for Review",
+                filename: "PSURERC-Form-2-1A.pdf",
+                tags: ["review", "application", "initial"]
+            },
+            {
+                id: "2.1B",
+                title: "PSURERC Form 2.1B",
+                description: "Application for Review Checklist",
+                filename: "PSURERC-Form-2-1B.pdf",
+                tags: ["review", "checklist", "initial"]
+            },
+            {
+                id: "2.1C",
+                title: "PSURERC Form 2.1C",
+                description: "Worksheet for Initial Protocol Assessment",
+                filename: "PSURERC-Form-2-1C.pdf",
+                tags: ["review", "assessment", "initial"]
+            },
+            {
+                id: "2.1D",
+                title: "PSURERC Form 2.1D",
+                description: "Assignment of Reviewers",
+                filename: "PSURERC-Form-2-1D.pdf",
+                tags: ["review", "reviewers", "assignment"]
+            },
+            {
+                id: "2.1E",
+                title: "PSURERC Form 2.1E",
+                description: "Exemption Letter",
+                filename: "PSURERC-Form-2-1E.pdf",
+                tags: ["review", "exemption"]
+            },
+            {
+                id: "2.1F",
+                title: "PSURERC Form 2.1F",
+                description: "Protocol Database Template",
+                filename: "PSURERC-Form-2-1F.pdf",
+                tags: ["review", "database", "template"]
+            },
+            {
+                id: "2.2A",
+                title: "PSURERC Form 2.2A",
+                description: "Resubmitted Study Protocol Assessment Form",
+                filename: "PSURERC-Form-2-2A.pdf",
+                tags: ["review", "assessment", "resubmission"]
+            }
+        ]
+    },
+
+    "Section 3: Post-Approval": {
+        forms: [
+            {
+                id: "3.1A",
+                title: "PSURERC Form 3.1A",
+                description: "Progress Report Form",
+                filename: "PSURERC-Form-3-1A.pdf",
+                tags: ["post-approval", "progress", "report"]
+            },
+            {
+                id: "3.1B",
+                title: "PSURERC Form 3.1B",
+                description: "Assessment Form for Post-Approval Reports and Applications",
+                filename: "PSURERC-Form-3-1B.pdf",
+                tags: ["post-approval", "assessment"]
+            },
+            {
+                id: "3.1C",
+                title: "PSURERC Form 3.1C",
+                description: "Action Letter to Post-Approval Reports and Applications",
+                filename: "PSURERC-Form-3-1C.pdf",
+                tags: ["post-approval", "action-letter"]
+            },
+            {
+                id: "3.2",
+                title: "PSURERC Form 3.2",
+                description: "Early Study Termination Application/Report Form",
+                filename: "PSURERC-Form-3-2.pdf",
+                tags: ["post-approval", "termination"]
+            },
+            {
+                id: "3.3",
+                title: "PSURERC Form 3.3",
+                description: "Amendment Request Form",
+                filename: "PSURERC-Form-3-3.pdf",
+                tags: ["post-approval", "amendment"]
+            },
+            {
+                id: "3.4",
+                title: "PSURERC Form 3.4",
+                description: "Protocol Deviation and Violation Report",
+                filename: "PSURERC-Form-3-4.pdf",
+                tags: ["post-approval", "deviation", "violation"]
+            },
+            {
+                id: "3.5A",
+                title: "PSURERC Form 3.5A",
+                description: "Reportable Negative Event Report",
+                filename: "PSURERC-Form-3-5A.pdf",
+                tags: ["post-approval", "negative-event"]
+            },
+            {
+                id: "3.5B",
+                title: "PSURERC Form 3.5B",
+                description: "SAE and SUSAR Report Form",
+                filename: "PSURERC-Form-3-5B.pdf",
+                tags: ["post-approval", "sae", "susar"]
+            },
+            {
+                id: "3.6A",
+                title: "PSURERC Form 3.6A",
+                description: "Continuing Review Application Form",
+                filename: "PSURERC-Form-3-6A.pdf",
+                tags: ["post-approval", "continuing-review"]
+            },
+            {
+                id: "3.6B",
+                title: "PSURERC Form 3.6B",
+                description: "Summary of Reports and Decisions on Protocol",
+                filename: "PSURERC-Form-3-6B.pdf",
+                tags: ["post-approval", "summary", "decisions"]
+            },
+            {
+                id: "3.7",
+                title: "PSURERC Form 3.7",
+                description: "Final Report Form",
+                filename: "PSURERC-Form-3-7.pdf",
+                tags: ["post-approval", "final-report"]
+            }
+        ]
+    },
+
+    "Section 4: Assessment and Decision": {
+        forms: [
+            {
+                id: "4.1A",
+                title: "PSURERC Form 4.1A",
+                description: "Study Protocol Assessment Form",
+                filename: "PSURERC-Form-4-1A.pdf",
+                tags: ["assessment", "protocol"]
+            },
+            {
+                id: "4.1B",
+                title: "PSURERC Form 4.1B",
+                description: "Informed Consent Assessment Form",
+                filename: "PSURERC-Form-4-1B.pdf",
+                tags: ["assessment", "informed-consent"]
+            },
+            {
+                id: "4.1C",
+                title: "PSURERC Form 4.1C",
+                description: "Action Letter to Study Protocol Submissions and Resubmissions",
+                filename: "PSURERC-Form-4-1C.pdf",
+                tags: ["assessment", "action-letter", "submission"]
+            },
+            {
+                id: "4.1D",
+                title: "PSURERC Form 4.1D",
+                description: "Ethics Clearance",
+                filename: "PSURERC-Form-4-1D.pdf",
+                tags: ["assessment", "clearance"]
+            },
+            {
+                id: "4.1E",
+                title: "PSURERC Form 4.1E",
+                description: "Protocol Assessment Form for Independent Consultant",
+                filename: "PSURERC-Form-4-1E.pdf",
+                tags: ["assessment", "protocol", "consultant"]
+            },
+            {
+                id: "4.1F",
+                title: "PSURERC Form 4.1F",
+                description: "Approval Letter to Study Protocol Submissions and Resubmissions",
+                filename: "PSURERC-Form-4-1F.pdf",
+                tags: ["assessment", "approval", "submission"]
+            }
+        ]
+    },
+
+    "Section 5: Meeting Management": {
+        forms: [
+            {
+                id: "5.1",
+                title: "PSURERC Form 5.1",
+                description: "Non-Disclosure Agreement for Non-Members",
+                filename: "PSURERC-Form-5-1.pdf",
+                tags: ["meeting", "non-disclosure", "non-members"]
+            },
+            {
+                id: "5.2",
+                title: "PSURERC Form 5.2",
+                description: "Notice of Meeting and Agenda Template",
+                filename: "PSURERC-Form-5-2.pdf",
+                tags: ["meeting", "agenda", "notice"]
+            },
+            {
+                id: "5.4",
+                title: "PSURERC Form 5.4",
+                description: "Minutes of the Meeting Template",
+                filename: "PSURERC-Form-5-4.pdf",
+                tags: ["meeting", "minutes", "template"]
+            }
+        ]
+    },
+
+    "Section 7: Communication Records": {
+        forms: [
+            {
+                id: "7.1A",
+                title: "PSURERC Form 7.1A",
+                description: "Logbook of Incoming Communications (Administrative Files)",
+                filename: "PSURERC-Form-7-1A.pdf",
+                tags: ["communication", "incoming", "administrative"]
+            },
+            {
+                id: "7.1B",
+                title: "PSURERC Form 7.1B",
+                description: "Logbook of Incoming Communications (Protocol-Related Files)",
+                filename: "PSURERC-Form-7-1B.pdf",
+                tags: ["communication", "incoming", "protocol"]
+            },
+            {
+                id: "7.2A",
+                title: "PSURERC Form 7.2A",
+                description: "Logbook of Outgoing Communications (Administrative Files)",
+                filename: "PSURERC-Form-7-2A.pdf",
+                tags: ["communication", "outgoing", "administrative"]
+            },
+            {
+                id: "7.2B",
+                title: "PSURERC Form 7.2B",
+                description: "Logbook of Outgoing Communications (Protocol-Related Files)",
+                filename: "PSURERC-Form-7-2B.pdf",
+                tags: ["communication", "outgoing", "protocol"]
+            },
+            {
+                id: "7.5",
+                title: "PSURERC Form 7.5",
+                description: "Request to Access Files",
+                filename: "PSURERC-Form-7-5.pdf",
+                tags: ["communication", "access", "request"]
+            }
+        ]
+    },
+
+    "Section 8: Site Visit": {
+        forms: [
+            {
+                id: "8A",
+                title: "PSURERC Form 8A",
+                description: "Notification of Selection as Member of Site Visit Team",
+                filename: "PSURERC-Form-8A.pdf",
+                tags: ["site-visit", "team", "notification"]
+            },
+            {
+                id: "8B",
+                title: "PSURERC Form 8B",
+                description: "Site Visit Report Form",
+                filename: "PSURERC-Form-8B.pdf",
+                tags: ["site-visit", "report"]
+            }
+        ]
+    },
+
+    "Section 9-11: Queries and SOP": {
+        forms: [
+            {
+                id: "9A",
+                title: "PSURERC Form 9A",
+                description: "Queries, Complaints, Notification Form",
+                filename: "PSURERC-Form-9A.pdf",
+                tags: ["queries", "complaints", "notification"]
+            },
+            {
+                id: "9B",
+                title: "PSURERC Form 9B",
+                description: "Logbook of Queries, Complaints, or Notifications",
+                filename: "PSURERC-Form-9B.pdf",
+                tags: ["queries", "complaints", "logbook"]
+            },
+            {
+                id: "9C",
+                title: "PSURERC Form 9C",
+                description: "Action Letter to Queries, Complaints, or Notifications",
+                filename: "PSURERC-Form-9C.pdf",
+                tags: ["queries", "complaints", "action-letter"]
+            },
+            {
+                id: "10",
+                title: "PSURERC Form 10",
+                description: "Action Letter to Appeal",
+                filename: "PSURERC-Form-10.pdf",
+                tags: ["appeal", "action-letter"]
+            },
+            {
+                id: "11A",
+                title: "PSURERC Form 11A",
+                description: "Request for Creation/Revision of an SOP",
+                filename: "PSURERC-Form-11A.pdf",
+                tags: ["sop", "creation", "revision"]
+            },
+            {
+                id: "11B",
+                title: "PSURERC Form 11B",
+                description: "SOP or Guideline Cover Page and Content Template",
+                filename: "PSURERC-Form-11B.pdf",
+                tags: ["sop", "template", "guideline"]
+            }
+        ]
+    }
+};
+
+// Forms section initialization
+function initializeFormsSections() {
+    const resourcesContainer = document.querySelector('.resources-container');
+    if (!resourcesContainer) return;
+
+    // Clear existing content but keep the header
+    const header = resourcesContainer.querySelector('.resources-header');
+    resourcesContainer.innerHTML = '';
+    if (header) resourcesContainer.appendChild(header);
+
+    // Create search and filter interface
+    const searchContainer = document.createElement('div');
+    searchContainer.className = 'search-container';
+    searchContainer.innerHTML = `
+        <div class="search-input-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="formSearch" placeholder="Search forms...">
+        </div>
+        <div class="filter-tags">
+            ${filterTags.map(tag => `
+                <button class="filter-tag" data-tag="${tag.id}">
+                    ${tag.label}
+                    <span class="tag-count">0</span>
+                </button>
+            `).join('')}
+        </div>
+    `;
+    resourcesContainer.appendChild(searchContainer);
+
+    // Add sections container
+    const sectionsContainer = document.createElement('div');
+    sectionsContainer.id = 'sectionsContainer';
+    sectionsContainer.className = 'forms-sections-container';
+    resourcesContainer.appendChild(sectionsContainer);
+
+    // Initialize functionality
+    updateTagCounts();
+    renderSections();
+    initializeEventListeners();
+}
+
+function updateTagCounts() {
+    filterTags.forEach(tag => {
+        let count = 0;
+        Object.values(formsData).forEach(section => {
+            count += section.forms.filter(form => 
+                form.tags.includes(tag.id)
+            ).length;
+        });
+        const countElement = document.querySelector(`[data-tag="${tag.id}"] .tag-count`);
+        if (countElement) countElement.textContent = count;
+    });
+}
+
+function renderSections(searchTerm = '', activeTags = []) {
+    const container = document.getElementById('sectionsContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    Object.entries(formsData).forEach(([sectionName, section]) => {
+        const filteredForms = section.forms.filter(form => {
+            const matchesSearch = !searchTerm || 
+                form.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                form.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                form.id.toLowerCase().includes(searchTerm.toLowerCase());
+
+            const matchesTags = activeTags.length === 0 || 
+                activeTags.some(tag => form.tags.includes(tag));
+
+            return matchesSearch && matchesTags;
+        });
+
+        if (filteredForms.length > 0) {
+            container.appendChild(createSectionElement(sectionName, filteredForms));
+        }
+    });
+}
+
+function createSectionElement(title, forms) {
+    const section = document.createElement('div');
+    section.className = 'forms-section';
+    
+    section.innerHTML = `
+        <div class="section-header">
+            <h3>${title}</h3>
+            <span class="toggle-icon">+</span>
+        </div>
+        <div class="section-content" style="max-height: 0;">
+            ${forms.map(form => `
+                <div class="form-card">
+                    <h4>${form.title}</h4>
+                    <p>${form.description}</p>
+                    <div class="form-tags">
+                        ${form.tags.map(tag => `
+                            <span class="form-tag">${tag}</span>
+                        `).join('')}
+                    </div>
+                    <a href="forms/${form.filename}" class="download-btn" download>
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    // Add collapsible functionality
+    const header = section.querySelector('.section-header');
+    const content = section.querySelector('.section-content');
+    const icon = header.querySelector('.toggle-icon');
+
+    header.addEventListener('click', () => {
+        const isActive = header.classList.toggle('active');
+        icon.textContent = isActive ? '-' : '+';
+        
+        if (isActive) {
+            // Set fixed height for scrolling
+            content.style.maxHeight = '300px';
+        } else {
+            // Close the section
+            content.style.maxHeight = '0';
+        }
+    });
+
+    return section;
+}
+
+function initializeEventListeners() {
+    const searchInput = document.getElementById('formSearch');
+    const filterButtons = document.querySelectorAll('.filter-tag');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.trim();
+            const activeTags = Array.from(document.querySelectorAll('.filter-tag.active'))
+                .map(btn => btn.dataset.tag);
+            renderSections(searchTerm, activeTags);
+        });
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            button.classList.toggle('active');
+            const searchTerm = searchInput ? searchInput.value.trim() : '';
+            const activeTags = Array.from(document.querySelectorAll('.filter-tag.active'))
+                .map(btn => btn.dataset.tag);
+            renderSections(searchTerm, activeTags);
+        });
+    });
+}
