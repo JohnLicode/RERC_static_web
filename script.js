@@ -69,30 +69,47 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   // Get current page file name
   const currentPage = window.location.pathname.split("/").pop();
+  const isIndexPage = currentPage === '' || currentPage === 'index.html';
+  const candidateMainIds = ['about','resources','contacts','updates'];
+  const pageMainSectionId = candidateMainIds.find(id => document.getElementById(id)) || 'home';
 
-  // Select all desktop & mobile nav links
-  const menuLinks = document.querySelectorAll(".nav-item, .mobile-nav-item");
+  // Helper to set active state across both menus
+  function setActiveForHref(href) {
+    navItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === href));
+    mobileNavItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === href));
+  }
 
-  menuLinks.forEach(link => {
-      // Get file name from link href
-      const linkPage = link.getAttribute("href");
+  // Initial activation: prefer URL hash; else page main section
+  (function initialNavActivation() {
+    const hash = window.location.hash;
+    const hashId = hash ? hash.substring(1) : '';
+    let initialId = '';
 
-      // If current page matches the link, highlight it
-      if (linkPage === currentPage) {
-          link.classList.add("active");
-      } else {
-          link.classList.remove("active");
-      }
-  });
+    if (hashId && document.getElementById(hashId)) {
+      initialId = hashId;
+    } else if (isIndexPage) {
+      initialId = 'home';
+    } else {
+      initialId = pageMainSectionId;
+    }
+    setActiveForHref(`#${initialId}`);
+  })();
 
   // FIXED: Highlight nav item on scroll + move nav + back to top button
   window.addEventListener("scroll", () => {
     let current = "";
-    document.querySelectorAll("section").forEach(section => {
+    // Ignore #home on non-index pages so main section is highlighted first
+    const sections = Array.from(document.querySelectorAll("section[id]"))
+      .filter(sec => {
+        if (isIndexPage) return sec.id !== 'updates'; // keep Home highlighted on index
+        return sec.id !== 'home'; // ignore Home on other pages
+      });
+    sections.forEach(section => {
       if (scrollY >= section.offsetTop - 60) current = section.getAttribute("id");
     });
-    navItems.forEach(item => item.classList.toggle("active", item.getAttribute("href") === `#${current}`));
-    mobileNavItems.forEach(item => item.classList.toggle("active", item.getAttribute("href") === `#${current}`));
+    // Ensure something is highlighted at the very top
+    if (!current) current = isIndexPage ? 'home' : pageMainSectionId;
+    setActiveForHref(`#${current}`);
     
     // Move nav from bottom to top once you scroll past hero
     if (window.scrollY > window.innerHeight * 0.5) {
