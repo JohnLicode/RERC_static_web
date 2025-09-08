@@ -529,6 +529,9 @@ const filterTags = [
     { id: 'queries', label: 'Queries & SOP' }
 ];
 
+// Map tag id to lowercased label for search matching
+const tagIdToLowerLabel = Object.fromEntries(filterTags.map(t => [t.id, t.label.toLowerCase()]));
+
 // Forms data object
 const formsData = {
     "Section 1: Committee Management": {
@@ -984,13 +987,27 @@ function initializeFormsSections() {
     initializeEventListeners();
 }
 
-function updateTagCounts() {
+function updateTagCounts(searchTerm = '') {
+    const normalizedSearch = searchTerm.toLowerCase();
+
     filterTags.forEach(tag => {
         let count = 0;
-        Object.values(formsData).forEach(section => {
-            count += section.forms.filter(form => 
-                form.tags.includes(tag.id)
-            ).length;
+        Object.entries(formsData).forEach(([sectionName, section]) => {
+            count += section.forms.filter(form => {
+                const matchesTagsField = form.tags.some(t => {
+                    const label = tagIdToLowerLabel[t] || '';
+                    return t.toLowerCase().includes(normalizedSearch) || label.includes(normalizedSearch);
+                });
+                const matchesSearch = !normalizedSearch ||
+                    form.title.toLowerCase().includes(normalizedSearch) ||
+                    form.description.toLowerCase().includes(normalizedSearch) ||
+                    form.id.toLowerCase().includes(normalizedSearch) ||
+                    (form.filename && form.filename.toLowerCase().includes(normalizedSearch)) ||
+                    matchesTagsField ||
+                    sectionName.toLowerCase().includes(normalizedSearch);
+                const hasTag = form.tags.includes(tag.id);
+                return matchesSearch && hasTag;
+            }).length;
         });
         const countElement = document.querySelector(`[data-tag="${tag.id}"] .tag-count`);
         if (countElement) countElement.textContent = count;
@@ -1004,11 +1021,19 @@ function renderSections(searchTerm = '', activeTags = []) {
     container.innerHTML = '';
 
     Object.entries(formsData).forEach(([sectionName, section]) => {
+        const normalizedSearch = (searchTerm || '').toLowerCase();
         const filteredForms = section.forms.filter(form => {
-            const matchesSearch = !searchTerm || 
-                form.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                form.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                form.id.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesTagsField = form.tags.some(t => {
+                const label = tagIdToLowerLabel[t] || '';
+                return t.toLowerCase().includes(normalizedSearch) || label.includes(normalizedSearch);
+            });
+            const matchesSearch = !normalizedSearch || 
+                form.title.toLowerCase().includes(normalizedSearch) || 
+                form.description.toLowerCase().includes(normalizedSearch) ||
+                form.id.toLowerCase().includes(normalizedSearch) ||
+                (form.filename && form.filename.toLowerCase().includes(normalizedSearch)) ||
+                matchesTagsField ||
+                sectionName.toLowerCase().includes(normalizedSearch);
 
             const matchesTags = activeTags.length === 0 || 
                 activeTags.some(tag => form.tags.includes(tag));
@@ -1080,6 +1105,7 @@ function initializeEventListeners() {
             const activeTags = Array.from(document.querySelectorAll('.filter-tag.active'))
                 .map(btn => btn.dataset.tag);
             renderSections(searchTerm, activeTags);
+            updateTagCounts(searchTerm);
         });
     }
 
@@ -1090,6 +1116,7 @@ function initializeEventListeners() {
             const activeTags = Array.from(document.querySelectorAll('.filter-tag.active'))
                 .map(btn => btn.dataset.tag);
             renderSections(searchTerm, activeTags);
+            updateTagCounts(searchTerm);
         });
     });
 }
