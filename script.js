@@ -151,6 +151,37 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 4000);
   }
 
+  // Scroll reveal (exclude hero `.home_page`)
+  (function setupScrollReveal() {
+    const candidates = Array.from(document.querySelectorAll(
+      "section:not(.home_page) h1, section:not(.home_page) h2, section:not(.home_page) h3, section:not(.home_page) h4, section:not(.home_page) p, section:not(.home_page) .review_card, section:not(.home_page) .carousel, section:not(.home_page) .process-flow-container, section:not(.home_page) .about-container, section:not(.home_page) .mvv-block, section:not(.home_page) .v-block, section:not(.home_page) .contacts-container, section:not(.home_page) .additional-info, section:not(.home_page) .resources-container .forms-section, section:not(.home_page) .resource-card"
+    ));
+    if (candidates.length === 0) return;
+
+    candidates.forEach(el => el.classList.add("reveal"));
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-visible");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { root: null, rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+
+    candidates.forEach(el => observer.observe(el));
+
+    // Persist revealed state after first animation ends
+    document.addEventListener('transitionend', function onEnd(e) {
+      const el = e.target;
+      if (el.classList && el.classList.contains('reveal-visible')) {
+        el.classList.add('reveal-done');
+        el.classList.remove('reveal');
+        el.classList.remove('reveal-visible');
+      }
+    }, true);
+  })();
+
   // Carousel
   const carouselContainer = document.querySelector('.carousel-container');
   const slides = document.querySelectorAll('.carousel-slide');
