@@ -123,6 +123,7 @@ body {
 .logo-text h3 {
   margin: 0;
   font-size: 35px;
+  white-space: nowrap;
 }
 
 .logo-text h5 {
@@ -152,13 +153,13 @@ body {
 
 .home_page-title h1 {
   margin: 0;
-  font-size: 68px;
+  font-size: 50px;
   font-weight: bold;
 }
 
 .home_page-title h5 {
   margin-top: 10px;
-  font-size: 28px;
+  font-size: 25px;
   font-weight: 100;
 }
 
@@ -216,14 +217,16 @@ body {
   display: none;
   flex-direction: column;
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 1001;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 5px;
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
 }
 
 .burger-menu.nav-moved-top {
@@ -231,11 +234,12 @@ body {
 }
 
 .burger-line {
-  width: 25px;
-  height: 3px;
+  width: 20px;
+  height: 2px;
   background: rgb(4, 72, 24);
-  margin: 3px 0;
-  transition: all 0.3s ease;
+  margin: 2px 0;
+  border-radius: 2px;
+  transition: all 0.25s ease;
   transform-origin: center;
 }
 
@@ -651,48 +655,40 @@ body {
   }
 
   .home_page-logo {
-    padding: 15px 20px;
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
+    padding: 14px 16px;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
 
   .left-logo {
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
   }
 
-  .left-logo img {
-    width: 60px;
-  }
+  .left-logo img { width: 56px; }
 
-  .logo-text h3 {
-    font-size: 28px;
-  }
-
-  .logo-text h5 {
-    font-size: 13px;
-  }
-
-  .right-logo {
+  .logo-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
     text-align: center;
   }
+  .logo-text h3 { font-size: 24px; }
 
-  .right-logo h5 {
-    font-size: 12px;
-    text-align: center;
-  }
+  .logo-text h5 { font-size: 12px; }
 
-  .home_page-title {
-    margin-top: 20vh;
-  }
+  .right-logo { display: none; }
 
-  .home_page-title h1 {
-    font-size: 48px;
-  }
+  .right-logo h5 { font-size: 12px; text-align: center; }
 
-  .home_page-title h5 {
-    font-size: 22px;
-  }
+  .home_page-title { margin-top: 18vh; }
+
+  .home_page-title h1 { font-size: 36px; }
+
+  .home_page-title h5 { font-size: 16px; }
 
   /* Review Page Tablet */
   .rp_container {
@@ -770,6 +766,15 @@ body {
   .member-card {
     width: 300px;
   }
+
+  /* Resources: search + tags responsive sizing */
+  .search-container { padding: 1.25rem; }
+  .search-input-wrapper { width: 100%; }
+  #formSearch { padding: 0.8rem 2.5rem 0.8rem 1rem; font-size: 0.95rem; }
+  .filter-tags { width: 100%; justify-content: center; gap: 0.4rem; }
+  .filter-tag { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+  .tag-count { font-size: 0.75rem; }
+  .download-btn { padding: 0.45rem 0.9rem; font-size: 0.9rem; }
 }
 
 /* Mobile phones (480px and below) */
@@ -794,16 +799,12 @@ body {
   }
 
   .home_page-logo {
-    padding: 10px 15px;
+    padding: 12px 14px;
   }
 
-  .left-logo img {
-    width: 50px;
-  }
+  .left-logo img { width: 44px; }
 
-  .logo-text h3 {
-    font-size: 20px;
-  }
+  .logo-text h3 { font-size: 18px; }
 
   .logo-text h5 {
     font-size: 10px;
@@ -813,19 +814,11 @@ body {
     font-size: 9px;
   }
 
-  .home_page-title {
-    margin-top: 15vh;
-    padding: 0 20px;
-  }
+  .home_page-title { text-align: center; margin-top: 10vh; padding: 0 20px; }
 
-  .home_page-title h1 {
-    font-size: 32px;
-    line-height: 1.2;
-  }
+  .home_page-title h1 { font-size: 30px; line-height: 1.25; }
 
-  .home_page-title h5 {
-    font-size: 16px;
-  }
+  .home_page-title h5 { font-size: 14px; }
 
   /* Review Page Mobile */
   .rp_container {
@@ -946,6 +939,16 @@ body {
   .resource-card p {
     font-size: 0.9rem;
   }
+
+  /* Resources mobile: tighter search and tags */
+  .search-container { padding: 1rem; }
+  .search-input-wrapper { width: 100%; }
+  #formSearch { padding: 0.7rem 2rem 0.7rem 0.9rem; font-size: 0.9rem; }
+  .fa-search { right: 1rem; }
+  .filter-tags { width: 100%; justify-content: center; gap: 0.35rem; }
+  .filter-tag { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
+  .tag-count { font-size: 0.7rem; }
+  .download-btn { width: 100%; text-align: center; padding: 0.5rem 0.9rem; font-size: 0.85rem; }
 }
 
 /* Extra small devices (320px and below) */
@@ -1030,4 +1033,100 @@ body {
   background: #f16901;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.footer {
+  position: relative;
+  background: url("img/psu_bg.jpg") no-repeat center center/cover;
+  min-height: 35vh;
+  color: white;
+  text-align: center;
+  padding: 50px 20px 15px;
+  font-family: Arial, sans-serif;
+}
+
+.footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 139, 52, 0.452);
+  backdrop-filter: blur(5px);
+  z-index: 0;
+}
+
+.footer * {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-top { margin-top: -10px; }
+.footer-top h3 {
+  margin: 5px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.footer-top h4 {
+  font-style: italic;
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.footer-socials {
+  margin: 15px 0;
+}
+
+.footer-socials a {
+  color: white;
+  margin: 0 8px;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.footer-socials a:hover {
+  color: #f39c12;
+}
+
+.footer-links {
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+.footer-links a {
+  color: #ddd;
+  margin: 0 5px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.footer-bottom {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #bbb;
+}
+
+/* Footer responsive tweaks */
+@media (max-width: 768px) {
+  .footer { padding: 35px 20px 15px; }
+  .footer-top h3 { font-size: 18px; margin: 8px 0; }
+  .footer-top h4 { font-size: 14px; margin: 6px 0; }
+  .footer-top p { margin: 8px 0; }
+  .footer-links { font-size: 13px; margin: 12px 0; }
+  .footer-socials { margin: 12px 0; }
+  .footer-bottom { margin-top: 15px; }
+}
+
+@media (max-width: 480px) {
+  .footer { padding: 30px 16px 12px; }
+  .footer-top h3 { font-size: 16px; margin: 6px 0; }
+  .footer-top h4 { font-size: 13px; margin: 5px 0; }
+  .footer-top p { margin: 6px 0; }
+  .footer-links { font-size: 12px; margin: 10px 0; }
+  .footer-socials { margin: 10px 0; }
+  .footer-bottom { margin-top: 12px; }
 }

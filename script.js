@@ -250,6 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
           e.preventDefault();
           lightbox.style.display = "flex";
           document.body.style.overflow = "hidden";
+          document.body.classList.add("lightbox-open");
           lightboxIndex = i;
           showLightboxSlide(lightboxIndex);
           if (progressBar) progressBar.classList.add("hidden-during-lightbox");
@@ -275,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
     closeBtn.addEventListener("click", () => {
       lightbox.style.display = "none";
       document.body.style.overflow = "";
+      document.body.classList.remove("lightbox-open");
       if (progressBar) progressBar.classList.remove("hidden-during-lightbox");
       resetImageTransform();
     });
@@ -283,6 +285,30 @@ document.addEventListener("DOMContentLoaded", function () {
   // Navigation inside lightbox
   if (lightboxPrev) lightboxPrev.addEventListener("click", () => showLightboxSlide(lightboxIndex - 1));
   if (lightboxNext) lightboxNext.addEventListener("click", () => showLightboxSlide(lightboxIndex + 1));
+
+  // Close lightbox with escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox && lightbox.style.display === "flex") {
+      lightbox.style.display = "none";
+      document.body.style.overflow = "";
+      document.body.classList.remove("lightbox-open");
+      if (progressBar) progressBar.classList.remove("hidden-during-lightbox");
+      resetImageTransform();
+    }
+  });
+
+  // Close lightbox when clicking outside the image
+  if (lightbox) {
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.classList.remove("lightbox-open");
+        if (progressBar) progressBar.classList.remove("hidden-during-lightbox");
+        resetImageTransform();
+      }
+    });
+  }
 
   // Lightbox touch swipe for navigation
   let touchStartX = 0, touchEndX = 0;
