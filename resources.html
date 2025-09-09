@@ -79,11 +79,19 @@
 
         <!-- Search Bar -->
         <div class="search-container">
-            <div class="search-icon">
-                <i class="fas fa-search"></i>
+            <div class="search-input-wrapper">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="formSearch" 
+                    placeholder="Search forms by name, number, or purpose..."
+                >
+                <button id="searchBtn" class="search-btn" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
-            <input type="text" class="search-input" id="formSearch" placeholder="Search forms by name, number, or purpose...">
         </div>
+
 
         <!-- Search Results Info -->
         <div class="search-results-info" id="searchResults" style="display: none;">
