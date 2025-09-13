@@ -1712,3 +1712,67 @@ body.no-scroll {
   color: #444;
   line-height: 1.5;
 }
+
+.login-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid #ff8400;
+  padding: 15px 35px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.login-btn:hover {
+  background: #ffffff;
+  color: #ff8400;
+  /* Removed transform: translateY(-2px) to keep button fixed */
+  box-shadow: 0 6px 20px rgba(255, 132, 0, 0.3);
+}
+
+.login-btn:active {
+  /* Removed transform: translateY(0) to keep button fixed */
+  box-shadow: 0 4px 15px rgba(255, 132, 0, 0.2);
+}
+
+.login-btn i {
+  font-size: 14px;
+}
+
+/* Mobile Responsiveness for Login Button */
+@media (max-width: 768px) {
+  .login-btn {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+  
+  .login-container {
+    margin-top: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-btn {
+    padding: 10px 25px;
+    font-size: 13px;
+  }
+  
+  .login-container {
+    margin-top: 20px;
+  }
+}
+

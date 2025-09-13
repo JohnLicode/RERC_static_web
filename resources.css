@@ -678,7 +678,6 @@ body {
 /* Show burger menu on mobile, hide regular nav */
 @media (max-width: 768px) {
   .bottom-nav {
-    display: none !important;
     width: 100%;
     padding: 5px 0;
   }
