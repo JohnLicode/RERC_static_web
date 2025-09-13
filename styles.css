@@ -766,9 +766,77 @@ body.no-scroll {
 
 /* Hide lightbox navigation buttons on mobile */
 @media (max-width: 768px) {
-  .lightbox-prev, .lightbox-next {
-    display: none !important;
-  }
+    .steps-container {
+        padding: 10px;
+        gap: 30px;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .step {
+        flex: 1 1 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 10px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .how-to-section {
+        padding: 40px 20px;
+        width: 100%;
+    }
+
+    .how-to-section h2 {
+        font-size: 28px;
+        padding: 0 15px;
+        margin-bottom: 20px;
+    }
+
+    .how-to-section .subtitle {
+        font-size: 13px;
+        padding: 0 20px;
+        margin-bottom: 35px;
+        max-width: 320px;
+    }
+
+    .steps-container {
+        gap: 35px;
+        padding: 0 15px;
+    }
+
+    .step {
+        padding: 10px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 25px;
+    }
+
+    .icon-circle i {
+        font-size: 28px;
+    }
+
+    .step h3 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .step p {
+        font-size: 13px;
+        line-height: 1.6;
+        max-width: 280px;
+        margin: 0 auto;
+        text-align: center;
+    }
 }
 
 /* About Page */

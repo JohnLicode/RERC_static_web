@@ -549,9 +549,16 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
+  justify-items: center;
+  align-items: start; /* Changed from center to start for better alignment */
+}
 
-  justify-items: center; /* centers horizontally */
-  align-items: center;   /* centers vertically */
+.office-hours,
+.location-info,
+.quick-links {
+  width: 100%;
+  max-width: 350px; /* Consistent max width for all sections */
+  text-align: center; /* Center align all content */
 }
 
 .office-hours h3,
@@ -561,12 +568,15 @@ body {
   color: rgb(4, 72, 24);
   margin-bottom: 20px;
   font-weight: 600;
+  text-align: center;
 }
 
 .hours-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-width: 300px;
+  margin: 0 auto; /* Center the hours list */
 }
 
 .hours-item {
@@ -587,10 +597,18 @@ body {
   color: #666;
 }
 
+.location-info {
+  text-align: center; /* Center align location info */
+}
+
 .location-info p {
   margin-bottom: 15px;
   line-height: 1.6;
   color: #555;
+  text-align: left; /* Keep paragraph text left-aligned for readability */
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .location-info i {
@@ -600,18 +618,20 @@ body {
 }
 
 .quick-links {
-  position: relative;
-  left: -50px; /* moves it 20px to the left */
+  /* Removed the position: relative and left: -50px that was causing alignment issues */
+  text-align: center;
 }
-
 
 .quick-links ul {
   list-style: none;
   padding: 0;
+  max-width: 250px;
+  margin: 0 auto; /* Center the quick links list */
 }
 
 .quick-links li {
   margin-bottom: 12px;
+  text-align: left; /* Keep individual links left-aligned within centered container */
 }
 
 .quick-links a {
@@ -818,6 +838,25 @@ body {
   .info-container {
     grid-template-columns: 1fr;
     gap: 40px;
+    max-width: 100%;
+  }
+
+  .office-hours,
+  .location-info,
+  .quick-links {
+    max-width: 100%;
+  }
+
+  .hours-list {
+    max-width: 100%;
+  }
+
+  .location-info p {
+    max-width: 100%;
+  }
+
+  .quick-links ul {
+    max-width: 100%;
   }
 }
 
@@ -908,74 +947,79 @@ body {
     padding: 40px 25px;
   }
 
+  .info-container {
+    gap: 30px;
+  }
+
   .office-hours h3,
   .location-info h3,
   .quick-links h3 {
     font-size: 20px;
   }
+
+  .hours-item {
+    padding: 8px 0;
+    gap: 15px;
+  }
+
+  .location-info p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .quick-links a {
+    font-size: 14px;
+  }
+}
 
   .social-icon {
     width: 45px;
     height: 45px;
     font-size: 18px;
   }
-}
 
 /* Extra small devices (320px and below) */
 @media (max-width: 320px) {
-  .home_page-title h1 {
-    font-size: 28px;
-  }
-
-  .home_page-title h5 {
-    font-size: 14px;
-  }
-
-  .logo-text h3 {
-    font-size: 18px;
-  }
-
-  .right-logo h5 {
-    font-size: 8px;
-  }
-
-  .nav-item {
-    font-size: 10px;
-    padding: 8px 3px;
-  }
-
-  .contact-info {
-    padding: 30px 20px;
-  }
-
-  .contact-form-container {
-    padding: 30px 20px;
-  }
-
-  .contact-header h2 {
-    font-size: 20px;
-  }
-
-  .form-header h2 {
-    font-size: 24px;
-  }
-
   .additional-info {
     padding: 30px 20px;
+  }
+
+  .info-container {
+    gap: 25px;
   }
 
   .office-hours h3,
   .location-info h3,
   .quick-links h3 {
     font-size: 18px;
+    margin-bottom: 15px;
   }
+
+  .hours-item {
+    padding: 6px 0;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .location-info p {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .quick-links a {
+    font-size: 13px;
+  }
+
+  .quick-links li {
+    margin-bottom: 10px;
+  }
+}
 
   .social-icon {
     width: 40px;
     height: 40px;
     font-size: 16px;
   }
-}
 
 #backToTop {
   position: fixed;
