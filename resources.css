@@ -361,9 +361,54 @@ body {
 }
 
 .search-input-wrapper {
-    position: relative;
-    margin-bottom: 1rem;
-    width: 70%
+  position: relative;
+  margin-bottom: 1rem;
+  width: 70%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1.5rem; /* notice right padding makes space for the icon */
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  font-size: 1rem;
+}
+
+.search-btn {
+  position: absolute;
+  right: 1.5rem;   /* was 1rem → moves button slightly left */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 1.2rem;
+
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+
+  outline: none; /* prevent default focus outline */
+}
+
+/* ✅ Add this below */
+.search-btn i {
+  left: 0.3rem;
+  font-size: 1.2rem;
+  color: inherit;
+  pointer-events: none;
+}
+
+.search-btn:hover i {
+  color: #257c46; /* green on hover */
+}
+
+.search-btn:active i {
+  color: #1b5e34; /* darker green when pressed */
 }
 
 #formSearch {
