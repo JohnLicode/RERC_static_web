@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Research Ethics Review Committee</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
+    <style>
+          body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: url('img/psu_bg2.png') center center/cover no-repeat;
+        position: relative;
+      }
+      .bg-blur {
+        position: fixed;
+        inset: 0;
+        background: rgba(34, 139, 34, 0.35); /* green overlay with transparency */
+        backdrop-filter: blur(3px);
+        z-index: 0;
+      }
+      .login-modal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        width: 95%;
+        max-width: 400px;
+        padding: 2.5rem 2rem 1.5rem 2rem;
+        z-index: 2;
+        text-align: center;
+      }
+      .login-modal .close-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #888;
+      }
+      .login-modal .modal-logos {
+        display: flex;
+        justify-content: center;
+        gap: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+      .login-modal .modal-logos img {
+        height: 48px;
+        width: 48px;
+        object-fit: contain;
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid #eee;
+      }
+      .login-modal h2 {
+        margin: 0.5rem 0 0.2rem 0;
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: #1a3d2f;
+      }
+      .login-modal p {
+        color: #666;
+        font-size: 0.98rem;
+        margin-bottom: 1.2rem;
+      }
+      .google-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        background: #fff;
+        border: 1.5px solid #ddd;
+        border-radius: 6px;
+        padding: 0.7rem 0;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 1rem;
+        transition: box-shadow 0.2s;
+      }
+      .google-btn:hover {
+        box-shadow: 0 2px 8px rgba(66,133,244,0.08);
+      }
+      .google-btn img {
+        width: 22px;
+        height: 22px;
+      }
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 1rem 0;
+        color: #aaa;
+        font-size: 0.95rem;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+        margin: 0 0.7em;
+      }
+      .login-form {
+        text-align: left;
+      }
+      .input-group {
+        margin-bottom: 1.1rem;
+      }
+      .input-group label {
+        font-size: 0.97rem;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+        display: block;
+      }
+      .input-group input {
+        width: 100%;
+        padding: 0.65rem 0.9rem;
+        border: 1.2px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        margin-top: 0.2rem;
+        background: #fafbfc;
+        outline: none;
+        transition: border 0.2s;
+      }
+      .input-group input:focus {
+        border: 1.5px solid #1a3d2f;
+      }
+      .login-submit-btn {
+        width: 100%;
+        background: #1a3d2f;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0.8rem 0;
+        font-size: 1.08rem;
+        font-weight: 600;
+        margin-top: 0.3rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .login-submit-btn:hover {
+        background: #256d4b;
+      }
+      .login-links {
+        margin-top: 1.1rem;
+        text-align: center;
+        font-size: 0.97rem;
+        color: #666;
+      }
+      .login-links a {
+        color: #1a3d2f;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .login-links a:hover {
+        text-decoration: underline;
+      }
+      .login-links span {
+        color: #bbb;
+        margin: 0 0.5em;
+      }
+      .terms {
+        margin-top: 1.2rem;
+        font-size: 0.85rem;
+        color: #888;
+      }
+      .terms a {
+        color: #1a3d2f;
+        text-decoration: underline;
+      }
+      @media (max-width: 500px) {
+        .login-modal {
+          padding: 1.2rem 0.5rem 1rem 0.5rem;
+        }
+        .login-modal .modal-logos img {
+          height: 38px;
+          width: 38px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-blur"></div>
+    <div class="login-modal">
+      <button class="close-btn" onclick="window.location.href='index.html'">&times;</button>
+      <div class="modal-logos">
+        <img src="img/logo_rerc.png" alt="PSU Logo" />
+        <img src="img/logo_psu.png" alt="RERC Logo" />
+      </div>
+      <h2>Log In</h2>
+      <p>Your login details are safe with us.</p>
+      <button class="google-btn">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+        Continue with Google
+      </button>
+      <div class="divider">OR</div>
+      <form class="login-form" autocomplete="off">
+        <div class="input-group">
+          <label for="email"><i class="fa-regular fa-envelope"></i> Email<span style="color:#e74c3c;">*</span></label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email" />
+        </div>
+        <div class="input-group">
+          <label for="password"><i class="fa-solid fa-lock"></i> Password<span style="color:#e74c3c;">*</span></label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password" />
+        </div>
+        <button type="submit" class="login-submit-btn">
+          <i class="fa-solid fa-envelope"></i> Continue with Email
+        </button>
+        <div class="login-links">
+          <a href="#">Forgot password?</a>
+          <span>|</span>
+          <a href="#">Sign Up</a>
+        </div>
+        <div class="terms">
+          By logging in, you agree to our
+          <a href="#">Terms of Service</a> and
+          <a href="#">Privacy Policy</a>.
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
