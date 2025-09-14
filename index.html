@@ -3,11 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/logo_rerc.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/logo_rerc.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/logo_rerc.png">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
     />
-    <title>Document</title>
+    <title>PSU RERC</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -22,10 +25,9 @@
 
     <!-- Mobile Navigation Menu - -->
     <div class="mobile-nav-menu">
-      <a href="index.html" class="mobile-nav-item active">Home</a>
+      <a href="#home" class="mobile-nav-item active">Home</a>
       <a href="about.html" class="mobile-nav-item">About</a>
       <a href="resources.html" class="mobile-nav-item">Resources</a>
-      <a href="#updates" class="mobile-nav-item">Updates</a>
       <a href="contacts.html" class="mobile-nav-item">Contacts</a>
     </div>
 
@@ -33,22 +35,21 @@
         <div class="nav-container">
           <a href="#home" class="nav-item active">Home</a>
           <a href="about.html" class="nav-item">About</a>
-          <a href="resources.html" class="nav-item">Requirements</a>
-          <a href="#updates" class="nav-item">Updates</a>
+          <a href="resources.html" class="nav-item">Resources</a>
           <a href="contacts.html" class="nav-item">Contacts</a>
         </div>
       </nav>
     <!-- Navigation Overlay -->
     <div class="nav-overlay"></div>
 
-    <section class="home_page">
+    <section class="home_page" id="home">
       <div class="overlay">
         <div class="home_page-logo">
           <div class="left-logo">
             <img src="img/logo_rerc.png" alt="Logo" />
             <div class="logo-text">
-              <h3>Palawan State University</h3>
-              <h5>Research Ethics Review Committee</h5>
+              <h3>Palawan State<br class="mobile-only" /> University</h3>
+              <!-- <h5>Research Ethics Review Committee</h5> -->
             </div>
           </div>
           <div class="right-logo">
@@ -63,11 +64,20 @@
           </div>
         </div>
         <div class="home_page-title">
-          <h1>RESEARCH ETHICS OFFICE</h1>
+          <h1>RESEARCH ETHICS REVIEW COMMITTEE</h1>
           <h5>Ensuring Ethical Standards in Research</h5>
+
+          <!-- Add log in button kevin-->
+           <!----
+        <div class="login-container">
+          <a href="login.html" class="login-btn">Get Access</a>
+        </div>
+        --
+        ...existing code... -->
+
         </div>
       </div>
-      
+
     </section>
 
     <section class="review_page">
@@ -107,7 +117,7 @@
     </section>
 
 <!-- Carousel Section with Process Flow Header -->
-  <section class="carousel-section">
+  <section class="carousel-section" id="updates">
     <div class="process-flow-container">
       <h3>Research Ethics Review Process Flow</h3>
       <p>Navigate through the different application processes for research ethics review. Each diagram outlines the step-by-step procedures for various types of submissions.</p>
@@ -154,6 +164,48 @@
     <img class="lightbox-image" src="" alt="Expanded View">
     <button class="lightbox-next">&#10095;</button>
   </div>
+  
+  <!--How to Section-->
+  <section class="how-to-section">
+    <h2>How to Use the System</h2>
+    <p class="subtitle">
+      Follow these steps to submit your research protocol and track its progress through the review process.
+    </p>
+
+    <div class="steps-container">
+      <div class="step">
+        <div class="icon-circle">
+          <i class="fa-regular fa-user"></i>
+        </div>
+        <h3>Sign Up</h3>
+        <p>Create your account by filling out the registration form with your basic details to access the system.</p>
+      </div>
+
+      <div class="step">
+        <div class="icon-circle">
+          <i class="fa-regular fa-clipboard"></i>
+        </div>
+        <h3>Submit your Protocol</h3>
+        <p>Upload the required documents and complete the checklist to submit your research for review.</p>
+      </div>
+
+      <div class="step">
+        <div class="icon-circle">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <h3>Track your Review Status</h3>
+        <p>Follow your submission’s progress in real time and get notified of any updates or requirements.</p>
+      </div>
+
+      <div class="step">
+        <div class="icon-circle">
+          <i class="fa-regular fa-envelope"></i>
+        </div>
+        <h3>Decision and Feedback</h3>
+        <p>View the outcome of the evaluation and access any remarks or official notices provided through your dashboard.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- FAQ Section -->
   <section class="faq-section">
@@ -217,8 +269,8 @@
 
   <footer class="footer">
   <div class="footer-top">
-    <h3>Palawan State University</h3>
-    <h4>THE FUTURE BEGINS HERE</h4>
+    <h3>Palawan State University — Research Ethics Review Committee</h3>
+    <h4> Protecting participants. Elevating research.</h4>
     <p>Connect with us</p>
     <div class="footer-socials">
       <a href="#"><i class="fab fa-facebook-f"></i></a>

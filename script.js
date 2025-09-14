@@ -69,30 +69,47 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   // Get current page file name
   const currentPage = window.location.pathname.split("/").pop();
+  const isIndexPage = currentPage === '' || currentPage === 'index.html';
+  const candidateMainIds = ['about','resources','contacts','updates'];
+  const pageMainSectionId = candidateMainIds.find(id => document.getElementById(id)) || 'home';
 
-  // Select all desktop & mobile nav links
-  const menuLinks = document.querySelectorAll(".nav-item, .mobile-nav-item");
+  // Helper to set active state across both menus
+  function setActiveForHref(href) {
+    navItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === href));
+    mobileNavItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === href));
+  }
 
-  menuLinks.forEach(link => {
-      // Get file name from link href
-      const linkPage = link.getAttribute("href");
+  // Initial activation: prefer URL hash; else page main section
+  (function initialNavActivation() {
+    const hash = window.location.hash;
+    const hashId = hash ? hash.substring(1) : '';
+    let initialId = '';
 
-      // If current page matches the link, highlight it
-      if (linkPage === currentPage) {
-          link.classList.add("active");
-      } else {
-          link.classList.remove("active");
-      }
-  });
+    if (hashId && document.getElementById(hashId)) {
+      initialId = hashId;
+    } else if (isIndexPage) {
+      initialId = 'home';
+    } else {
+      initialId = pageMainSectionId;
+    }
+    setActiveForHref(`#${initialId}`);
+  })();
 
   // FIXED: Highlight nav item on scroll + move nav + back to top button
   window.addEventListener("scroll", () => {
     let current = "";
-    document.querySelectorAll("section").forEach(section => {
+    // Ignore #home on non-index pages so main section is highlighted first
+    const sections = Array.from(document.querySelectorAll("section[id]"))
+      .filter(sec => {
+        if (isIndexPage) return sec.id !== 'updates'; // keep Home highlighted on index
+        return sec.id !== 'home'; // ignore Home on other pages
+      });
+    sections.forEach(section => {
       if (scrollY >= section.offsetTop - 60) current = section.getAttribute("id");
     });
-    navItems.forEach(item => item.classList.toggle("active", item.getAttribute("href") === `#${current}`));
-    mobileNavItems.forEach(item => item.classList.toggle("active", item.getAttribute("href") === `#${current}`));
+    // Ensure something is highlighted at the very top
+    if (!current) current = isIndexPage ? 'home' : pageMainSectionId;
+    setActiveForHref(`#${current}`);
     
     // Move nav from bottom to top once you scroll past hero
     if (window.scrollY > window.innerHeight * 0.5) {
@@ -133,6 +150,37 @@ document.addEventListener("DOMContentLoaded", function () {
       homePage.style.backgroundImage = `url('${bgImages[bgIndex]}')`;
     }, 4000);
   }
+
+  // Scroll reveal (exclude hero `.home_page`)
+  (function setupScrollReveal() {
+    const candidates = Array.from(document.querySelectorAll(
+      "section:not(.home_page) h1, section:not(.home_page) h2, section:not(.home_page) h3, section:not(.home_page) h4, section:not(.home_page) p, section:not(.home_page) .review_card, section:not(.home_page) .carousel, section:not(.home_page) .process-flow-container, section:not(.home_page) .about-container, section:not(.home_page) .mvv-block, section:not(.home_page) .v-block, section:not(.home_page) .contacts-container, section:not(.home_page) .additional-info, section:not(.home_page) .resources-container .forms-section, section:not(.home_page) .resource-card"
+    ));
+    if (candidates.length === 0) return;
+
+    candidates.forEach(el => el.classList.add("reveal"));
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-visible");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { root: null, rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+
+    candidates.forEach(el => observer.observe(el));
+
+    // Persist revealed state after first animation ends
+    document.addEventListener('transitionend', function onEnd(e) {
+      const el = e.target;
+      if (el.classList && el.classList.contains('reveal-visible')) {
+        el.classList.add('reveal-done');
+        el.classList.remove('reveal');
+        el.classList.remove('reveal-visible');
+      }
+    }, true);
+  })();
 
   // Carousel
   const carouselContainer = document.querySelector('.carousel-container');
@@ -202,6 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
           e.preventDefault();
           lightbox.style.display = "flex";
           document.body.style.overflow = "hidden";
+          document.body.classList.add("lightbox-open");
           lightboxIndex = i;
           showLightboxSlide(lightboxIndex);
           if (progressBar) progressBar.classList.add("hidden-during-lightbox");
@@ -227,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
     closeBtn.addEventListener("click", () => {
       lightbox.style.display = "none";
       document.body.style.overflow = "";
+      document.body.classList.remove("lightbox-open");
       if (progressBar) progressBar.classList.remove("hidden-during-lightbox");
       resetImageTransform();
     });
@@ -235,6 +285,30 @@ document.addEventListener("DOMContentLoaded", function () {
   // Navigation inside lightbox
   if (lightboxPrev) lightboxPrev.addEventListener("click", () => showLightboxSlide(lightboxIndex - 1));
   if (lightboxNext) lightboxNext.addEventListener("click", () => showLightboxSlide(lightboxIndex + 1));
+
+  // Close lightbox with escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox && lightbox.style.display === "flex") {
+      lightbox.style.display = "none";
+      document.body.style.overflow = "";
+      document.body.classList.remove("lightbox-open");
+      if (progressBar) progressBar.classList.remove("hidden-during-lightbox");
+      resetImageTransform();
+    }
+  });
+
+  // Close lightbox when clicking outside the image
+  if (lightbox) {
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.classList.remove("lightbox-open");
+        if (progressBar) progressBar.classList.remove("hidden-during-lightbox");
+        resetImageTransform();
+      }
+    });
+  }
 
   // Lightbox touch swipe for navigation
   let touchStartX = 0, touchEndX = 0;
@@ -1135,27 +1209,3 @@ function initializeEventListeners() {
       });
     }
 }
-
-// FAQ functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-        const icon = item.querySelector('.fas');
-        
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            
-            // Toggle current item only
-            if (isActive) {
-                item.classList.remove('active');
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                item.classList.add('active');
-                icon.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
-});
