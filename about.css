@@ -152,13 +152,14 @@ body {
 }
 
 .home_page-title h1 {
-  font-size: 68px;
+  margin: 0;
+  font-size: 50px;
   font-weight: bold;
 }
 
 .home_page-title h5 {
-  margin-top: 5px;
-  font-size: 28px;
+  margin-top: 10px;
+  font-size: 25px;
   font-weight: 100;
 }
 
@@ -212,7 +213,7 @@ body {
   display: none;
   flex-direction: column;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
   position: fixed;
   top: 20px;
   right: 20px;
@@ -713,21 +714,11 @@ body {
     padding: 10px 5px;
   }
 
-  .home_page-logo {
-    padding: 10px 1px;
-    margin-right: 50px;
-    margin-bottom: 40px;
-  }
+  .home_page-logo { padding: 12px 14px; }
 
-  .left-logo img {
-    width: 50px; 
-    margin-top: 10px; 
-  }
+  .left-logo img { width: 44px; }
 
-  .logo-text h3 {
-    font-size: 20px;
-    margin-top: 10px;
-  }
+  .logo-text h3 { font-size: 18px; }
 
   .logo-text h5 {
     font-size: 10px;
@@ -739,10 +730,8 @@ body {
     margin-top: -5px;
   }
 
-  .home_page-title {
-    margin-top: 1vh;
-    padding: 0 20px;
-  }
+  .home_page-title { margin-top: 18vh; padding: 0 20px; }
+  .home_page-title { text-align: center; margin-top: 10vh; }
 
   .home_page-title h1 { font-size: 30px; line-height: 1.25; }
 
