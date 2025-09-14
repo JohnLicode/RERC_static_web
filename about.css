@@ -364,9 +364,11 @@ body {
 }
 
 .image-m img {
-  max-width: 95%;
+  max-width: 90%;
   height: auto;
   border-radius: 8px;
+  margin: 0 auto;
+  display: block;
 }
 
 .content {
@@ -395,8 +397,8 @@ body {
 }
 
 .image-v img {
-  max-width: 17vw;
-  height: 23vh;
+  max-width: 20vw;
+  height: auto;
   border-radius: 8px;
   margin-left: 30px;
 }
@@ -646,9 +648,11 @@ body {
   }
 
   .image-v img {
-    max-width: 95%;
+    max-width: 80%;
     height: auto;
     margin-left: 0;
+    margin: 0 auto;
+    display: block;
   }
 
   .v-block .content h3 {
@@ -661,9 +665,11 @@ body {
   }
   
   .image-m img {
-    max-width: 95%;
+    max-width: 80%;
     height: auto;
     margin-left: 0;
+    margin: 0 auto;
+    display: block;
   }
 
   /* Members Tablet */
@@ -793,7 +799,17 @@ body {
   }
 
   .image-v img {
-    max-width: 95%;
+    max-width: 70%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .image-m img {
+    max-width: 70%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
   }
 
   /* Members Mobile */
@@ -872,14 +888,30 @@ body {
     .about_members h3 {
       font-size: 20px;
       text-align: center;
-    }  .member-card {
-    width: 200px;
-  }
+    }
 
-  .member-card img {
-    width: 100px;
-    height: 100px;
-  }
+    .image-v img {
+      max-width: 60%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .image-m img {
+      max-width: 60%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .member-card {
+      width: 200px;
+    }
+
+    .member-card img {
+      width: 100px;
+      height: 100px;
+    }
 }
 
 #backToTop {
