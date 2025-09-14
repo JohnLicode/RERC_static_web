@@ -1209,3 +1209,34 @@ function initializeEventListeners() {
       });
     }
 }
+// FAQ functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.fas');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all other FAQ items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.fas').style.transform = 'rotate(0deg)';
+                }
+            });
+            
+            // Toggle current item
+            if (isActive) {
+                item.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                item.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    });
+});
