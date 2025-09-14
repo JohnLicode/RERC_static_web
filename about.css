@@ -152,14 +152,13 @@ body {
 }
 
 .home_page-title h1 {
-  margin: 0;
-  font-size: 50px;
+  font-size: 68px;
   font-weight: bold;
 }
 
 .home_page-title h5 {
-  margin-top: 10px;
-  font-size: 25px;
+  margin-top: 5px;
+  font-size: 28px;
   font-weight: 100;
 }
 
@@ -213,7 +212,7 @@ body {
   display: none;
   flex-direction: column;
   cursor: pointer;
-  padding: 8px;
+  padding: 5px;
   position: fixed;
   top: 20px;
   right: 20px;
@@ -697,6 +696,7 @@ body {
   .burger-menu {
     top: 15px;
     right: 15px;
+    padding: -50px;
   }
 
   .mobile-nav-menu {
@@ -713,11 +713,21 @@ body {
     padding: 10px 5px;
   }
 
-  .home_page-logo { padding: 12px 14px; }
+  .home_page-logo {
+    padding: 10px 1px;
+    margin-right: 50px;
+    margin-bottom: 40px;
+  }
 
-  .left-logo img { width: 44px; }
+  .left-logo img {
+    width: 50px; 
+    margin-top: 10px; 
+  }
 
-  .logo-text h3 { font-size: 18px; }
+  .logo-text h3 {
+    font-size: 20px;
+    margin-top: 10px;
+  }
 
   .logo-text h5 {
     font-size: 10px;
@@ -725,10 +735,14 @@ body {
 
   .right-logo h5 {
     font-size: 9px;
+    margin-left: 50px;
+    margin-top: -5px;
   }
 
-  .home_page-title { margin-top: 18vh; padding: 0 20px; }
-  .home_page-title { text-align: center; margin-top: 10vh; }
+  .home_page-title {
+    margin-top: 1vh;
+    padding: 0 20px;
+  }
 
   .home_page-title h1 { font-size: 30px; line-height: 1.25; }
 
