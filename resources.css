@@ -705,11 +705,7 @@ body {
     gap: 10px;
   }
 
-  .left-logo {
-    justify-content: flex-start;
-    align-items: center;
-  }
-
+  .left-logo { align-items: center; }
   .left-logo img { width: 56px; }
 
   .logo-text {
@@ -720,12 +716,9 @@ body {
     text-align: center;
   }
   .logo-text h3 { font-size: 24px; }
-
   .logo-text h5 { font-size: 12px; }
 
   .right-logo { display: none; }
-
-  .right-logo h5 { font-size: 12px; text-align: center; }
 
   .home_page-title { margin-top: 18vh; }
 
@@ -861,11 +854,19 @@ body {
     font-size: 9px;
   }
 
-  .home_page-title { text-align: center; margin-top: 10vh; padding: 0 20px; }
+  .home_page-title {
+    margin-top: 18vh;
+    padding: 0 20px;
+    padding-top: 10px;
+  }
 
   .home_page-title h1 { font-size: 30px; line-height: 1.25; }
 
   .home_page-title h5 { font-size: 14px; }
+
+  /* Force one-liner for university name on mobile */
+  .logo-text h3 {
+    white-space: nowrap;
 
   /* Review Page Mobile */
   .rp_container {
