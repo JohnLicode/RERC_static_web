@@ -867,7 +867,7 @@ body {
   /* Force one-liner for university name on mobile */
   .logo-text h3 {
     white-space: nowrap;
-
+  }
   /* Review Page Mobile */
   .rp_container {
     max-width: 95vw;
@@ -1089,7 +1089,7 @@ body {
 
 .footer {
   position: relative;
-  background: url("img/psu_bg.jpg") no-repeat center center/cover;
+  background: url("../img/psu_bg.jpg") no-repeat center center/cover;
   min-height: 35vh;
   color: white;
   text-align: center;
