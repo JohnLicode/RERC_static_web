@@ -446,11 +446,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // FIXED MOUSE DRAG FUNCTIONALITY
   if (lightboxImg) {
+    let carouselHasDragged = false;
+    
     lightboxImg.addEventListener("mousedown", e => {
       if (e.button !== 0 || scale <= 1) return; // Only left click and when zoomed
       
       e.preventDefault();
       isDragging = true;
+      carouselHasDragged = false; // Reset drag flag
       
       // Store the starting mouse position and current image position
       dragStartX = e.clientX;
@@ -472,6 +475,11 @@ document.addEventListener("DOMContentLoaded", function () {
       // Calculate the distance moved
       const deltaX = e.clientX - dragStartX;
       const deltaY = e.clientY - dragStartY;
+      
+      // Mark as dragged if moved more than 3 pixels
+      if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
+        carouselHasDragged = true;
+      }
       
       // Update origin based on initial position + delta
       originX = dragOriginX + deltaX;
@@ -496,6 +504,19 @@ document.addEventListener("DOMContentLoaded", function () {
         lightboxImg.style.cursor = scale > 1 ? "grab" : "default";
         document.body.style.userSelect = "";
       }
+    });
+
+    // Click to zoom (when not dragging) for carousel
+    lightboxImg.addEventListener("click", e => {
+      if (!carouselHasDragged && lightbox && lightbox.style.display === "flex") {
+        e.preventDefault();
+        if (scale === 1) {
+          zoom(1, e.clientX, e.clientY); // Zoom to 2x
+        } else {
+          resetImageTransform(); // Reset to 1x
+        }
+      }
+      carouselHasDragged = false; // Reset after click
     });
 
     // TOUCH DRAG FOR MOBILE
@@ -1239,4 +1260,333 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Requirements Image Lightbox Functionality
+    const requirementsImg = document.getElementById('requirementsImage');
+    const clickableWrapper = document.querySelector('.clickable-image-wrapper');
+    const requirementsLightbox = document.getElementById('requirementsLightbox');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxRequirementsImg = document.getElementById('lightboxRequirementsImg');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Requirements lightbox zoom and pan variables
+    let reqScale = 1;
+    let reqOriginX = 0;
+    let reqOriginY = 0;
+    let reqIsDragging = false;
+    let reqDragStartX = 0;
+    let reqDragStartY = 0;
+    let reqDragOriginX = 0;
+    let reqDragOriginY = 0;
+
+    function reqUpdateTransform() {
+        if (lightboxRequirementsImg) {
+            lightboxRequirementsImg.style.transform = `translate(${reqOriginX}px, ${reqOriginY}px) scale(${reqScale})`;
+        }
+    }
+
+    function reqLimitPan() {
+        if (reqScale <= 1) {
+            reqOriginX = 0;
+            reqOriginY = 0;
+            return;
+        }
+        
+        if (!requirementsLightbox || !lightboxRequirementsImg) return;
+        
+        const lbRect = requirementsLightbox.getBoundingClientRect();
+        const imgRect = lightboxRequirementsImg.getBoundingClientRect();
+        
+        // Calculate the scaled dimensions
+        const scaledWidth = lightboxRequirementsImg.naturalWidth * reqScale;
+        const scaledHeight = lightboxRequirementsImg.naturalHeight * reqScale;
+        
+        // Calculate max pan distances
+        const maxPanX = Math.max((scaledWidth - lbRect.width) / 2, 0);
+        const maxPanY = Math.max((scaledHeight - lbRect.height) / 2, 0);
+        
+        reqOriginX = Math.min(Math.max(reqOriginX, -maxPanX), maxPanX);
+        reqOriginY = Math.min(Math.max(reqOriginY, -maxPanY), maxPanY);
+    }
+
+    function reqResetImageTransform() {
+        reqScale = 1;
+        reqOriginX = 0;
+        reqOriginY = 0;
+        reqIsDragging = false;
+        reqUpdateTransform();
+        if (lightboxRequirementsImg) lightboxRequirementsImg.style.cursor = reqScale > 1 ? "grab" : "zoom-in";
+    }
+
+    function reqZoom(delta, centerX, centerY) {
+        if (!lightboxRequirementsImg) return;
+        
+        const prevScale = reqScale;
+        reqScale += delta;
+        reqScale = Math.min(Math.max(reqScale, 1), 4); // Allow up to 4x zoom
+
+        if (reqScale > 1) {
+            // Adjust origin to zoom toward the cursor/center point
+            const rect = lightboxRequirementsImg.getBoundingClientRect();
+            const imgCenterX = rect.left + rect.width / 2;
+            const imgCenterY = rect.top + rect.height / 2;
+            
+            reqOriginX = (reqOriginX - (centerX - imgCenterX)) * (reqScale / prevScale) + (centerX - imgCenterX);
+            reqOriginY = (reqOriginY - (centerY - imgCenterY)) * (reqScale / prevScale) + (centerY - imgCenterY);
+        } else {
+            reqOriginX = 0;
+            reqOriginY = 0;
+        }
+
+        reqLimitPan();
+        reqUpdateTransform();
+        lightboxRequirementsImg.style.cursor = reqScale > 1 ? "grab" : "zoom-in";
+    }
+
+    console.log('Requirements elements:', {
+        requirementsImg,
+        clickableWrapper,
+        requirementsLightbox,
+        lightboxClose,
+        lightboxRequirementsImg
+    });
+
+    if (clickableWrapper && requirementsLightbox) {
+        // Touch handling variables
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        let touchMoved = false;
+
+        // Touch start handler
+        clickableWrapper.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+            touchStartTime = Date.now();
+            touchMoved = false;
+        }, { passive: true });
+
+        // Touch move handler - detect if user is scrolling
+        clickableWrapper.addEventListener('touchmove', function(e) {
+            if (Math.abs(e.touches[0].clientY - touchStartY) > 10) {
+                touchMoved = true; // User is scrolling
+            }
+        }, { passive: true });
+
+        // Enhanced click handler that respects touch interactions
+        clickableWrapper.addEventListener('click', function(e) {
+            // Check if this was a touch event that involved scrolling
+            const timeSinceTouch = Date.now() - touchStartTime;
+            if (timeSinceTouch < 300 && touchMoved) {
+                // This was likely a scroll gesture, ignore the click
+                return;
+            }
+
+            e.preventDefault();
+            console.log('Clickable wrapper clicked');
+            requirementsLightbox.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            if (progressBar) progressBar.style.display = 'none';
+            reqResetImageTransform();
+        });
+
+        // Also make the image itself clickable as backup
+        if (requirementsImg) {
+            requirementsImg.addEventListener('click', function(e) {
+                // Same touch handling for direct image clicks
+                const timeSinceTouch = Date.now() - touchStartTime;
+                if (timeSinceTouch < 300 && touchMoved) {
+                    return;
+                }
+
+                e.preventDefault();
+                console.log('Image clicked directly');
+                requirementsLightbox.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                if (progressBar) progressBar.style.display = 'none';
+                reqResetImageTransform();
+            });
+        }
+
+        // Close lightbox when X is clicked
+        if (lightboxClose) {
+            lightboxClose.addEventListener('click', function() {
+                console.log('Close button clicked');
+                requirementsLightbox.style.display = 'none';
+                document.body.style.overflow = '';
+                if (progressBar) progressBar.style.display = 'block';
+                reqResetImageTransform();
+            });
+        }
+
+        // Close lightbox when clicking outside the image
+        requirementsLightbox.addEventListener('click', function(e) {
+            if (e.target === requirementsLightbox) {
+                console.log('Clicked outside image');
+                requirementsLightbox.style.display = 'none';
+                document.body.style.overflow = '';
+                if (progressBar) progressBar.style.display = 'block';
+                reqResetImageTransform();
+            }
+        });
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && requirementsLightbox.style.display === 'block') {
+                console.log('Escape key pressed');
+                requirementsLightbox.style.display = 'none';
+                document.body.style.overflow = '';
+                if (progressBar) progressBar.style.display = 'block';
+                reqResetImageTransform();
+            }
+        });
+
+        // Zoom and pan functionality for requirements lightbox
+        if (lightboxRequirementsImg) {
+            // Mouse wheel zoom
+            requirementsLightbox.addEventListener("wheel", e => {
+                if (requirementsLightbox.style.display === 'block') {
+                    e.preventDefault();
+                    const delta = e.deltaY < 0 ? 0.2 : -0.2;
+                    reqZoom(delta, e.clientX, e.clientY);
+                }
+            }, { passive: false });
+
+            // Keyboard zoom (Ctrl + / Ctrl -)
+            document.addEventListener("keydown", e => {
+                if (!requirementsLightbox || requirementsLightbox.style.display !== "block") return;
+                if (!e.ctrlKey) return;
+                
+                e.preventDefault();
+                const rect = lightboxRequirementsImg.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                if (e.key === "=" || e.key === "+") reqZoom(0.2, centerX, centerY);
+                else if (e.key === "-") reqZoom(-0.2, centerX, centerY);
+            });
+
+            // Mouse drag functionality
+            let hasDragged = false;
+            
+            lightboxRequirementsImg.addEventListener("mousedown", e => {
+                if (e.button !== 0 || reqScale <= 1) return; // Only left click and when zoomed
+                
+                e.preventDefault();
+                reqIsDragging = true;
+                hasDragged = false; // Reset drag flag
+                
+                reqDragStartX = e.clientX;
+                reqDragStartY = e.clientY;
+                reqDragOriginX = reqOriginX;
+                reqDragOriginY = reqOriginY;
+                
+                lightboxRequirementsImg.style.cursor = "grabbing";
+                document.body.style.userSelect = "none";
+            });
+
+            document.addEventListener("mousemove", e => {
+                if (!reqIsDragging) return;
+                
+                e.preventDefault();
+                
+                const deltaX = e.clientX - reqDragStartX;
+                const deltaY = e.clientY - reqDragStartY;
+                
+                // Mark as dragged if moved more than 3 pixels
+                if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
+                    hasDragged = true;
+                }
+                
+                reqOriginX = reqDragOriginX + deltaX;
+                reqOriginY = reqDragOriginY + deltaY;
+                
+                reqLimitPan();
+                reqUpdateTransform();
+            });
+
+            document.addEventListener("mouseup", e => {
+                if (reqIsDragging) {
+                    reqIsDragging = false;
+                    lightboxRequirementsImg.style.cursor = reqScale > 1 ? "grab" : "zoom-in";
+                    document.body.style.userSelect = "";
+                }
+            });
+
+            // Click to zoom (when not dragging)
+            lightboxRequirementsImg.addEventListener("click", e => {
+                if (!hasDragged && requirementsLightbox.style.display === 'block') {
+                    e.preventDefault();
+                    if (reqScale === 1) {
+                        reqZoom(1, e.clientX, e.clientY); // Zoom to 2x
+                    } else {
+                        reqResetImageTransform(); // Reset to 1x
+                    }
+                }
+                hasDragged = false; // Reset after click
+            });
+
+            // Double-tap to zoom on mobile
+            let lastTap = 0;
+            lightboxRequirementsImg.addEventListener("touchend", e => {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                
+                if (tapLength < 500 && tapLength > 0 && e.changedTouches.length === 1) {
+                    e.preventDefault();
+                    const touch = e.changedTouches[0];
+                    if (reqScale === 1) {
+                        reqZoom(1, touch.clientX, touch.clientY); // Zoom to 2x
+                    } else {
+                        reqResetImageTransform(); // Reset to 1x
+                    }
+                }
+                
+                lastTap = currentTime;
+            });
+
+            // Touch drag for mobile
+            let touchDragStartX = 0;
+            let touchDragStartY = 0;
+            let touchDragOriginX = 0;
+            let touchDragOriginY = 0;
+            let isTouchDragging = false;
+
+            lightboxRequirementsImg.addEventListener("touchstart", e => {
+                if (e.touches.length === 1 && reqScale > 1) {
+                    isTouchDragging = true;
+                    touchDragStartX = e.touches[0].clientX;
+                    touchDragStartY = e.touches[0].clientY;
+                    touchDragOriginX = reqOriginX;
+                    touchDragOriginY = reqOriginY;
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            lightboxRequirementsImg.addEventListener("touchmove", e => {
+                if (isTouchDragging && e.touches.length === 1) {
+                    e.preventDefault();
+                    
+                    const deltaX = e.touches[0].clientX - touchDragStartX;
+                    const deltaY = e.touches[0].clientY - touchDragStartY;
+                    
+                    reqOriginX = touchDragOriginX + deltaX;
+                    reqOriginY = touchDragOriginY + deltaY;
+                    
+                    reqLimitPan();
+                    reqUpdateTransform();
+                }
+            }, { passive: false });
+
+            lightboxRequirementsImg.addEventListener("touchend", e => {
+                isTouchDragging = false;
+            });
+
+            // Initialize cursor style
+            lightboxRequirementsImg.style.cursor = "zoom-in";
+        }
+    } else {
+        console.error('Required elements not found:', {
+            clickableWrapper: !!clickableWrapper,
+            requirementsLightbox: !!requirementsLightbox
+        });
+    }
 });
