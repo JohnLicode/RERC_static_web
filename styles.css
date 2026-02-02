@@ -1724,6 +1724,7 @@ body.no-scroll {
 .login-btn {
   background: transparent;
   color: white;
+  text-decoration: none;
   border: 2px solid #ffffff;
   padding: 25px 45px;
   font-size: 16px;
@@ -1742,12 +1743,14 @@ body.no-scroll {
 .login-btn:hover {
   background: #ff8400;
   color: #ffffff;
+  text-decoration: none;
   /* Removed transform: translateY(-2px) to keep button fixed */
   box-shadow: 0 6px 20px rgba(255, 132, 0, 0.3);
   border: 2px solid #ff8400;
 }
 
 .login-btn:active {
+  text-decoration: none;
   /* Removed transform: translateY(0) to keep button fixed */
   box-shadow: 0 4px 15px rgba(255, 132, 0, 0.2);
 }
