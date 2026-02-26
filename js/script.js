@@ -95,7 +95,71 @@ document.addEventListener("DOMContentLoaded", function () {
     setActiveForHref(`#${initialId}`);
   })();
 
-  // FIXED: Highlight nav item on scroll + move nav + back to top button
+  // Navbar stick-to-top behavior with spacer (smooth, no content snap)
+  let navSpacer = null;
+  let navStartY = 0;
+  let navTicking = false;
+
+  function navIsMobileHidden() {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  function navSetStuck(shouldStick) {
+    if (!nav || !navSpacer) return;
+    if (shouldStick) {
+      if (!nav.classList.contains('is-stuck')) {
+        nav.classList.add('is-stuck');
+      }
+      navSpacer.style.height = `${nav.offsetHeight}px`;
+    } else {
+      nav.classList.remove('is-stuck');
+      navSpacer.style.height = '0px';
+    }
+  }
+
+  function navRecalculateStart() {
+    if (!nav) return;
+    navSetStuck(false);
+    navStartY = nav.getBoundingClientRect().top + window.scrollY;
+  }
+
+  function navUpdateStickyState() {
+    if (!nav || !navSpacer) return;
+    if (navIsMobileHidden()) {
+      navSetStuck(false);
+      return;
+    }
+    navSetStuck(window.scrollY >= navStartY);
+  }
+
+  if (nav) {
+    navSpacer = document.createElement('div');
+    navSpacer.className = 'bottom-nav-spacer';
+    nav.parentNode.insertBefore(navSpacer, nav);
+    navRecalculateStart();
+    navUpdateStickyState();
+
+    window.addEventListener('scroll', () => {
+      if (navTicking) return;
+      navTicking = true;
+      requestAnimationFrame(() => {
+        navUpdateStickyState();
+        navTicking = false;
+      });
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      navRecalculateStart();
+      navUpdateStickyState();
+    });
+
+    window.addEventListener('load', () => {
+      navRecalculateStart();
+      navUpdateStickyState();
+    });
+  }
+
+  // Highlight nav item on scroll + back-to-top button
   window.addEventListener("scroll", () => {
     let current = "";
     // Ignore #home on non-index pages so main section is highlighted first
@@ -111,13 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!current) current = isIndexPage ? 'home' : pageMainSectionId;
     setActiveForHref(`#${current}`);
     
-    // Move nav from bottom to top once you scroll past hero
-    if (window.scrollY > window.innerHeight * 0.5) {
-      nav.classList.add("move-to-top");
-    } else {
-      nav.classList.remove("move-to-top");
-    }
-
     // ✅ FIXED: Back to top button with lower threshold and safety check
     if (backToTopButton) {
       // Changed from 300px to 100px for easier testing
@@ -140,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Background Slideshow
-  const bgImages = ["assets/images/psu_bg2.png", "assets/images/psu_bg.jpg", "assets/images/psu_bg3.jpg"];
+  const bgImages = ["/assets/images/psu_bg2.png", "/assets/images/psu_bg.jpg", "/assets/images/psu_bg3.jpg"];
   let bgIndex = 0;
   const homePage = document.querySelector(".home_page");
   if (homePage) {
@@ -310,37 +367,42 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Lightbox touch swipe for navigation
+  // Lightbox touch swipe for navigation (only when not zoomed in)
   let touchStartX = 0, touchEndX = 0;
   let touchStartY = 0, touchEndY = 0;
-  
+  let lbTouchHasMoved = false; // shared flag: prevents tap-zoom from firing after a drag/swipe
+
   if (lightboxImg) {
     lightboxImg.addEventListener("touchstart", e => {
-      // Only handle single touch for navigation swipe
-      if (e.touches.length === 1) {
+      if (e.touches.length === 1 && scale <= 1) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
       }
     });
-    
+
+    // Track movement so tap-zoom doesn't fire after a swipe
+    lightboxImg.addEventListener("touchmove", e => {
+      if (e.touches.length === 1 && scale <= 1) {
+        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+        if (dx > 8 || dy > 8) lbTouchHasMoved = true;
+      }
+    });
+
     lightboxImg.addEventListener("touchend", e => {
-      if (e.changedTouches.length === 1 && !isDragging) {
+      if (e.changedTouches.length === 1 && scale <= 1 && !lbTouchHasMoved) {
         touchEndX = e.changedTouches[0].clientX;
         touchEndY = e.changedTouches[0].clientY;
-        
         const swipeDistanceX = touchStartX - touchEndX;
         const swipeDistanceY = Math.abs(touchStartY - touchEndY);
-        
-        // Only trigger navigation if horizontal swipe is dominant and significant
         if (Math.abs(swipeDistanceX) > 50 && swipeDistanceY < 100) {
+          lbTouchHasMoved = true; // block tap-zoom in the second touchend listener
           if (swipeDistanceX > 0) showLightboxSlide(lightboxIndex + 1);
           else showLightboxSlide(lightboxIndex - 1);
         }
       }
-      touchStartX = 0; 
-      touchEndX = 0;
-      touchStartY = 0;
-      touchEndY = 0;
+      touchStartX = 0; touchEndX = 0;
+      touchStartY = 0; touchEndY = 0;
     });
   }
 
@@ -419,29 +481,27 @@ document.addEventListener("DOMContentLoaded", function () {
     lightboxImg.style.cursor = scale > 1 ? "grab" : "default";
   }
 
-  // Mouse wheel zoom
+  // Mouse wheel zoom (no Ctrl required)
   if (lightbox) {
     lightbox.addEventListener("wheel", e => {
-      if (e.ctrlKey) {
-        e.preventDefault();
-        const delta = e.deltaY < 0 ? 0.2 : -0.2;
-        zoom(delta, e.clientX, e.clientY);
-      }
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.2 : -0.2;
+      zoom(delta, e.clientX, e.clientY);
     }, { passive: false });
   }
 
-  // Keyboard zoom
+  // Keyboard zoom (no Ctrl required)
   document.addEventListener("keydown", e => {
     if (!lightbox || lightbox.style.display !== "flex") return;
-    if (!e.ctrlKey) return;
-    
-    e.preventDefault();
-    const rect = lightboxImg.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    if (e.key === "=" || e.key === "+") zoom(0.2, centerX, centerY);
-    else if (e.key === "-") zoom(-0.2, centerX, centerY);
+    if (e.key === "=" || e.key === "+") {
+      e.preventDefault();
+      const rect = lightboxImg.getBoundingClientRect();
+      zoom(0.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    } else if (e.key === "-") {
+      e.preventDefault();
+      const rect = lightboxImg.getBoundingClientRect();
+      zoom(-0.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    }
   });
 
   // FIXED MOUSE DRAG FUNCTIONALITY
@@ -519,60 +579,100 @@ document.addEventListener("DOMContentLoaded", function () {
       carouselHasDragged = false; // Reset after click
     });
 
-    // TOUCH DRAG FOR MOBILE
-    let touchDragStartX = 0;
-    let touchDragStartY = 0;
-    let touchDragOriginX = 0;
-    let touchDragOriginY = 0;
+    // MOBILE: pan (1-finger drag), pinch-to-zoom (2-finger), single-tap toggle zoom
+    let touchDragStartX = 0, touchDragStartY = 0;
+    let touchDragOriginX = 0, touchDragOriginY = 0;
     let isTouchDragging = false;
+    let lbPinching = false;
+    let lbPinchStartDist = 0, lbPinchStartScale = 1;
+
+    function getLbPinchDist(touches) {
+      const dx = touches[0].clientX - touches[1].clientX;
+      const dy = touches[0].clientY - touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
 
     lightboxImg.addEventListener("touchstart", e => {
-      if (e.touches.length === 1 && scale > 1) {
-        isTouchDragging = true;
-        touchDragStartX = e.touches[0].clientX;
-        touchDragStartY = e.touches[0].clientY;
-        touchDragOriginX = originX;
-        touchDragOriginY = originY;
+      if (e.touches.length === 2) {
+        // Start pinch — cancel any single-finger drag
+        lbPinching = true;
+        isTouchDragging = false;
+        lbTouchHasMoved = false;
+        lbPinchStartDist = getLbPinchDist(e.touches);
+        lbPinchStartScale = scale;
         e.preventDefault();
+      } else if (e.touches.length === 1) {
+        lbPinching = false;
+        lbTouchHasMoved = false;
+        if (scale > 1) {
+          // Start pan drag
+          isTouchDragging = true;
+          touchDragStartX = e.touches[0].clientX;
+          touchDragStartY = e.touches[0].clientY;
+          touchDragOriginX = originX;
+          touchDragOriginY = originY;
+          e.preventDefault();
+        } else {
+          isTouchDragging = false;
+        }
       }
     }, { passive: false });
 
     lightboxImg.addEventListener("touchmove", e => {
-      if (isTouchDragging && e.touches.length === 1) {
+      if (lbPinching && e.touches.length === 2) {
         e.preventDefault();
-        
-        const deltaX = e.touches[0].clientX - touchDragStartX;
-        const deltaY = e.touches[0].clientY - touchDragStartY;
-        
-        originX = touchDragOriginX + deltaX;
-        originY = touchDragOriginY + deltaY;
-        
+        const currentDist = getLbPinchDist(e.touches);
+        const ratio = currentDist / lbPinchStartDist;
+        const newScale = Math.min(Math.max(lbPinchStartScale * ratio, 1), 4);
+        const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        const prevScale = scale;
+        scale = newScale;
+        if (scale > 1) {
+          const rect = lightboxImg.getBoundingClientRect();
+          const imgCX = rect.left + rect.width / 2;
+          const imgCY = rect.top  + rect.height / 2;
+          originX = (originX - (cx - imgCX)) * (scale / prevScale) + (cx - imgCX);
+          originY = (originY - (cy - imgCY)) * (scale / prevScale) + (cy - imgCY);
+        } else {
+          originX = 0; originY = 0;
+        }
+        limitPan();
+        updateTransform();
+        lightboxImg.style.cursor = scale > 1 ? "grab" : "default";
+        lbTouchHasMoved = true;
+      } else if (isTouchDragging && e.touches.length === 1 && scale > 1) {
+        e.preventDefault();
+        const dx = e.touches[0].clientX - touchDragStartX;
+        const dy = e.touches[0].clientY - touchDragStartY;
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) lbTouchHasMoved = true;
+        originX = touchDragOriginX + dx;
+        originY = touchDragOriginY + dy;
         limitPan();
         updateTransform();
       }
     }, { passive: false });
 
     lightboxImg.addEventListener("touchend", e => {
-      isTouchDragging = false;
-    });
-
-    // Double-tap to zoom on mobile
-    let lastTap = 0;
-    lightboxImg.addEventListener("touchend", e => {
-      const currentTime = new Date().getTime();
-      const tapLength = currentTime - lastTap;
-      
-      if (tapLength < 500 && tapLength > 0 && e.changedTouches.length === 1) {
-        e.preventDefault();
+      if (lbPinching) {
+        if (e.touches.length < 2) lbPinching = false;
+        lbTouchHasMoved = true; // prevent accidental tap-zoom right after pinch
+        return;
+      }
+      if (isTouchDragging) {
+        isTouchDragging = false;
+        if (lbTouchHasMoved) { lbTouchHasMoved = false; return; } // was a real drag
+      }
+      // Single tap: toggle zoom (only when no movement happened)
+      if (!lbTouchHasMoved && e.changedTouches.length === 1) {
         const touch = e.changedTouches[0];
         if (scale === 1) {
-          zoom(1, touch.clientX, touch.clientY); // Zoom to 2x
+          zoom(1, touch.clientX, touch.clientY);
         } else {
-          resetImageTransform(); // Reset to 1x
+          resetImageTransform();
         }
       }
-      
-      lastTap = currentTime;
+      lbTouchHasMoved = false;
     });
 
     // Initialize cursor style
@@ -590,6 +690,521 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
+  // Campus Map footer modal — matches lightbox style, transform-based zoom
+  (function setupCampusMapModal() {
+    const campusMapLinks = Array.from(document.querySelectorAll('.footer-links a'))
+      .filter(link => link.textContent && link.textContent.trim().toLowerCase() === 'campus map');
+    if (campusMapLinks.length === 0) return;
+
+    const cmSlides = [
+      { src: '/assets/images/PSU-Campuses-Map.png', alt: 'Palawan State University Campus Locations' }
+    ];
+
+    if (!document.getElementById('cm-modal-style')) {
+      const s = document.createElement('style');
+      s.id = 'cm-modal-style';
+      s.textContent = `
+        .cm-modal {
+          display: none;
+          position: fixed;
+          top: 0; left: 0;
+          width: 100vw; height: 100vh;
+          background: rgba(0,0,0,0.9);
+          justify-content: center;
+          align-items: center;
+          z-index: 10050;
+        }
+        .cm-modal.open { display: flex; }
+        .cm-close {
+          position: absolute;
+          top: 20px; right: 30px;
+          color: #fff; font-size: 32px;
+          cursor: pointer; z-index: 10051;
+          background: none; border: none;
+          line-height: 1; padding: 0;
+        }
+        .cm-close:hover { color: #ccc; }
+        .cm-image {
+          max-width: 90%; max-height: 80%;
+          border-radius: 8px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+          cursor: default;
+          -webkit-user-select: none; user-select: none;
+          -webkit-user-drag: none;
+          transition: transform 0.1s ease-out;
+        }
+        .cm-dots {
+          position: absolute; bottom: 20px;
+          left: 50%; transform: translateX(-50%);
+          display: flex; gap: 8px; z-index: 10051;
+        }
+        .cm-dot {
+          width: 8px; height: 8px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.4);
+          cursor: pointer; transition: background 0.2s;
+        }
+        .cm-dot.active { background: #fff; }
+      `;
+      document.head.appendChild(s);
+    }
+
+    const modal = document.createElement('div');
+    modal.className = 'cm-modal';
+    modal.id = 'campusMapModal';
+    modal.innerHTML = `
+      <button class="cm-close" aria-label="Close">&times;</button>
+      <img class="cm-image" src="" alt="">
+      <div class="cm-dots"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const cmCloseBtn = modal.querySelector('.cm-close');
+    const cmImg      = modal.querySelector('.cm-image');
+    const cmDotsEl   = modal.querySelector('.cm-dots');
+
+    let cmIndex = 0;
+    let cmScale = 1, cmOriginX = 0, cmOriginY = 0;
+    let cmDragging = false, cmDragMoved = false;
+    let cmDragSX = 0, cmDragSY = 0, cmDragOX = 0, cmDragOY = 0;
+
+    cmSlides.forEach((_, idx) => {
+      const dot = document.createElement('span');
+      dot.className = 'cm-dot';
+      dot.addEventListener('click', () => { cmIndex = idx; cmShowSlide(); });
+      cmDotsEl.appendChild(dot);
+    });
+
+    function cmApplyTransform() {
+      cmImg.style.transform = `translate(${cmOriginX}px,${cmOriginY}px) scale(${cmScale})`;
+    }
+
+    function cmLimitPan() {
+      if (cmScale <= 1) { cmOriginX = 0; cmOriginY = 0; return; }
+      const mR = modal.getBoundingClientRect();
+      const maxX = Math.max((cmImg.naturalWidth  * cmScale - mR.width)  / 2, 0);
+      const maxY = Math.max((cmImg.naturalHeight * cmScale - mR.height) / 2, 0);
+      cmOriginX = Math.min(Math.max(cmOriginX, -maxX), maxX);
+      cmOriginY = Math.min(Math.max(cmOriginY, -maxY), maxY);
+    }
+
+    function cmReset() {
+      cmScale = 1; cmOriginX = 0; cmOriginY = 0;
+      cmDragging = false; cmDragMoved = false;
+      cmApplyTransform();
+      cmImg.style.cursor = 'default';
+    }
+
+    function cmZoom(delta, cx, cy) {
+      const prev = cmScale;
+      cmScale = Math.min(Math.max(cmScale + delta, 1), 4);
+      if (cmScale > 1) {
+        const r = cmImg.getBoundingClientRect();
+        const icx = r.left + r.width / 2, icy = r.top + r.height / 2;
+        cmOriginX = (cmOriginX - (cx - icx)) * (cmScale / prev) + (cx - icx);
+        cmOriginY = (cmOriginY - (cy - icy)) * (cmScale / prev) + (cy - icy);
+      } else { cmOriginX = 0; cmOriginY = 0; }
+      cmLimitPan();
+      cmApplyTransform();
+      cmImg.style.cursor = cmScale > 1 ? 'grab' : 'default';
+    }
+
+    function cmShowSlide() {
+      const slide = cmSlides[cmIndex];
+      cmImg.src = slide.src;
+      cmImg.alt = slide.alt;
+      Array.from(cmDotsEl.children).forEach((d, i) => d.classList.toggle('active', i === cmIndex));
+      cmReset();
+    }
+
+    function cmOpen()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; cmShowSlide(); }
+    function cmClose() { modal.classList.remove('open'); document.body.style.overflow = ''; cmReset(); }
+
+    campusMapLinks.forEach(link => link.addEventListener('click', e => { e.preventDefault(); cmOpen(); }));
+    cmCloseBtn.addEventListener('click', cmClose);
+    modal.addEventListener('click', e => { if (e.target === modal) cmClose(); });
+
+    document.addEventListener('keydown', e => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') { cmClose(); return; }
+      if (e.key === 'ArrowLeft')  { cmIndex = Math.max(0, cmIndex - 1); cmShowSlide(); }
+      if (e.key === 'ArrowRight') { cmIndex = Math.min(cmSlides.length - 1, cmIndex + 1); cmShowSlide(); }
+      if (e.key === '+' || e.key === '=') { const r = cmImg.getBoundingClientRect(); cmZoom( 0.2, r.left+r.width/2, r.top+r.height/2); }
+      if (e.key === '-')                  { const r = cmImg.getBoundingClientRect(); cmZoom(-0.2, r.left+r.width/2, r.top+r.height/2); }
+    });
+
+    // Mouse wheel zoom (no Ctrl required)
+    modal.addEventListener('wheel', e => {
+      e.preventDefault();
+      cmZoom(e.deltaY < 0 ? 0.2 : -0.2, e.clientX, e.clientY);
+    }, { passive: false });
+
+    // Mouse: click to zoom toggle, drag to pan when zoomed
+    cmImg.addEventListener('mousedown', e => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      cmDragging = true; cmDragMoved = false;
+      cmDragSX = e.clientX; cmDragSY = e.clientY;
+      cmDragOX = cmOriginX; cmDragOY = cmOriginY;
+      cmImg.style.cursor = cmScale > 1 ? 'grabbing' : 'default';
+      document.body.style.userSelect = 'none';
+    });
+    document.addEventListener('mousemove', e => {
+      if (!cmDragging) return;
+      e.preventDefault();
+      const dx = e.clientX - cmDragSX, dy = e.clientY - cmDragSY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) cmDragMoved = true;
+      if (cmScale > 1) { cmOriginX = cmDragOX + dx; cmOriginY = cmDragOY + dy; cmLimitPan(); cmApplyTransform(); }
+    });
+    document.addEventListener('mouseup', () => {
+      if (!cmDragging) return;
+      cmDragging = false;
+      document.body.style.userSelect = '';
+      cmImg.style.cursor = cmScale > 1 ? 'grab' : 'default';
+    });
+    cmImg.addEventListener('click', e => {
+      if (cmDragMoved) { cmDragMoved = false; return; }
+      cmScale === 1 ? cmZoom(1, e.clientX, e.clientY) : cmReset();
+    });
+
+    // Mobile: pinch-to-zoom, 1-finger drag (when zoomed), single-tap toggle zoom
+    let cmTouch = { moved: false, pinching: false, pinchDist: 0, pinchScale: 1,
+                    dragging: false, sx: 0, sy: 0, ox: 0, oy: 0 };
+
+    function cmPinchDist(t) {
+      const dx = t[0].clientX-t[1].clientX, dy = t[0].clientY-t[1].clientY;
+      return Math.sqrt(dx*dx+dy*dy);
+    }
+
+    cmImg.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        cmTouch.pinching = true; cmTouch.dragging = false; cmTouch.moved = false;
+        cmTouch.pinchDist  = cmPinchDist(e.touches);
+        cmTouch.pinchScale = cmScale;
+        e.preventDefault();
+      } else if (e.touches.length === 1) {
+        cmTouch.pinching = false; cmTouch.moved = false;
+        if (cmScale > 1) {
+          cmTouch.dragging = true;
+          cmTouch.sx = e.touches[0].clientX; cmTouch.sy = e.touches[0].clientY;
+          cmTouch.ox = cmOriginX; cmTouch.oy = cmOriginY;
+          e.preventDefault();
+        } else { cmTouch.dragging = false; }
+      }
+    }, { passive: false });
+
+    cmImg.addEventListener('touchmove', e => {
+      if (cmTouch.pinching && e.touches.length === 2) {
+        e.preventDefault();
+        const dist  = cmPinchDist(e.touches);
+        const ratio = dist / cmTouch.pinchDist;
+        const newSc = Math.min(Math.max(cmTouch.pinchScale * ratio, 1), 4);
+        const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        const prev = cmScale; cmScale = newSc;
+        if (cmScale > 1) {
+          const r = cmImg.getBoundingClientRect();
+          const icx = r.left+r.width/2, icy = r.top+r.height/2;
+          cmOriginX = (cmOriginX-(cx-icx))*(cmScale/prev)+(cx-icx);
+          cmOriginY = (cmOriginY-(cy-icy))*(cmScale/prev)+(cy-icy);
+        } else { cmOriginX = 0; cmOriginY = 0; }
+        cmLimitPan(); cmApplyTransform();
+        cmImg.style.cursor = cmScale > 1 ? 'grab' : 'default';
+        cmTouch.moved = true;
+      } else if (cmTouch.dragging && e.touches.length === 1 && cmScale > 1) {
+        e.preventDefault();
+        const dx = e.touches[0].clientX - cmTouch.sx;
+        const dy = e.touches[0].clientY - cmTouch.sy;
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) cmTouch.moved = true;
+        cmOriginX = cmTouch.ox + dx; cmOriginY = cmTouch.oy + dy;
+        cmLimitPan(); cmApplyTransform();
+      }
+    }, { passive: false });
+
+    cmImg.addEventListener('touchend', e => {
+      if (cmTouch.pinching) {
+        if (e.touches.length < 2) cmTouch.pinching = false;
+        cmTouch.moved = true; return; // block accidental tap-zoom after pinch
+      }
+      if (cmTouch.dragging) {
+        cmTouch.dragging = false;
+        if (cmTouch.moved) { cmTouch.moved = false; return; } // real drag — no tap
+      }
+      // Single tap = toggle zoom
+      if (!cmTouch.moved && e.changedTouches.length === 1) {
+        const t = e.changedTouches[0];
+        cmScale === 1 ? cmZoom(1, t.clientX, t.clientY) : cmReset();
+      }
+      cmTouch.moved = false;
+    });
+
+    cmShowSlide();
+  })();
+
+  // ── Privacy Policy & Terms & Conditions footer modals ──
+  (function setupLegalModals() {
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const legalContent = {
+      'privacy policy': {
+        title: 'Privacy Policy (RERC)',
+        body: `
+          <p class="legal-date">Last updated: ${formattedDate}</p>
+          <p>The Research Ethics Review Committee (RERC) is committed to protecting the privacy and confidentiality of its users.</p>
+
+          <h3>Information We Collect</h3>
+          <p>We may collect the following information when you use the RERC system:</p>
+          <ul>
+            <li>Personal information (such as name, email address, institutional affiliation)</li>
+            <li>Login credentials</li>
+            <li>Research submission details and supporting documents</li>
+            <li>System usage data for security and auditing purposes</li>
+          </ul>
+
+          <h3>How We Use Your Information</h3>
+          <p>Your information is used to:</p>
+          <ul>
+            <li>Facilitate researcher submissions and ethics review processes</li>
+            <li>Manage user authentication and role-based access (Researcher, Committee)</li>
+            <li>Communicate application status and review outcomes</li>
+            <li>Maintain system security and integrity</li>
+          </ul>
+
+          <h3>Data Protection</h3>
+          <ul>
+            <li>Access to submitted data is restricted to authorized RERC personnel only</li>
+            <li>Research data and personal information are treated as confidential</li>
+            <li>Reasonable technical and organizational measures are used to protect stored data</li>
+          </ul>
+
+          <h3>Data Sharing</h3>
+          <p>RERC does not sell or share personal data with third parties, except:</p>
+          <ul>
+            <li>When required by institutional policy</li>
+            <li>When required by law or regulatory authorities</li>
+          </ul>
+
+          <h3>User Responsibility</h3>
+          <p>Users are responsible for:</p>
+          <ul>
+            <li>Keeping their login credentials secure</li>
+            <li>Ensuring uploaded research data complies with ethical and institutional guidelines</li>
+          </ul>
+
+          <h3>Contact</h3>
+          <p>For privacy-related concerns, please contact our Facebook Page:<br>
+          📧 <a href="https://www.facebook.com/people/PSU-Research-Ethics-Review-Committee/100091248249310" target="_blank" style="color:#22c55e;">PSU-Research Ethics Review Committee</a></p>
+        `
+      },
+      'terms & conditions': {
+        title: 'Terms and Conditions (RERC)',
+        body: `
+          <p class="legal-date">Last updated: ${formattedDate}</p>
+          <p>By accessing and using the RERC system, you agree to the following terms and conditions.</p>
+
+          <h3>Use of the System</h3>
+          <ul>
+            <li>The system is intended solely for official RERC research ethics submissions and reviews</li>
+            <li>Users must provide accurate, truthful, and complete information</li>
+            <li>Unauthorized access or misuse of the system is strictly prohibited</li>
+          </ul>
+
+          <h3>User Roles</h3>
+          <ul>
+            <li>Researchers may submit applications and supporting documents</li>
+            <li>Committee Members may review, evaluate, and provide decisions on submissions</li>
+            <li>Access and actions are limited based on assigned roles</li>
+          </ul>
+
+          <h3>Intellectual Property</h3>
+          <ul>
+            <li>Submitted research materials remain the intellectual property of the researcher</li>
+            <li>RERC reserves the right to store and process submissions for review and record-keeping purposes</li>
+          </ul>
+
+          <h3>Confidentiality</h3>
+          <p>All users must:</p>
+          <ul>
+            <li>Maintain confidentiality of research materials and review discussions</li>
+            <li>Not disclose sensitive or restricted information obtained through the system</li>
+          </ul>
+
+          <h3>System Availability</h3>
+          <ul>
+            <li>RERC does not guarantee uninterrupted access</li>
+            <li>The system may be temporarily unavailable due to maintenance or updates</li>
+          </ul>
+
+          <h3>Limitation of Liability</h3>
+          <p>RERC is not liable for:</p>
+          <ul>
+            <li>Data loss caused by user error</li>
+            <li>Delays due to system downtime or external factors</li>
+          </ul>
+
+          <h3>Changes to Terms</h3>
+          <p>RERC may update these terms at any time. Continued use of the system indicates acceptance of the updated terms.</p>
+        `
+      }
+    };
+
+    // Inject styles
+    if (!document.getElementById('legal-modal-style')) {
+      const s = document.createElement('style');
+      s.id = 'legal-modal-style';
+      s.textContent = `
+        .legal-modal-overlay {
+          display: none;
+          position: fixed;
+          top: 0; left: 0;
+          width: 100vw; height: 100vh;
+          background: rgba(0,0,0,0.85);
+          z-index: 10060;
+          justify-content: center;
+          align-items: center;
+          overflow-y: auto;
+        }
+        .legal-modal-overlay.open { display: flex; }
+        .legal-modal-box {
+          background: #fff;
+          border-radius: 12px;
+          width: 92%;
+          max-width: 680px;
+          max-height: 85vh;
+          overflow-y: auto;
+          padding: 2.5rem 2rem 2rem;
+          position: relative;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+          animation: legalFadeIn 0.25s ease;
+        }
+        @keyframes legalFadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .legal-modal-close {
+          position: absolute;
+          top: 14px; right: 18px;
+          background: none; border: none;
+          font-size: 28px; color: #555;
+          cursor: pointer; line-height: 1;
+          padding: 4px 8px; border-radius: 4px;
+          transition: background 0.2s, color 0.2s;
+        }
+        .legal-modal-close:hover { background: #f0f0f0; color: #111; }
+        .legal-modal-box h2 {
+          margin: 0 0 0.3rem;
+          font-size: 1.5rem;
+          color: #1a3d2f;
+          font-weight: 700;
+          padding-right: 40px;
+        }
+        .legal-modal-box .legal-date {
+          color: #888;
+          font-size: 0.88rem;
+          margin: 0 0 1.2rem;
+          font-style: italic;
+        }
+        .legal-modal-box h3 {
+          margin: 1.4rem 0 0.5rem;
+          font-size: 1.08rem;
+          color: #1a3d2f;
+          font-weight: 600;
+        }
+        .legal-modal-box p {
+          margin: 0 0 0.7rem;
+          font-size: 0.95rem;
+          line-height: 1.65;
+          color: #333;
+        }
+        .legal-modal-box ul {
+          margin: 0 0 0.8rem 1.2rem;
+          padding: 0;
+          list-style: disc;
+        }
+        .legal-modal-box li {
+          font-size: 0.93rem;
+          line-height: 1.6;
+          color: #444;
+          margin-bottom: 0.3rem;
+        }
+        .legal-modal-box a {
+          color: #1a3d2f;
+          text-decoration: underline;
+        }
+        /* Scrollbar styling */
+        .legal-modal-box::-webkit-scrollbar { width: 6px; }
+        .legal-modal-box::-webkit-scrollbar-track { background: transparent; }
+        .legal-modal-box::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        .legal-modal-box::-webkit-scrollbar-thumb:hover { background: #aaa; }
+        @media (max-width: 500px) {
+          .legal-modal-box { padding: 1.5rem 1.2rem 1.2rem; }
+          .legal-modal-box h2 { font-size: 1.25rem; }
+        }
+      `;
+      document.head.appendChild(s);
+    }
+
+    // Create modal element
+    const overlay = document.createElement('div');
+    overlay.className = 'legal-modal-overlay';
+    overlay.id = 'legalModal';
+    overlay.innerHTML = `
+      <div class="legal-modal-box">
+        <button class="legal-modal-close" aria-label="Close">&times;</button>
+        <h2 class="legal-modal-title"></h2>
+        <div class="legal-modal-body"></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const box      = overlay.querySelector('.legal-modal-box');
+    const closeBtn = overlay.querySelector('.legal-modal-close');
+    const titleEl  = overlay.querySelector('.legal-modal-title');
+    const bodyEl   = overlay.querySelector('.legal-modal-body');
+
+    function openLegal(key) {
+      const data = legalContent[key];
+      if (!data) return;
+      titleEl.textContent = data.title;
+      bodyEl.innerHTML = data.body;
+      box.scrollTop = 0;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLegal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeLegal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeLegal(); });
+    document.addEventListener('keydown', e => {
+      if (overlay.classList.contains('open') && e.key === 'Escape') closeLegal();
+    });
+
+    // Hook footer links
+    document.querySelectorAll('.footer-links a').forEach(link => {
+      const text = (link.textContent || '').trim().toLowerCase();
+      if (text === 'privacy policy' || text === 'terms & conditions') {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          openLegal(text);
+        });
+      }
+    });
+
+    // Also hook login page links if present
+    document.querySelectorAll('.terms a').forEach(link => {
+      const text = (link.textContent || '').trim().toLowerCase();
+      if (text === 'privacy policy') {
+        link.addEventListener('click', e => { e.preventDefault(); openLegal('privacy policy'); });
+      } else if (text === 'terms of service') {
+        link.addEventListener('click', e => { e.preventDefault(); openLegal('terms & conditions'); });
+      }
+    });
+  })();
 
     // Forms functionality
     initializeFormsSections();
@@ -1152,7 +1767,7 @@ function createSectionElement(title, forms) {
                             <span class="form-tag">${tag}</span>
                         `).join('')}
                     </div>
-                    <a href="assets/documents/${form.filename}" class="download-btn" download>
+                    <a href="/assets/documents/${form.filename}" class="download-btn" download>
                         <i class="fas fa-download"></i> Download
                     </a>
                 </div>
