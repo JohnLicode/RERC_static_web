@@ -46,7 +46,7 @@ body {
 /* HOME PAGE container + slideshow */
 .home_page {
   width: 100%;
-  height: 50vh;
+  height: 38vh;
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -85,7 +85,6 @@ body {
 }
 
 .overlay {
-  
   position: absolute;
   top: 0;
   left: 0;
@@ -93,6 +92,8 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
 }
 
 .home_page-logo {
@@ -148,7 +149,11 @@ body {
 
 .home_page-title {
   text-align: center;
-  margin-top: 6vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .home_page-title h1 {
@@ -357,27 +362,43 @@ body {
   line-height: 1.7;
 }
 
-.mvv-block {
+/* Shared Mission / Vision layout */
+.mvv-block,
+.v-block {
   display: flex;
   margin: 0 auto;
   margin-top: 5%;
-  max-width: 65vw;
+  max-width: min(90vw, 980px);
   align-items: center;
   justify-content: center;
-  padding: 0 auto;
-  gap: 2%;
+  gap: 40px;
 }
 
-.image-m img {
-  max-width: 90%;
+.v-block {
+  flex-direction: row-reverse;
+}
+
+.image-m,
+.image-v {
+  flex: 0 1 32%;
+  min-width: 200px;
+  max-width: 340px;
+  width: 100%;
+}
+
+.image-m img,
+.image-v img {
+  width: 100%;
+  max-width: 100%;
   height: auto;
   border-radius: 8px;
-  margin: 0 auto;
+  margin: 0;
   display: block;
 }
 
 .content {
-  padding: 0% auto;
+  flex: 1 1 60%;
+  min-width: 0;
   line-height: 1.7;
 }
 
@@ -386,39 +407,6 @@ body {
 }
 
 .content p {
-  font-size: 14px;
-  text-align: justify;
-}
-
-.v-block {
-  display: flex;
-  flex-direction: row-reverse;
-  margin: 0 auto;
-  margin-top: 5%;
-  max-width: 65vw;
-  align-items: center;
-  justify-content: center;
-  padding: 0 auto;
-}
-
-.image-v img {
-  max-width: 20vw;
-  height: auto;
-  border-radius: 8px;
-  margin-left: 30px;
-}
-
-.v-block .content {
-  padding: 0% auto;
-  line-height: 1.7;
-}
-
-.v-block .content h3 {
-  font-size: 35px;
-  text-align: right;
-}
-
-.v-block .content p {
   font-size: 14px;
   text-align: justify;
 }
@@ -583,8 +571,6 @@ body {
 
   .right-logo h5 { font-size: 12px; text-align: center; }
 
-  .home_page-title { margin-top: 18vh; }
-
   .home_page-title h1 { font-size: 36px; }
 
   .home_page-title h5 { font-size: 16px; }
@@ -640,41 +626,37 @@ body {
     font-size: 28px;
   }
 
-  .mvv-block {
-    max-width: 90vw;
-    flex-direction: column;
-    gap: 20px;
-  }
-
+  .mvv-block,
   .v-block {
     max-width: 90vw;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
+    align-items: center;
   }
 
+  .image-m,
+  .image-v {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .image-m img,
   .image-v img {
-    max-width: 80%;
+    width: 100%;
+    max-width: 100%;
     height: auto;
-    margin-left: 0;
     margin: 0 auto;
     display: block;
   }
 
-  .v-block .content h3 {
-    text-align: center;
+  .content {
+    width: 100%;
   }
 
-  .mvv-block .content h3 {
+  .content h3 {
     font-size: 28px;
     text-align: center;
-  }
-  
-  .image-m img {
-    max-width: 80%;
-    height: auto;
-    margin-left: 0;
-    margin: 0 auto;
-    display: block;
   }
 
   /* Members Tablet */
@@ -735,8 +717,7 @@ body {
     margin-top: -5px;
   }
 
-  .home_page-title { margin-top: 18vh; padding: 0 20px; }
-  .home_page-title { text-align: center; margin-top: 10vh; }
+  .home_page-title { text-align: center; padding: 0 20px; }
 
   .home_page-title h1 { font-size: 30px; line-height: 1.25; }
 
@@ -788,14 +769,16 @@ body {
     max-width: 95vw;
   }
 
-  .mvv-block {
-    max-width: 95vw;
-    margin-top: 8%;
-  }
-
+  .mvv-block,
   .v-block {
     max-width: 95vw;
     margin-top: 8%;
+    gap: 20px;
+  }
+
+  .image-m,
+  .image-v {
+    max-width: 280px;
   }
 
   .content h3 {
@@ -804,20 +787,6 @@ body {
 
   .content p {
     font-size: 13px;
-  }
-
-  .image-v img {
-    max-width: 70%;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .image-m img {
-    max-width: 70%;
-    height: auto;
-    margin: 0 auto;
-    display: block;
   }
 
   /* Members Mobile */
@@ -898,18 +867,9 @@ body {
       text-align: center;
     }
 
-    .image-v img {
-      max-width: 60%;
-      height: auto;
-      margin: 0 auto;
-      display: block;
-    }
-
-    .image-m img {
-      max-width: 60%;
-      height: auto;
-      margin: 0 auto;
-      display: block;
+    .image-m,
+    .image-v {
+      max-width: 240px;
     }
 
     .member-card {
