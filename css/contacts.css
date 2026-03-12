@@ -318,7 +318,7 @@ body {
 /* Contacts Page */
 .contacts_page {
   width: 100%;
-  min-height: 150vh;
+  min-height: 120vh;
   background-color: #f6f6f6;
   padding: 50px 20px;
   align-items: center;
@@ -327,7 +327,7 @@ body {
 }
 
 .contacts-container {
-  max-width: 800px;
+  max-width: 920px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;

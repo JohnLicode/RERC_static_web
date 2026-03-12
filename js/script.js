@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function handleNavigation(targetId, clickedItem, items) {
-    items.forEach((item) => item.classList.remove("active"));
-    clickedItem.classList.add("active");
+    // ensure immediate visual feedback
+    activateNavLink(clickedItem);
 
     const targetSection = document.getElementById(targetId);
     if (targetSection) {
@@ -23,28 +23,65 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Activate a nav link (and its mobile counterpart) immediately
+  function activateNavLink(linkEl) {
+    if (!linkEl) return;
+    const href = linkEl.getAttribute('href');
+    // clear previous
+    navItems.forEach(i => {
+      i.classList.remove('active');
+      i.removeAttribute('aria-current');
+    });
+    mobileNavItems.forEach(i => {
+      i.classList.remove('active');
+      i.removeAttribute('aria-current');
+    });
+
+    // set on matching items (both nav and mobile)
+    navItems.forEach(i => {
+      if (i.getAttribute('href') === href) {
+        i.classList.add('active');
+        i.setAttribute('aria-current', 'page');
+      }
+    });
+    mobileNavItems.forEach(i => {
+      if (i.getAttribute('href') === href) {
+        i.classList.add('active');
+        i.setAttribute('aria-current', 'page');
+      }
+    });
+  }
+
   navItems.forEach((item) => {
     item.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
+      // immediate activation for feedback
+      activateNavLink(this);
       if (href.startsWith("#")) {
         e.preventDefault();
         const targetId = href.substring(1);
         handleNavigation(targetId, this, navItems);
       }
+      // for external/path links we let navigation proceed; activation remains until page unload
     });
   });
 
   mobileNavItems.forEach((item) => {
     item.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
+      // immediate activation for feedback
+      activateNavLink(this);
       if (href.startsWith("#")) {
         e.preventDefault();
         const targetId = href.substring(1);
         handleNavigation(targetId, this, mobileNavItems);
-        navItems.forEach(navItem => {
-          navItem.classList.remove("active");
-          if (navItem.getAttribute("href") === href) navItem.classList.add("active");
-        });
+      }
+      // close mobile nav after click
+      if (mobileNavMenu && mobileNavMenu.classList.contains('active')) {
+        burgerMenu.classList.remove('active');
+        mobileNavMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        body.classList.remove('mobile-nav-open');
       }
     });
   });
@@ -67,9 +104,12 @@ document.addEventListener("DOMContentLoaded", function () {
     this.classList.remove('active');
     body.classList.remove('mobile-nav-open');
   });
-  // Get current page file name
-  const currentPage = window.location.pathname.split("/").pop();
-  const isIndexPage = currentPage === '' || currentPage === 'index.html';
+  // Detect true home page path only
+  const pathname = window.location.pathname.toLowerCase();
+  const normalizedPath = pathname.endsWith('/') && pathname !== '/'
+    ? pathname.slice(0, -1)
+    : pathname;
+  const isIndexPage = normalizedPath === '' || normalizedPath === '/' || normalizedPath === '/index.html';
   const candidateMainIds = ['about','resources','contacts','updates'];
   const pageMainSectionId = candidateMainIds.find(id => document.getElementById(id)) || 'home';
 

@@ -565,6 +565,21 @@ body {
     #lightboxRequirementsImg {
         max-height: 85vh;
     }
+
+    /* Reduce header bottom spacing on small screens so it doesn't add extra gap */
+    .resources-header {
+      margin-bottom: 10px;
+    }
+
+    /* Center hero title on mobile */
+    .home_page-title {
+      text-align: center;
+    }
+
+    .home_page-title h1,
+    .home_page-title h5 {
+      text-align: center;
+    }
 }
 
 /* Extra Small Mobile */
