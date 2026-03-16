@@ -104,6 +104,179 @@ document.addEventListener("DOMContentLoaded", function () {
     this.classList.remove('active');
     body.classList.remove('mobile-nav-open');
   });
+
+  // ================================
+  // ANNOUNCEMENT BAR FUNCTIONALITY
+  // ================================
+  const announcementBar = document.getElementById('announcement-bar');
+  const announcementMessages = document.querySelectorAll('.announcement-message');
+  const announcementIndicators = document.querySelector('.announcement-indicators');
+  const announcementPrev = document.querySelector('.announcement-nav.prev');
+  const announcementNext = document.querySelector('.announcement-nav.next');
+  const announcementDetailsBtn = document.querySelector('.announcement-details-btn');
+  const announcementDropdown = document.querySelector('.announcement-dropdown');
+  
+  if (announcementBar && announcementMessages.length > 0) {
+    let currentMessageIndex = 0;
+    let autoRotateInterval = null;
+    const AUTO_ROTATE_DELAY = 5000; // 5 seconds between messages
+    const DETAILS_LABEL = 'View Details ⬇️';
+    const CLOSE_LABEL = 'Close ❌';
+    
+    // Initialize indicators
+    function initIndicators() {
+      if (!announcementIndicators) return;
+      announcementIndicators.innerHTML = '';
+      
+      if (announcementMessages.length > 1) {
+        announcementBar.classList.add('has-multiple');
+        announcementMessages.forEach((_, index) => {
+          const dot = document.createElement('span');
+          dot.className = 'announcement-indicator' + (index === 0 ? ' active' : '');
+          dot.setAttribute('data-index', index);
+          dot.setAttribute('aria-label', `Go to announcement ${index + 1}`);
+          dot.addEventListener('click', () => goToMessage(index));
+          announcementIndicators.appendChild(dot);
+        });
+      }
+    }
+    
+    // Go to specific message
+    function goToMessage(index) {
+      if (index < 0 || index >= announcementMessages.length) return;
+      
+      announcementMessages.forEach((msg, i) => {
+        msg.classList.toggle('active', i === index);
+      });
+      
+      const indicators = document.querySelectorAll('.announcement-indicator');
+      indicators.forEach((ind, i) => {
+        ind.classList.toggle('active', i === index);
+      });
+      
+      currentMessageIndex = index;
+      resetAutoRotate();
+    }
+    
+    // Go to next message
+    function nextMessage() {
+      const nextIndex = (currentMessageIndex + 1) % announcementMessages.length;
+      goToMessage(nextIndex);
+    }
+    
+    // Go to previous message
+    function prevMessage() {
+      const prevIndex = (currentMessageIndex - 1 + announcementMessages.length) % announcementMessages.length;
+      goToMessage(prevIndex);
+    }
+    
+    // Start auto-rotation
+    function startAutoRotate() {
+      if (announcementMessages.length <= 1) return;
+      stopAutoRotate();
+      autoRotateInterval = setInterval(nextMessage, AUTO_ROTATE_DELAY);
+    }
+    
+    // Stop auto-rotation
+    function stopAutoRotate() {
+      if (autoRotateInterval) {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = null;
+      }
+    }
+    
+    // Reset auto-rotation timer
+    function resetAutoRotate() {
+      stopAutoRotate();
+      startAutoRotate();
+    }
+
+    function setAnnouncementExpanded(isExpanded) {
+      announcementBar.classList.toggle('expanded', isExpanded);
+      document.body.classList.toggle('announcement-expanded', isExpanded);
+      if (announcementDetailsBtn) {
+        announcementDetailsBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        announcementDetailsBtn.setAttribute('aria-label', isExpanded ? 'Close' : 'View Details');
+        announcementDetailsBtn.textContent = isExpanded ? CLOSE_LABEL : DETAILS_LABEL;
+      }
+    }
+    
+    // Show announcement bar
+    function showAnnouncementBar() {
+      // Trigger text fade-in class after short delay
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          announcementBar.classList.add('visible');
+        });
+      });
+      
+      // Start auto-rotation for multiple messages
+      startAutoRotate();
+    }
+    
+    // Event listeners
+    if (announcementPrev) {
+      announcementPrev.addEventListener('click', prevMessage);
+    }
+    
+    if (announcementNext) {
+      announcementNext.addEventListener('click', nextMessage);
+    }
+
+    if (announcementDetailsBtn && announcementDropdown) {
+      announcementDetailsBtn.addEventListener('click', () => {
+        const isExpanded = announcementBar.classList.contains('expanded');
+        setAnnouncementExpanded(!isExpanded);
+      });
+    }
+
+    // Pause rotation on hover
+    announcementBar.addEventListener('mouseenter', stopAutoRotate);
+    announcementBar.addEventListener('mouseleave', startAutoRotate);
+    
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    announcementBar.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    announcementBar.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextMessage(); // Swipe left = next
+        } else {
+          prevMessage(); // Swipe right = prev
+        }
+      }
+    }
+    
+    // Keyboard accessibility
+    announcementBar.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevMessage();
+      } else if (e.key === 'ArrowRight') {
+        nextMessage();
+      } else if (e.key === 'Escape') {
+        setAnnouncementExpanded(false);
+      }
+    });
+    
+    // Initialize and show with slight delay for smooth page load
+    initIndicators();
+    setAnnouncementExpanded(false);
+    setTimeout(showAnnouncementBar, 300);
+  }
+
   // Detect true home page path only
   const pathname = window.location.pathname.toLowerCase();
   const normalizedPath = pathname.endsWith('/') && pathname !== '/'

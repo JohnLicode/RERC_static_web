@@ -1,0 +1,417 @@
+/* ================================
+   ANNOUNCEMENT BAR STYLES (shared)
+   ================================ */
+
+/* Announcement bar container */
+.announcement-bar {
+  --announcement-bar-height: 52px;
+  position: relative;
+  z-index: 20;
+  background: #1a4f2a;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  max-height: var(--announcement-bar-height);
+  transform: none;
+  opacity: 1;
+  transition: none;
+}
+
+.announcement-bar.visible {
+  transform: none;
+  opacity: 1;
+}
+
+.announcement-bar.hidden {
+  transform: none;
+  opacity: 1;
+}
+
+.announcement-bar.expanded {
+  position: relative;
+  z-index: 11002;
+  max-height: var(--announcement-bar-height);
+  overflow: visible;
+}
+
+body.announcement-expanded {
+  overflow: hidden;
+}
+
+body.announcement-expanded::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 22, 13, 0.58);
+  z-index: 11000;
+}
+
+/* Inner wrapper */
+.announcement-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  min-height: var(--announcement-bar-height);
+  position: relative;
+  background: #1a4f2a;
+}
+
+/* Message container for rotation */
+.announcement-messages {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* Single message styling */
+.announcement-message {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 140px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 40px;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transform: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.announcement-message.active {
+  opacity: 0;
+}
+
+.announcement-bar.visible .announcement-message.active {
+  opacity: 1;
+}
+
+.announcement-message .icon {
+  flex-shrink: 0;
+  font-size: 14px;
+  color: #ff8400;
+}
+
+.announcement-message .text {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+.announcement-details-btn {
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  justify-self: end;
+  gap: 6px;
+  font-family: Arial, Helvetica, sans-serif;
+  min-width: 140px;
+}
+
+.announcement-details-btn:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.announcement-details-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.announcement-dropdown {
+  position: fixed;
+  top: var(--announcement-bar-height);
+  left: 0;
+  right: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  background: #f7f7f5;
+  border-top: none;
+  padding: 0 48px;
+  transition: all 0.3s ease-in-out;
+  z-index: 11001;
+  pointer-events: none;
+}
+
+.announcement-bar.expanded .announcement-dropdown {
+  max-height: calc(100vh - var(--announcement-bar-height));
+  opacity: 1;
+  padding: 32px 48px 36px;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+.announcement-dropdown-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 20px;
+  color: #1a4f2a;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #1a4f2a;
+  display: inline-block;
+}
+
+.announcement-dropdown-content {
+  padding: 0;
+  max-width: 800px;
+}
+
+.announcement-dropdown-content p {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #3a3a3a;
+}
+
+.announcement-dropdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+.announcement-dropdown-content .announcement-contact {
+  margin-top: 6px;
+  color: #555;
+}
+
+.announcement-dropdown-content .announcement-contact a {
+  color: #1a4f2a;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.announcement-dropdown-content .announcement-contact a:hover {
+  color: #ff8400;
+  text-decoration: underline;
+}
+
+.announcement-dropdown-content .announcement-closing {
+  font-style: italic;
+  color: #777;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.announcement-message .text a {
+  color: #ff8400;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+.announcement-message .text a:hover {
+  color: #ffb347;
+}
+
+/* Scrolling text for long messages */
+.announcement-message.scrolling .text {
+  animation: scrollText 15s linear infinite;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+@keyframes scrollText {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Message indicators (dots) */
+.announcement-indicators {
+  display: flex;
+  gap: 6px;
+  margin-left: 15px;
+  flex-shrink: 0;
+}
+
+.announcement-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.announcement-indicator.active {
+  background: #ff8400;
+  transform: scale(1.2);
+}
+
+.announcement-indicator:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Navigation arrows for multiple messages */
+.announcement-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  display: none;
+}
+
+.announcement-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.announcement-nav.prev { left: 15px; }
+.announcement-nav.next { right: 15px; }
+
+.announcement-bar.has-multiple .announcement-nav {
+  display: flex;
+}
+
+/* Alternative color schemes */
+.announcement-bar.urgent {
+  background: #c53030;
+}
+
+.announcement-bar.success {
+  background: #276749;
+}
+
+.announcement-bar.warning {
+  background: #c05621;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .announcement-bar {
+    --announcement-bar-height: 42px;
+  }
+
+  .announcement-bar-inner {
+    padding: 8px 12px;
+    min-height: var(--announcement-bar-height);
+  }
+
+  .announcement-message {
+    grid-template-columns: auto minmax(0, 1fr) 126px;
+    padding: 0 6px;
+    gap: 8px;
+  }
+
+  .announcement-message .text {
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .announcement-details-btn {
+    font-size: 13px;
+    padding: 0;
+    min-width: 126px;
+  }
+
+  .announcement-bar.expanded .announcement-dropdown {
+    max-height: calc(100vh - var(--announcement-bar-height));
+    padding: 24px 24px 28px;
+  }
+
+  .announcement-dropdown-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+  }
+
+  .announcement-dropdown-content p {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .announcement-dropdown-content .announcement-closing {
+    font-size: 12px;
+  }
+
+  .announcement-message .icon {
+    font-size: 14px;
+  }
+
+  .announcement-indicators {
+    display: none;
+  }
+
+  .announcement-nav {
+    display: none !important;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .announcement-bar {
+    --announcement-bar-height: 38px;
+  }
+
+  .announcement-bar-inner {
+    padding: 6px 10px;
+    min-height: var(--announcement-bar-height);
+  }
+
+  .announcement-message {
+    gap: 8px;
+    padding: 0 4px;
+    grid-template-columns: auto minmax(0, 1fr) 112px;
+  }
+
+  .announcement-message .text {
+    font-size: 12px;
+  }
+
+  .announcement-details-btn {
+    font-size: 12px;
+    padding: 0;
+    min-width: 112px;
+  }
+
+  .announcement-dropdown-content p {
+    font-size: 12px;
+  }
+
+  .announcement-dropdown-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  .announcement-dropdown-content .announcement-closing {
+    font-size: 11.5px;
+  }
+
+  .announcement-message .icon {
+    font-size: 12px;
+  }
+
+}

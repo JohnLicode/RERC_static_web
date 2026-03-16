@@ -1764,6 +1764,38 @@ body.no-scroll {
   box-shadow: 0 4px 15px rgba(255, 132, 0, 0.2);
 }
 
+.login-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  position: relative;
+}
+
+.login-container:has(.login-btn.disabled) {
+  position: relative;
+  cursor: not-allowed;
+}
+
+.login-container:has(.login-btn.disabled):hover::after {
+  content: attr(data-tooltip);
+  content: 'Currently unavailable — PSU RERC is under moratorium';
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 6px 14px;
+  border-radius: 4px;
+  white-space: nowrap;
+  letter-spacing: 0;
+  text-transform: none;
+  z-index: 10;
+}
+
 .login-btn i {
   font-size: 14px;
 }
@@ -1971,16 +2003,17 @@ body.no-scroll {
   .faq-container h3 {
     font-size: 20px;
   }
-  
+
   .faq-question {
     padding: 12px 15px;
   }
-  
+
   .faq-question h4 {
     font-size: 13px;
   }
-  
+
   .faq-item.active .faq-answer {
     padding: 15px;
   }
 }
+
