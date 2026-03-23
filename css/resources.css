@@ -609,8 +609,8 @@ body {
 
 /* Resources Section */
 .resources {
-    padding-bottom: 100px;
     padding: 0 20px;
+    padding-bottom: 60px; /* Balance the bottom space */
     position: relative;
     z-index: 1;
     min-height: 100vh;
@@ -650,7 +650,7 @@ body {
 .search-container {
     position: sticky;
     padding: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem; /* Reduced to balance top gap */
     display: flex;
     flex-direction: column;
     align-items: center;
