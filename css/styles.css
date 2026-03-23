@@ -52,7 +52,8 @@ body.no-scroll {
 /* HOME PAGE container + slideshow */
 .home_page {
   width: 100%;
-  height: calc(100vh - 53px);
+  height: calc(100vh - var(--announcement-bar-height, 50px));
+  min-height: 400px;
   position: relative;
   overflow: hidden;
   isolation: auto; /* avoid trapping fixed elements (like bottom nav) in a lower stacking context */
@@ -1128,7 +1129,7 @@ body.no-scroll {
 /* Show burger menu on mobile, hide regular nav */
 @media (max-width: 768px) {
   .home_page {
-    height: 100vh;
+    height: calc(100vh - var(--announcement-bar-height, 48px));
   }
 
   .bottom-nav {

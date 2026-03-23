@@ -2,9 +2,12 @@
    ANNOUNCEMENT BAR STYLES (Modern & Clean)
    ================================ */
 
+:root {
+  --announcement-bar-height: 50px;
+}
+
 /* Announcement bar container */
 .announcement-bar {
-  --announcement-bar-height: 50px;
   position: relative;
   z-index: 20;
   background: linear-gradient(90deg, #133a1f 0%, #1a4f2a 100%);
@@ -270,10 +273,10 @@ body.announcement-expanded::before {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
-  .announcement-bar {
+  :root {
     --announcement-bar-height: 48px;
   }
-
+  
   .announcement-bar-inner {
     padding: 0 72px 0 16px; /* Space for burger menu */
   }
@@ -314,7 +317,7 @@ body.announcement-expanded::before {
 }
 
 @media (max-width: 480px) {
-  .announcement-bar {
+  :root {
     --announcement-bar-height: 44px;
   }
 
