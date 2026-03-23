@@ -120,8 +120,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentMessageIndex = 0;
     let autoRotateInterval = null;
     const AUTO_ROTATE_DELAY = 5000; // 5 seconds between messages
-    const DETAILS_LABEL = 'View Details ⬇️';
-    const CLOSE_LABEL = 'Close ❌';
+    const DETAILS_LABEL = 'Details';
+    const CLOSE_LABEL = 'Close';
     
     // Initialize indicators
     function initIndicators() {
