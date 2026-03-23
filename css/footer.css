@@ -19,7 +19,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(14, 33, 19, 0.94);
+  background: rgba(14, 33, 19, 0.70);
   backdrop-filter: blur(8px);
   z-index: 0;
 }
