@@ -804,10 +804,7 @@ body {
     max-height: 0;           /* Fixed height for scroll */
     overflow-y: auto;            /* Enable vertical scrolling */
     padding: 0; 
-}
-
-/* Custom scrollbar styling */
-.section-content::-webkit-scrollbar {
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 8px;                  /* Scrollbar width */
 }
 
