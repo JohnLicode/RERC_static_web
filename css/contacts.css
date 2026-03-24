@@ -153,6 +153,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: -40px; /* Counter-balance the top logo */
 }
 
 .home_page-title h1 {
@@ -348,7 +349,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 485px;
+  min-height: 485px;
+  height: 100%;
 }
 
 /* contact-info::before removed for cleaner gradient */
@@ -435,7 +437,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 485px;
+  min-height: 485px;
+  height: 100%;
 }
 
 .form-header {
@@ -1046,3 +1049,49 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
+
+
+/* Toast Notification Styles */
+.toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 9999;
+}
+
+.toast-container.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toast-container.success i {
+    color: #1a5f3f; /* Academic Green */
+    font-size: 20px;
+}
+
+.toast-container.error i {
+    color: #ef4444; /* Red for errors */
+    font-size: 20px;
+}
+
+.toast-container span {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
