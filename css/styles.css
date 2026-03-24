@@ -383,8 +383,15 @@ body.no-scroll {
   margin-bottom: auto;
 }
 
-.review_card:hover {
-  transform: translateY(-5px);
+@media (hover: hover) {
+  .review_card:hover {
+    transform: translateY(-5px);
+    background-color: #f0f8ff;
+  }
+}
+
+.review_card:active {
+  transform: translateY(-2px);
   background-color: #f0f8ff;
 }
 
@@ -1774,7 +1781,7 @@ body.no-scroll {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   transition: all 0.3s ease;
-  border-left: 4px solid #f16901;
+  border-left: 4px solid #1a5f3f;
 }
 
 .faq-item:hover {

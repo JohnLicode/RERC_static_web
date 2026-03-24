@@ -786,7 +786,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     transition: all 0.3s ease;
-    border-left: 4px solid #f16901; /* PSU Gold border */
+    border-left: 4px solid #1a5f3f; /* PSU Green border */
 }
 
 .forms-section:hover {
