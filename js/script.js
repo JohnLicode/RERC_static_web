@@ -2089,7 +2089,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Requirements Image Lightbox Functionality
-    const requirementsTitleClick = document.getElementById('requirementsTitleClick');
+    const requirementsContainer = document.getElementById('requirementsContainer');
     const requirementsLightbox = document.getElementById('requirementsLightbox');
     const lightboxClose = document.querySelector('.lightbox-close');
     const lightboxRequirementsImg = document.getElementById('lightboxRequirementsImg');
@@ -2143,10 +2143,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    if (requirementsTitleClick && requirementsLightbox) {
+    if (requirementsContainer && requirementsLightbox) {
         console.log('Requirements functionality initialized');
-        
-        requirementsTitleClick.addEventListener('click', function(e) {
+
+        requirementsContainer.addEventListener('click', function(e) {
             e.preventDefault();
             requirementsLightbox.style.display = 'block';
             document.body.style.overflow = 'hidden';

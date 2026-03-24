@@ -339,25 +339,23 @@ body {
     width: 100%;
     background: white;
     border-radius: 12px;
-    
+    cursor: pointer;
+
     box-shadow: 0 4px 20px rgba(26, 95, 63, 0.08); /* Subtle green tint */
     border: 1px solid #e9ecef;
     transition: all 0.3s ease;
 }
 
 .resources-image-container:hover {
-    box-shadow: 0 8px 32px rgba(26, 95, 63, 0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 95, 63, 0.2);
+    transform: translateY(-4px);
+    border-color: rgba(26, 95, 63, 0.2);
 }
 
 /* Desktop hover effects */
 @media (hover: hover) and (pointer: fine) {
     .resources-image-container:hover {
-        box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);
-    }
-    
-    .clickable-image-wrapper:hover img {
-        transform: scale(1.01);
+        box-shadow: 0 14px 40px rgba(26, 95, 63, 0.25);
     }
     
     .clickable-image-wrapper:hover .image-overlay {
@@ -598,7 +596,7 @@ body {
     }
     
     .image-title {
-        padding: 14px;
+        padding: 12px 10px;
     }
     
     .image-title h3 {
