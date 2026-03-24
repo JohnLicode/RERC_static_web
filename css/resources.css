@@ -786,7 +786,11 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     transition: all 0.3s ease;
-    border-left: 4px solid #1a5f3f; /* PSU Green border */
+    border-left: 4px solid #f16901; /* PSU Orange border when closed */
+}
+
+.forms-section:has(.section-header.active) {
+    border-left: 4px solid #1a5f3f; /* PSU Green border when open */
 }
 
 .forms-section:hover {
@@ -870,18 +874,39 @@ body {
 .download-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: #257c46;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #1a5f3f;
     color: white;
+    font-weight: 600;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 50px;
     margin-top: 1rem;
-    transition: background 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 95, 63, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+}
+
+.download-btn i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
 }
 
 .download-btn:hover {
-    background: #1b5a32;
+    background: #ffffff;
+    color: #1a5f3f;
+    border-color: #1a5f3f;
+    box-shadow: 0 6px 20px rgba(26, 95, 63, 0.3);
+    transform: translateY(-2px);
+}
+
+.download-btn:hover i {
+    transform: translateY(2px);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(26, 95, 63, 0.2);
 }
 
         /* Mobile Responsiveness */
