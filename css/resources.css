@@ -777,54 +777,58 @@ body {
 
 /* Form Sections Styles */
 .forms-section {
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 15px auto;
     max-width: 700px;
-    background: #fff;
+    background: #ffffff;
     border-radius: 10px;
-    
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-left: 4px solid #f16901; /* PSU Gold border */
+}
+
+.forms-section:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .forms-sections-container {
-    position: relative;  /* Add position relative */
+    position: relative;
     width: 100%;
 }
 
 .section-header {
-    padding: 1rem 1.5rem;
-    background: #257c46;
-    color: white;
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #ffffff, #ffffff);
+    color: rgb(4, 72, 24);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.3s ease;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.section-header:hover {
+    background: linear-gradient(135deg, #f0f8ff, #ffffff);
+}
+
+.section-header.active {
+    background: linear-gradient(135deg, #f0f8ff, #ffffff);
+    border-bottom: 1px solid rgba(4, 72, 24, 0.1);
 }
 
 .section-content {
-    max-height: 0;           /* Fixed height for scroll */
-    overflow-y: auto;            /* Enable vertical scrolling */
+    max-height: 0;
+    overflow: hidden; /* Remove overflow-y: auto to kill double scroll */
     padding: 0;
+    background: #ffffff;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-     /* Prevent text spilling during collapse calculation */
-}
-
-/* Custom scrollbar styling */
-.section-content::-webkit-scrollbar {
-    width: 8px;                  /* Scrollbar width */
-}
-
-.section-content::-webkit-scrollbar-track {
-    background: #f1f1f1;         /* Track color */
-    border-radius: 4px;
-}
-
-.section-content::-webkit-scrollbar-thumb {
-    background: #257c46;         /* Handle color */
-    border-radius: 4px;
-}
-
-.section-content::-webkit-scrollbar-thumb:hover {
-    background: #1b5a32;         /* Handle hover color */
 }
 
 .form-card {

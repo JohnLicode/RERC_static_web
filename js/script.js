@@ -1998,12 +1998,10 @@ function createSectionElement(title, forms) {
         icon.textContent = isActive ? '-' : '+';
         
         if (isActive) {
-            // Set fixed height for scrolling
-            content.style.maxHeight = '300px';
-        } else {
-            // Close the section
-            content.style.maxHeight = '0';
-        }
+              content.style.maxHeight = content.scrollHeight + 'px';
+          } else {
+              content.style.maxHeight = '0';
+          }
     });
 
     return section;
