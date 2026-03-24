@@ -336,8 +336,9 @@ body {
 }
 
 /* Contact Info Section */
+
 .contact-info {
-  background: rgb(4, 72, 24);
+  background: linear-gradient(90deg, #133a1f 0%, #1a4f2a 100%);
   color: white;
   padding: 30px 40px;
   border-radius: 15px;
@@ -350,16 +351,7 @@ body {
   height: 485px;
 }
 
-.contact-info::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(4, 72, 24, 0.9), rgba(37, 124, 70, 0.8));
-  z-index: 0;
-}
+/* contact-info::before removed for cleaner gradient */
 
 .contact-info > * {
   position: relative;
@@ -379,7 +371,7 @@ body {
 .header-underline {
   width: 80px;
   height: 3px;
-  background: #22c55e;
+  background: #1a5f3f;
   margin: 20px 0 40px 0;
 }
 
@@ -428,8 +420,8 @@ body {
 }
 
 .social-icon:hover {
-  background: #22c55e;
-  border-color: #22c55e;
+  background: #1a5f3f;
+  border-color: #1a5f3f;
   transform: translateY(-3px);
 }
 
@@ -453,7 +445,7 @@ body {
 
 .stay-contact {
   font-size: 14px;
-  color: #22c55e;
+  color: #1a5f3f;
   font-weight: 600;
   letter-spacing: 2px;
   margin-bottom: 10px;
@@ -498,9 +490,9 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #22c55e;
+  border-color: #1a5f3f;
   background: white;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 0 0 3px rgba(26, 95, 63, 0.1);
 }
 
 .form-group textarea {
@@ -509,7 +501,7 @@ body {
 }
 
 .submit-btn {
-  background: #1dad52;
+  background: #1a5f3f;
   color: white;
   padding: 10px 18px;
   border: none;
@@ -523,9 +515,9 @@ body {
 }
 
 .submit-btn:hover {
-  background: #256d4b;
+  background: #0c2b14;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 8px 25px rgba(26, 95, 63, 0.3);
 }
 
 .form-footer {
@@ -542,7 +534,7 @@ body {
 }
 
 .mostaql-badge i {
-  color: #22c55e;
+  color: #1a5f3f;
 }
 
 /* Additional Info Section */
@@ -623,7 +615,7 @@ body {
 }
 
 .location-info i {
-  color: #22c55e;
+  color: #1a5f3f;
   margin-right: 8px;
   width: 20px;
 }
@@ -655,13 +647,13 @@ body {
 }
 
 .quick-links a:hover {
-  color: #22c55e;
+  color: #1a5f3f;
 }
 
 .quick-links a::before {
   content: "→";
   margin-right: 8px;
-  color: #22c55e;
+  color: #1a5f3f;
   font-weight: bold;
 }
 
@@ -988,7 +980,7 @@ body {
 
 .map-container h3 i {
   margin-right: 8px;
-  color: #22c55e;
+  color: #1a5f3f;
 }
 
 .map-description {

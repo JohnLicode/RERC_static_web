@@ -386,7 +386,7 @@ body.no-scroll {
 }
 
 .exempt { border-left: 6px solid #f47236; }
-.expedited { border-left: 6px solid #4caf50; }
+.expedited { border-left: 6px solid #1a5f3f; }
 .fullboard { border-left: 6px solid #eea332; }
 
 /* Process Flow Section */
@@ -1611,7 +1611,7 @@ body.no-scroll {
 .icon-circle {
   width: 60px;
   height: 60px;
-  background: #4caf50;
+  background: #1a5f3f;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1832,7 +1832,7 @@ body.no-scroll {
 
 .faq-item.active {
   background: #ffffff;
-  border-left-color: #4caf50;
+  border-left-color: #1a5f3f;
 }
 
 .faq-item.active .faq-question {

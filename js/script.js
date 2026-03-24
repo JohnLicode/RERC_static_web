@@ -1208,7 +1208,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           <h3>Contact</h3>
           <p>For privacy-related concerns, please contact our Facebook Page:<br>
-          📧 <a href="https://www.facebook.com/people/PSU-Research-Ethics-Review-Committee/100091248249310" target="_blank" style="color:#22c55e;">PSU-Research Ethics Review Committee</a></p>
+          📧 <a href="https://www.facebook.com/people/PSU-Research-Ethics-Review-Committee/100091248249310" target="_blank" style="color:#1a5f3f;">PSU-Research Ethics Review Committee</a></p>
         `
       },
       'terms & conditions': {
