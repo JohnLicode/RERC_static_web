@@ -388,18 +388,23 @@ html {
 
 .image-m,
 .image-v {
-  flex: 0 1 400px;
+  flex: 0 1 380px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image-m img,
 .image-v img {
   width: 100%;
   max-width: 100%;
-  height: auto;
+  height: 300px;
   border-radius: 8px;
   margin: 0;
   display: block;
+  object-fit: cover;
+  object-position: center;
 }
 
 .content {
@@ -414,6 +419,33 @@ html {
 .content p {
   font-size: 14px;
   text-align: justify;
+}
+
+/* Organogram Section */
+.org-section {
+  margin: 0 auto;
+  margin-top: 5%;
+  max-width: 65vw;
+  width: 100%;
+}
+
+.org-section h3 {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.image-org {
+  width: 100%;
+}
+
+.image-org img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0;
+  display: block;
 }
 
 /* About Members */
@@ -619,7 +651,7 @@ html {
   .image-v {
     flex: 0 1 auto;
     width: 100%;
-    max-width: 340px;
+    max-width: 95%;
     margin: 0 auto;
   }
 
@@ -630,6 +662,29 @@ html {
     height: auto;
     margin: 0 auto;
     display: block;
+  }
+
+  .org-section {
+    max-width: 90vw;
+  }
+
+  .image-org {
+    width: 100%;
+    max-width: 95%;
+    margin: 0 auto;
+  }
+
+  .image-org img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .org-section h3 {
+    font-size: 28px;
+    text-align: center;
   }
 
   .content {
@@ -744,6 +799,7 @@ html {
   .about-container div h2 {
     font-size: 24px;
     text-align: center;
+    margin: 0;
   }
 
   .about-container p {
@@ -760,7 +816,18 @@ html {
 
   .image-m,
   .image-v {
-    max-width: 280px;
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .image-org {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .org-section h3 {
+    font-size: 24px;
+    text-align: center;
   }
 
   .content h3 {
