@@ -361,11 +361,11 @@ html {
 .about-container div h2 {
   text-align: center;
   margin-bottom: 20px;
-  font-size: 35px;
+  font-size: 32px;
 }
 
 .about-container p {
-  font-size: 14px;
+  font-size: 16px;
   text-align: left;
   line-height: 1.7;
 }
@@ -413,11 +413,11 @@ html {
 }
 
 .content h3 {
-  font-size: 35px;
+  font-size: 32px;
 }
 
 .content p {
-  font-size: 14px;
+  font-size: 16px;
   text-align: justify;
 }
 
@@ -430,7 +430,7 @@ html {
 }
 
 .org-section h3 {
-  font-size: 35px;
+  font-size: 32px;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -468,14 +468,14 @@ html {
   /* margin-top: 0%; */
   text-align: center;
   margin-bottom: 15px;
-  font-size: 35px;
+  font-size: 32px;
 }
 
 .about_members p {
   text-align: justify;
   margin-bottom: 30px;
   line-height: 1.6;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .members {

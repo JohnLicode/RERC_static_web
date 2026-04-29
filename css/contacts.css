@@ -462,7 +462,7 @@ html {
 }
 
 .form-header h2 {
-  font-size: 36px;
+  font-size: 32px;
   color: rgb(4, 72, 24);
   font-weight: 300;
 }
@@ -981,7 +981,7 @@ html {
 }
 
 .map-container h3 {
-  font-size: 24px;
+  font-size: 32px;
   color: rgb(4, 72, 24);
   margin-bottom: 10px;
   font-weight: 600;
@@ -997,7 +997,7 @@ html {
   text-align: center;
   max-width: 700px;
   margin: 0 auto 25px;
-  font-size: 15px;
+  font-size: 16px;
   color: #666;
   line-height: 1.6;
 }
