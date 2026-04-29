@@ -105,6 +105,18 @@ document.addEventListener("DOMContentLoaded", function () {
     body.classList.remove('mobile-nav-open');
   });
 
+  // Handle burger menu scroll sticking
+  if (burgerMenu) {
+    window.addEventListener('scroll', () => {
+      // Threshold around 40px to trigger the fixed state
+      if (window.scrollY > 40) {
+        burgerMenu.classList.add('scrolled');
+      } else {
+        burgerMenu.classList.remove('scrolled');
+      }
+    }, { passive: true });
+  }
+
   // ================================
   // ANNOUNCEMENT BAR FUNCTIONALITY
   // ================================
@@ -911,7 +923,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (campusMapLinks.length === 0) return;
 
     const cmSlides = [
-      { src: '/assets/images/PSU-Campuses-Map.png', alt: 'Palawan State University Campus Locations' }
+      { src: '/assets/images/main campus map.png', alt: 'Palawan State University Main Campus Map' }
     ];
 
     if (!document.getElementById('cm-modal-style')) {
@@ -1849,6 +1861,10 @@ const formsData = {
                 tags: ["sop", "template", "guideline"]
             }
         ]
+    },
+
+    "Section 12: International and National References": {
+        forms: []
     }
 };
 
@@ -1955,7 +1971,7 @@ function renderSections(searchTerm = '', activeTags = []) {
             return matchesSearch && matchesTags;
         });
 
-        if (filteredForms.length > 0) {
+        if (filteredForms.length > 0 || section.forms.length === 0) {
             container.appendChild(createSectionElement(sectionName, filteredForms));
         }
     });
@@ -1965,26 +1981,30 @@ function createSectionElement(title, forms) {
     const section = document.createElement('div');
     section.className = 'forms-section';
     
+    const formsHTML = forms.length > 0 
+        ? forms.map(form => `
+            <div class="form-card">
+                <h4>${form.title}</h4>
+                <p>${form.description}</p>
+                <div class="form-tags">
+                    ${form.tags.map(tag => `
+                        <span class="form-tag">${tag}</span>
+                    `).join('')}
+                </div>
+                <a href="/assets/documents/${form.filename}" class="download-btn" download>
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </div>
+        `).join('')
+        : '<div class="empty-section-message">No files available yet</div>';
+    
     section.innerHTML = `
         <div class="section-header">
             <h3>${title}</h3>
             <span class="toggle-icon">+</span>
         </div>
         <div class="section-content" style="max-height: 0;">
-            ${forms.map(form => `
-                <div class="form-card">
-                    <h4>${form.title}</h4>
-                    <p>${form.description}</p>
-                    <div class="form-tags">
-                        ${form.tags.map(tag => `
-                            <span class="form-tag">${tag}</span>
-                        `).join('')}
-                    </div>
-                    <a href="/assets/documents/${form.filename}" class="download-btn" download>
-                        <i class="fas fa-download"></i> Download
-                    </a>
-                </div>
-            `).join('')}
+            ${formsHTML}
         </div>
     `;
 

@@ -860,6 +860,14 @@ html {
     border-bottom: none;
 }
 
+.empty-section-message {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    font-size: 1rem;
+}
+
 .form-tags {
     margin: 0.5rem 0;
     display: flex;

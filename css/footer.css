@@ -42,9 +42,11 @@
 .footer-brand-text h3 {
   margin: 0 0 4px;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.5px;
   color: #ffffff;
+  font-family: Georgia, Garamond, serif;
+  font-style: normal;
 }
 
 .footer-brand-text p {
@@ -52,6 +54,8 @@
   font-size: 14px;
   color: #cccccc;
   font-weight: 400;
+  font-family: Georgia, Garamond, serif;
+  font-style: normal;
 }
 
 .footer-links {
