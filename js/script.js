@@ -1864,7 +1864,15 @@ const formsData = {
     },
 
     "Section 12: International and National References": {
-        forms: []
+        forms: [
+            {
+                id: "12.1",
+                title: "National Ethical Guidelines for Research involving Human Participants 2022",
+                description: "National ethical guidelines and standards for conducting research with human participants",
+                filename: "National Ethical Guidelines for Research involving Human Participants 2022.pdf",
+                tags: ["guidelines", "national", "ethics", "human participants", "standards"]
+            }
+        ]
     }
 };
 
