@@ -13,6 +13,11 @@ body {
   color: #ffffff;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -616,10 +621,10 @@ html {
 /* Resources Section */
 .resources {
     padding: 0 20px;
-    padding-bottom: 60px; /* Balance the bottom space */
+  padding-bottom: 40px;
     position: relative;
     z-index: 1;
-    min-height: 100vh;
+  min-height: auto;
     display: flex;
     align-items: flex-start; /* Change from center to flex-start */
     margin-top: 20px;
