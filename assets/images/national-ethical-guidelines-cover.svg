@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">National Ethical Guidelines for Research involving Human Participants 2022 cover preview</title>
+  <desc id="desc">A magenta cover-style graphic with the title of the national ethical guidelines and PHREB PNHRS branding.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b41461" />
+      <stop offset="100%" stop-color="#94104c" />
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.26" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.06" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#5d0d2f" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <rect width="900" height="1200" fill="url(#bg)" />
+  <path d="M70 40 H860" stroke="#ffffff" stroke-width="10" opacity="0.9" />
+  <path d="M70 40 V1160" stroke="#ffffff" stroke-width="10" opacity="0.9" />
+  <path d="M70 1116 H860" stroke="#ffffff" stroke-width="4" opacity="0.9" />
+  <path d="M70 40 H860 V1116 H70 Z" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3" />
+
+  <g opacity="0.26" fill="#f4b1cb">
+    <path d="M510 140c60 10 90 54 87 114-3 59-37 114-85 153-53 43-115 62-159 43-48-20-71-79-59-148 15-87 83-175 216-162z" />
+    <path d="M612 390c58 0 102 33 116 83 12 40 2 85-25 125-36 53-90 92-149 104-40 8-71-4-88-34-24-41-12-108 31-167 37-50 82-78 115-111z" />
+    <path d="M311 630c68-12 145 34 182 108 29 57 21 117-19 159-42 45-113 64-181 44-63-18-117-64-132-125-18-75 44-172 150-186z" />
+    <path d="M635 765c44-6 84 7 114 34 27 24 42 58 44 95 2 45-15 88-50 121-38 35-90 52-141 44-47-7-89-35-106-75-18-41-11-95 16-138 29-45 80-72 123-81z" />
+  </g>
+
+  <rect x="120" y="125" width="660" height="860" fill="url(#fade)" opacity="0.35" />
+
+  <g filter="url(#shadow)">
+    <text x="120" y="300" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800" letter-spacing="-1">NATIONAL</text>
+    <text x="120" y="384" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800" letter-spacing="-1">ETHICAL</text>
+    <text x="120" y="468" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800" letter-spacing="-1">GUIDELINES</text>
+    <text x="120" y="560" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700">FOR RESEARCH INVOLVING</text>
+    <text x="120" y="606" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700">HUMAN PARTICIPANTS</text>
+    <text x="120" y="710" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="800">2022</text>
+  </g>
+
+  <rect x="110" y="1000" width="680" height="2" fill="#ffffff" opacity="0.8" />
+  <g transform="translate(230,1035)" fill="#ffffff" opacity="0.9">
+    <text x="0" y="0" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">PHREB</text>
+    <text x="165" y="0" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">PNHRS</text>
+  </g>
+  <g transform="translate(415,1008)" fill="#ffffff" opacity="0.9">
+    <rect x="0" y="0" width="70" height="56" rx="6" opacity="0.16" />
+    <path d="M13 36c9-14 20-22 31-22 13 0 24 9 32 27" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+    <circle cx="24" cy="17" r="6" />
+    <circle cx="47" cy="17" r="6" />
+    <path d="M24 24v12M47 24v12" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+  </g>
+</svg>

@@ -825,11 +825,77 @@ html {
     transition: all 0.3s ease;
 }
 
+  .section-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    align-items: flex-start;
+  }
+
 .section-header h3 {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
 }
+
+  .section-type-badge {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(26, 95, 63, 0.12);
+    color: #1a5f3f;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .reference-section {
+    border-left-color: #0f766e;
+  }
+
+  .reference-section .section-header {
+    background: linear-gradient(135deg, #f7fffd, #ffffff);
+  }
+
+  .reference-note {
+    margin: 0;
+    padding: 0 25px 14px 25px;
+    color: #5b6b73;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    background: #ffffff;
+  }
+
+  .reference-card {
+    background: linear-gradient(180deg, #fbfffe 0%, #ffffff 100%);
+  }
+
+  .reference-card h4 {
+    color: #0f766e;
+  }
+
+  .reference-card p {
+    color: #35535a;
+  }
+
+  .reference-card .form-tag {
+    background: #e7f7f5;
+    color: #0f766e;
+  }
+
+  .reference-card .download-btn {
+    background: #0f766e;
+    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.2);
+  }
+
+  .reference-card .download-btn:hover {
+    color: #0f766e;
+    border-color: #0f766e;
+    box-shadow: 0 6px 20px rgba(15, 118, 110, 0.28);
+  }
 
 .section-header:hover {
     background: linear-gradient(135deg, #f0f8ff, #ffffff);

@@ -1864,11 +1864,14 @@ const formsData = {
     },
 
     "Section 12: International and National References": {
+      type: "reference",
+      intro: "Official reference material for ethics guidance and national standards.",
+      viewerUrl: "/resources/national-ethical-guidelines/",
         forms: [
             {
                 id: "12.1",
                 title: "National Ethical Guidelines for Research involving Human Participants 2022",
-                description: "National ethical guidelines and standards for conducting research with human participants",
+                description: "Official national ethical guidelines and standards for conducting research with human participants.",
                 filename: "National Ethical Guidelines for Research involving Human Participants 2022.pdf",
                 tags: ["guidelines", "national", "ethics", "human participants", "standards"]
             }
@@ -1980,18 +1983,21 @@ function renderSections(searchTerm = '', activeTags = []) {
         });
 
         if (filteredForms.length > 0 || section.forms.length === 0) {
-            container.appendChild(createSectionElement(sectionName, filteredForms));
+            container.appendChild(createSectionElement(sectionName, filteredForms, section));
         }
     });
 }
 
-function createSectionElement(title, forms) {
+      function createSectionElement(title, forms, sectionData = {}) {
     const section = document.createElement('div');
-    section.className = 'forms-section';
+        const isReferenceSection = sectionData.type === 'reference' || /references?/i.test(title);
+        const referenceUrl = sectionData.viewerUrl || '/resources/national-ethical-guidelines/';
+        const referenceIntro = sectionData.intro || '';
+        section.className = `forms-section${isReferenceSection ? ' reference-section' : ''}`;
     
     const formsHTML = forms.length > 0 
         ? forms.map(form => `
-            <div class="form-card">
+            <div class="form-card${isReferenceSection ? ' reference-card' : ''}">
                 <h4>${form.title}</h4>
                 <p>${form.description}</p>
                 <div class="form-tags">
@@ -1999,8 +2005,8 @@ function createSectionElement(title, forms) {
                         <span class="form-tag">${tag}</span>
                     `).join('')}
                 </div>
-                <a href="/assets/documents/${form.filename}" class="download-btn" download>
-                    <i class="fas fa-download"></i> Download
+              <a href="${isReferenceSection ? referenceUrl : `/assets/documents/${form.filename}`}" class="download-btn" ${isReferenceSection ? 'target="_blank" rel="noopener noreferrer"' : 'download'}>
+                <i class="fas fa-download"></i> ${isReferenceSection ? 'Open Reference' : 'Download'}
                 </a>
             </div>
         `).join('')
@@ -2008,9 +2014,13 @@ function createSectionElement(title, forms) {
     
     section.innerHTML = `
         <div class="section-header">
-            <h3>${title}</h3>
+            <div class="section-header-text">
+                <h3>${title}</h3>
+                ${isReferenceSection ? '<span class="section-type-badge">Reference</span>' : ''}
+            </div>
             <span class="toggle-icon">+</span>
         </div>
+          ${isReferenceSection ? `<p class="reference-note">${referenceIntro || 'These documents are provided as guidance and background references for research ethics review.'}</p>` : ''}
         <div class="section-content" style="max-height: 0;">
             ${formsHTML}
         </div>
