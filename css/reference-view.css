@@ -3,49 +3,59 @@
   --primary-green-dark: #0c2b14;
   --accent-orange: #f16901;
   --accent-orange-light: #ff9933;
-  --text-primary: #2c3e50;
-  --text-muted: #64748b;
-  --surface-light: #f8fafc;
-  --border-color: #e2e8f0;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --text-primary: #23313d;
+  --text-muted: #607080;
+  --surface: #ffffff;
+  --surface-soft: #f5f8f4;
+  --surface-warm: #f3efe6;
+  --border-color: rgba(26, 95, 63, 0.12);
+  --shadow-sm: 0 8px 22px rgba(12, 43, 20, 0.08);
+  --shadow-md: 0 18px 40px rgba(12, 43, 20, 0.14);
+  --shadow-lg: 0 26px 58px rgba(12, 43, 20, 0.18);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body.reference-page {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   color: var(--text-primary);
-  background: #ffffff;
+  background: #fafafa;
+  overflow-x: hidden;
 }
 
 .reference-shell {
-  width: min(1200px, calc(100% - 2rem));
+  width: min(1220px, calc(100% - 2rem));
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .reference-hero {
-  padding: 3rem 1rem 2rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: 1.25rem 0 1.75rem;
 }
 
 .reference-breadcrumbs {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   font-size: 0.9rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem;
+  position: relative;
 }
 
 .reference-breadcrumbs a {
   color: var(--primary-green);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   transition: color 0.2s ease;
 }
 
@@ -53,129 +63,144 @@ body.reference-page {
   color: var(--accent-orange);
 }
 
+.breadcrumb-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(26, 95, 63, 0.08);
+  color: var(--primary-green);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.breadcrumb-back:hover {
+  background: rgba(26, 95, 63, 0.12);
+  color: var(--accent-orange);
+  transform: translateX(-2px);
+}
+
 .reference-hero-grid {
   display: grid;
+  gap: 1rem;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  align-items: start;
 }
 
 .reference-hero-copy {
-  padding: 2rem;
-  border-radius: 12px;
+  display: grid;
+  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 22px;
   background: #ffffff;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
 }
 
-.eyebrow {
-  margin: 0 0 0.5rem;
-  color: var(--primary-green);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 700;
+.reference-hero-media,
+.reference-hero-content {
+  min-width: 0;
+}
+
+.reference-hero-copy::after {
+  content: "";
+  display: none;
 }
 
 .reference-hero-copy h1 {
   margin: 0;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  max-width: 24ch;
+  font-size: clamp(1.7rem, 2vw, 2.3rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
   color: var(--primary-green);
+  font-family: "Times New Roman", Times, Georgia, serif;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-summary {
-  margin: 1rem 0 0;
-  max-width: 60ch;
+  margin: 0.85rem 0 0;
+  max-width: 68ch;
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 0.96rem;
   line-height: 1.6;
+  position: relative;
+  z-index: 1;
 }
+
+
 
 .reference-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .primary-action,
 .secondary-action {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.2rem;
-  border-radius: 8px;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 46px;
+  padding: 0.85rem 1.15rem;
+  border-radius: 12px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid transparent;
 }
 
 .primary-action {
-  color: #fff;
-  background: var(--primary-green);
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary-green), #256949);
   box-shadow: var(--shadow-md);
 }
 
 .primary-action:hover {
-  background: var(--primary-green-dark);
-  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green));
   transform: translateY(-1px);
 }
 
 .secondary-action {
   color: var(--primary-green);
-  background: #ffffff;
-  border: 2px solid var(--primary-green);
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(26, 95, 63, 0.18);
 }
 
 .secondary-action:hover {
-  background: var(--surface-light);
+  background: #ffffff;
   color: var(--accent-orange);
-  border-color: var(--accent-orange);
+  border-color: rgba(241, 105, 1, 0.25);
+  transform: translateY(-1px);
 }
 
-.reference-stats {
-  display: grid;
-  gap: 0.75rem;
-}
 
-.stat-card {
-  padding: 1rem;
-  border-radius: 8px;
-  background: var(--surface-light);
-  border: 1px solid var(--border-color);
-}
-
-.stat-label {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.stat-card strong {
-  color: var(--primary-green);
-  font-weight: 700;
-}
 
 .reference-main {
   display: grid;
+  gap: 1rem;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
-  padding: 2rem 1rem;
+  align-items: start;
+  padding: 0.25rem 0 1.5rem;
 }
 
 .reference-card {
-  padding: 1.5rem;
-  border-radius: 10px;
-  background: #ffffff;
+  padding: 1.3rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
 }
@@ -186,145 +211,166 @@ body.reference-page {
 
 .card-heading h2 {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--primary-green);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
 .card-heading p {
   margin: 0.35rem 0 0;
   color: var(--text-muted);
   font-size: 0.9rem;
+  line-height: 1.55;
 }
 
 .cover-preview {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
+  max-height: 410px;
+  object-fit: contain;
+  border-radius: 16px;
+  border: 1px solid rgba(26, 95, 63, 0.12);
+  background: linear-gradient(180deg, #fafcf8, #f1f5ef);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), var(--shadow-sm);
+}
+
+.pdf-card {
+  min-width: 0;
+  background: #ffffff;
 }
 
 .pdf-frame-shell {
   overflow: hidden;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background: var(--surface-light);
-  min-height: 700px;
+  border-radius: 18px;
+  border: 1px solid rgba(26, 95, 63, 0.12);
+  background: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  min-height: 760px;
 }
 
 .pdf-frame {
   width: 100%;
-  height: 700px;
+  height: 760px;
   border: 0;
   display: block;
   background: #ffffff;
 }
 
 .reference-note-block {
-  padding: 1.5rem 1rem 2rem;
+  padding: 0 0 2rem;
 }
 
-.note-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1.2rem;
-  border-radius: 8px;
-  background: var(--surface-light);
-  border-left: 4px solid var(--primary-green);
-  color: var(--text-muted);
-}
-
-.note-card i {
-  color: var(--primary-green);
-  margin-top: 0.15rem;
-  font-size: 1.1rem;
-}
-
-.note-card p {
-  margin: 0;
+.attribution-box {
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  background: #f4f5f7;
+  border: 1px solid rgba(95, 105, 115, 0.22);
+  box-shadow: var(--shadow-sm);
+  color: #3f4a55;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 0.98rem;
   line-height: 1.6;
-  font-size: 0.95rem;
+}
+
+.attribution-label {
+  margin: 0 0 0.45rem;
+  color: var(--primary-green);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.attribution-box p {
+  margin: 0 0 0.55rem;
+}
+
+.attribution-box p:last-child {
+  margin-bottom: 0;
+}
+
+.attribution-box a {
+  color: var(--primary-green);
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.attribution-box a:hover {
+  color: var(--accent-orange);
+  text-decoration: underline;
+}
+
+.attribution-inline {
+  margin-top: 1rem;
+}
+
+@media (max-width: 1080px) {
+  .reference-main {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-hero-copy {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-  .reference-hero {
-    padding: 2rem 1rem 1.5rem;
-  }
-
   .reference-shell {
-    width: min(100% - 1rem, 1200px);
+    width: min(100% - 1rem, 1220px);
   }
 
   .reference-hero-copy,
   .reference-card {
-    padding: 1.25rem;
-    border-radius: 8px;
+    padding: 1rem;
+    border-radius: 18px;
+  }
+
+  .reference-hero-copy {
+    grid-template-columns: 1fr;
   }
 
   .reference-actions {
     flex-direction: column;
-    gap: 0.5rem;
   }
 
-  .primary-action,
-  .secondary-action {
+  .primary-action {
     width: 100%;
-    justify-content: center;
   }
 
   .pdf-frame-shell,
   .pdf-frame {
-    min-height: 500px;
-    height: 500px;
-  }
-
-  .reference-main {
-    padding: 1.5rem 1rem;
+    min-height: 560px;
+    height: 560px;
   }
 }
 
 @media (max-width: 480px) {
-  .reference-hero {
-    padding: 1.5rem 1rem 1rem;
-  }
-
   .reference-hero-copy h1 {
-    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-  }
-
-  .reference-hero-copy,
-  .reference-card {
-    padding: 1rem;
-  }
-
-  .eyebrow {
-    font-size: 0.7rem;
+    font-size: clamp(1.7rem, 10vw, 2.25rem);
   }
 
   .hero-summary {
-    font-size: 0.9rem;
+    font-size: 0.94rem;
+  }
+
+  .reference-chip {
+    font-size: 0.74rem;
   }
 
   .pdf-frame-shell,
   .pdf-frame {
-    min-height: 400px;
-    height: 400px;
-  }
-
-  .reference-main {
-    padding: 1rem;
-    gap: 1rem;
-  }
-
-  .note-card {
-    padding: 1rem;
-    font-size: 0.85rem;
+    min-height: 440px;
+    height: 440px;
   }
 
   .card-heading h2 {
     font-size: 1rem;
+  }
+
+  .attribution-box {
+    padding: 1rem;
   }
 }

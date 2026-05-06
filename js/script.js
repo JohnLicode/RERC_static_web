@@ -923,7 +923,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (campusMapLinks.length === 0) return;
 
     const cmSlides = [
-      { src: '/assets/images/main campus map.png', alt: 'Palawan State University Main Campus Map' }
+      { src: '/assets/images/main campus map.webp', alt: 'Palawan State University Main Campus Map' }
     ];
 
     if (!document.getElementById('cm-modal-style')) {
@@ -2005,7 +2005,7 @@ function renderSections(searchTerm = '', activeTags = []) {
                         <span class="form-tag">${tag}</span>
                     `).join('')}
                 </div>
-              <a href="${isReferenceSection ? referenceUrl : `/assets/documents/${form.filename}`}" class="download-btn" ${isReferenceSection ? 'target="_blank" rel="noopener noreferrer"' : 'download'}>
+              <a href="${isReferenceSection ? referenceUrl : `/assets/documents/${form.filename}`}" class="download-btn" ${isReferenceSection ? '' : 'download'}>
                 <i class="fas fa-download"></i> ${isReferenceSection ? 'Open Reference' : 'Download'}
                 </a>
             </div>
