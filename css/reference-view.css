@@ -28,10 +28,13 @@ body.reference-page {
   color: var(--text-primary);
   background: #fafafa;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .reference-shell {
-  width: min(1220px, calc(100% - 2rem));
+  width: min(1440px, calc(100% - 2rem));
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -92,10 +95,10 @@ body.reference-page {
 
 .reference-hero-copy {
   display: grid;
-  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
-  gap: 1.75rem;
-  align-items: center;
-  padding: 1.5rem;
+  grid-template-columns: minmax(110px, 145px) minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: start;
+  padding: 0.9rem;
   border-radius: 22px;
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -116,10 +119,10 @@ body.reference-page {
 
 .reference-hero-copy h1 {
   margin: 0;
-  max-width: 24ch;
-  font-size: clamp(1.7rem, 2vw, 2.3rem);
-  line-height: 1.06;
-  letter-spacing: -0.025em;
+  max-width: none;
+  font-size: clamp(1.35rem, 1.45vw, 1.85rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   color: var(--primary-green);
   font-family: "Times New Roman", Times, Georgia, serif;
   position: relative;
@@ -127,11 +130,11 @@ body.reference-page {
 }
 
 .hero-summary {
-  margin: 0.85rem 0 0;
-  max-width: 68ch;
+  margin: 0.5rem 0 0;
+  max-width: 64ch;
   color: var(--text-muted);
-  font-size: 0.96rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  line-height: 1.45;
   position: relative;
   z-index: 1;
 }
@@ -142,7 +145,7 @@ body.reference-page {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.5rem;
+  margin-top: 0.9rem;
   position: relative;
   z-index: 1;
 }
@@ -153,9 +156,9 @@ body.reference-page {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  min-height: 46px;
-  padding: 0.85rem 1.15rem;
-  border-radius: 12px;
+  min-height: 42px;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: 700;
   font-size: 0.9rem;
@@ -166,12 +169,13 @@ body.reference-page {
 .primary-action {
   color: #ffffff;
   background: linear-gradient(135deg, var(--primary-green), #256949);
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
 }
 
 .primary-action:hover {
   background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green));
-  transform: translateY(-1px);
+  transform: none;
+  box-shadow: none;
 }
 
 .secondary-action {
@@ -186,49 +190,19 @@ body.reference-page {
   border-color: rgba(241, 105, 1, 0.25);
   transform: translateY(-1px);
 }
-
-
-
-.reference-main {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr;
-  align-items: start;
-  padding: 0.25rem 0 1.5rem;
-}
-
 .reference-card {
-  padding: 1.3rem;
-  border-radius: 22px;
+  padding: 1rem;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
-}
-
-.card-heading {
-  margin-bottom: 1rem;
-}
-
-.card-heading h2 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: var(--primary-green);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
-.card-heading p {
-  margin: 0.35rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
 }
 
 .cover-preview {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 410px;
+  max-height: 330px;
   object-fit: contain;
   border-radius: 16px;
   border: 1px solid rgba(26, 95, 63, 0.12);
@@ -236,84 +210,29 @@ body.reference-page {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), var(--shadow-sm);
 }
 
-.pdf-card {
-  min-width: 0;
-  background: #ffffff;
-}
-
-.pdf-frame-shell {
-  overflow: hidden;
-  border-radius: 18px;
-  border: 1px solid rgba(26, 95, 63, 0.12);
-  background: #ffffff;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  min-height: 760px;
-}
-
-.pdf-frame {
-  width: 100%;
-  height: 760px;
-  border: 0;
-  display: block;
-  background: #ffffff;
-}
-
-.reference-note-block {
-  padding: 0 0 2rem;
-}
-
-.attribution-box {
-  padding: 0.9rem 1rem;
-  border-radius: 14px;
-  background: #f4f5f7;
-  border: 1px solid rgba(95, 105, 115, 0.22);
-  box-shadow: var(--shadow-sm);
-  color: #3f4a55;
+.source-note {
+  margin: 0.65rem 0 0;
+  color: #4f5f68;
   font-family: "Times New Roman", Times, Georgia, serif;
-  font-size: 0.98rem;
-  line-height: 1.6;
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
-.attribution-label {
-  margin: 0 0 0.45rem;
-  color: var(--primary-green);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.attribution-box p {
-  margin: 0 0 0.55rem;
-}
-
-.attribution-box p:last-child {
-  margin-bottom: 0;
-}
-
-.attribution-box a {
+.source-note a {
   color: var(--primary-green);
   text-decoration: none;
   word-break: break-word;
 }
 
-.attribution-box a:hover {
+.source-note a:hover {
   color: var(--accent-orange);
   text-decoration: underline;
 }
 
-.attribution-inline {
-  margin-top: 1rem;
-}
-
 @media (max-width: 1080px) {
-  .reference-main {
-    grid-template-columns: 1fr;
-  }
-
   .reference-hero-copy {
     grid-template-columns: 1fr;
+    align-items: start;
   }
 }
 
@@ -324,8 +243,8 @@ body.reference-page {
 
   .reference-hero-copy,
   .reference-card {
-    padding: 1rem;
-    border-radius: 18px;
+    padding: 0.9rem;
+    border-radius: 16px;
   }
 
   .reference-hero-copy {
@@ -338,12 +257,6 @@ body.reference-page {
 
   .primary-action {
     width: 100%;
-  }
-
-  .pdf-frame-shell,
-  .pdf-frame {
-    min-height: 560px;
-    height: 560px;
   }
 }
 
@@ -360,17 +273,5 @@ body.reference-page {
     font-size: 0.74rem;
   }
 
-  .pdf-frame-shell,
-  .pdf-frame {
-    min-height: 440px;
-    height: 440px;
-  }
-
-  .card-heading h2 {
-    font-size: 1rem;
-  }
-
-  .attribution-box {
-    padding: 1rem;
-  }
+  .source-note { font-size: 0.86rem; }
 }

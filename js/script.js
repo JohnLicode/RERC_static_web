@@ -1867,15 +1867,7 @@ const formsData = {
       type: "reference",
       intro: "Official reference material for ethics guidance and national standards.",
       viewerUrl: "/resources/national-ethical-guidelines/",
-        forms: [
-            {
-                id: "12.1",
-                title: "National Ethical Guidelines for Research involving Human Participants 2022",
-                description: "Official national ethical guidelines and standards for conducting research with human participants.",
-                filename: "National Ethical Guidelines for Research involving Human Participants 2022.pdf",
-                tags: ["guidelines", "national", "ethics", "human participants", "standards"]
-            }
-        ]
+      forms: []
     }
 };
 
@@ -1996,7 +1988,7 @@ function renderSections(searchTerm = '', activeTags = []) {
         section.className = `forms-section${isReferenceSection ? ' reference-section' : ''}`;
     
     const formsHTML = forms.length > 0 
-        ? forms.map(form => `
+      ? forms.map(form => `
             <div class="form-card${isReferenceSection ? ' reference-card' : ''}">
                 <h4>${form.title}</h4>
                 <p>${form.description}</p>
@@ -2010,6 +2002,18 @@ function renderSections(searchTerm = '', activeTags = []) {
                 </a>
             </div>
         `).join('')
+            : isReferenceSection
+            ? `
+              <div class="reference-launch-card">
+                <div class="reference-launch-copy">
+                  <h4>Open the reference tab</h4>
+                  <p>${referenceIntro || 'These reference materials are organized in a dedicated viewer tab to avoid duplicate entries in this section.'}</p>
+                </div>
+                <a href="${referenceUrl}" class="download-btn reference-launch-btn">
+                  <i class="fas fa-book-open"></i> Open Reference Tab
+                </a>
+              </div>
+            `
         : '<div class="empty-section-message">No files available yet</div>';
     
     section.innerHTML = `
@@ -2020,7 +2024,6 @@ function renderSections(searchTerm = '', activeTags = []) {
             </div>
             <span class="toggle-icon">+</span>
         </div>
-          ${isReferenceSection ? `<p class="reference-note">${referenceIntro || 'These documents are provided as guidance and background references for research ethics review.'}</p>` : ''}
         <div class="section-content" style="max-height: 0;">
             ${formsHTML}
         </div>
