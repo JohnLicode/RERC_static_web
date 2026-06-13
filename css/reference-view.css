@@ -34,7 +34,8 @@ body.reference-page {
 }
 
 .reference-shell {
-  width: min(1440px, calc(100% - 2rem));
+  width: 65vw; /* match About page horizontal gutters */
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -42,6 +43,12 @@ body.reference-page {
 
 .reference-hero {
   padding: 1.25rem 0 1.75rem;
+}
+
+/* Slight vertical adjustment: move hero text content a bit lower
+   and reduce bottom padding to avoid excess white space */
+.reference-hero-content {
+  padding-top: 0.6rem;
 }
 
 .reference-breadcrumbs {
@@ -97,12 +104,12 @@ body.reference-page {
   display: grid;
   grid-template-columns: minmax(110px, 145px) minmax(0, 1fr);
   gap: 0.9rem;
-  align-items: start;
-  padding: 0.9rem;
-  border-radius: 22px;
+  align-items: center; /* vertically center media and content */
+  padding: 1.25rem; /* closer to the About page's card density */
+  border-radius: 16px; /* slightly smaller radius */
   background: #ffffff;
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm); /* lighter shadow for a cleaner look */
   position: relative;
   overflow: hidden;
 }
@@ -110,6 +117,16 @@ body.reference-page {
 .reference-hero-media,
 .reference-hero-content {
   min-width: 0;
+}
+
+/* Ensure content column is a vertical flex container so actions/source
+   can be pushed to the bottom and align with the cover image */
+.reference-hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center the text block vertically */
+  gap: 0.5rem; /* tighten spacing between title, actions, and source */
+  padding-top: 0.4rem; /* slight top offset preserved */
 }
 
 .reference-hero-copy::after {
@@ -120,7 +137,7 @@ body.reference-page {
 .reference-hero-copy h1 {
   margin: 0;
   max-width: none;
-  font-size: clamp(1.35rem, 1.45vw, 1.85rem);
+  font-size: clamp(1.85rem, 1.95vw, 2.45rem); /* larger title */
   line-height: 1.05;
   letter-spacing: -0.015em;
   color: var(--primary-green);
@@ -144,8 +161,8 @@ body.reference-page {
 .reference-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 0.9rem;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
   position: relative;
   z-index: 1;
 }
@@ -211,11 +228,11 @@ body.reference-page {
 }
 
 .source-note {
-  margin: 0.65rem 0 0;
+  margin: 0.4rem 0 0;
   color: #4f5f68;
   font-family: "Times New Roman", Times, Georgia, serif;
-  font-size: 0.82rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  line-height: 1.35;
 }
 
 .source-note a {

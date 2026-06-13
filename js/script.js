@@ -1452,6 +1452,15 @@ const tagIdToLowerLabel = Object.fromEntries(filterTags.map(t => [t.id, t.label.
 
 // Forms data object
 const formsData = {
+  "Standard Operation Manual (SOP)": {
+    type: "generic",
+    intro: "Use the SOP template as the starting point for SOP preparation and revision.",
+    actionUrl: "/resources/sop/",
+    actionLabel: "Open SOP Tab",
+    launchTitle: "SOP Template",
+    forms: []
+  },
+
     "Section 1: Committee Management": {
         forms: [
             {
@@ -1816,7 +1825,7 @@ const formsData = {
         ]
     },
 
-    "Section 9-11: Queries and SOP": {
+    "Section 9-10: Queries and Appeals": {
         forms: [
             {
                 id: "9A",
@@ -1844,21 +1853,7 @@ const formsData = {
                 title: "PSURERC Form 10",
                 description: "Action Letter to Appeal",
                 filename: "PSURERC Form 10 Action Letter to Appeal.docx",
-                tags: ["appeal", "action-letter"]
-            },
-            {
-                id: "11A",
-                title: "PSURERC Form 11A",
-                description: "Request for Creation/Revision of an SOP",
-                filename: "PSURERC Form 11A Request for Writing of New SOP-Revision of SOP.docx",
-                tags: ["sop", "creation", "revision"]
-            },
-            {
-                id: "11B",
-                title: "PSURERC Form 11B",
-                description: "SOP or Guideline Cover Page and Content Template",
-                filename: "PSURERC Form 11B SOP or Guideline Cover Page and Content Template.docx",
-                tags: ["sop", "template", "guideline"]
+              tags: ["appeal", "action-letter"]
             }
         ]
     },
@@ -1983,8 +1978,13 @@ function renderSections(searchTerm = '', activeTags = []) {
       function createSectionElement(title, forms, sectionData = {}) {
     const section = document.createElement('div');
         const isReferenceSection = sectionData.type === 'reference' || /references?/i.test(title);
+        const isGenericLauncherSection = sectionData.type === 'generic';
         const referenceUrl = sectionData.viewerUrl || '/resources/national-ethical-guidelines/';
         const referenceIntro = sectionData.intro || '';
+        const genericUrl = sectionData.actionUrl || '#';
+        const genericIntro = sectionData.intro || '';
+        const genericTitle = sectionData.launchTitle || title;
+        const genericLabel = sectionData.actionLabel || 'Open Template';
         section.className = `forms-section${isReferenceSection ? ' reference-section' : ''}`;
     
     const formsHTML = forms.length > 0 
@@ -2011,6 +2011,18 @@ function renderSections(searchTerm = '', activeTags = []) {
                 </div>
                 <a href="${referenceUrl}" class="download-btn reference-launch-btn">
                   <i class="fas fa-book-open"></i> Open Reference Tab
+                </a>
+              </div>
+            `
+            : isGenericLauncherSection
+            ? `
+              <div class="reference-launch-card">
+                <div class="reference-launch-copy">
+                  <h4>${genericTitle}</h4>
+                  <p>${genericIntro || 'Open the SOP template used for preparation and revision.'}</p>
+                </div>
+                <a href="${genericUrl}" class="download-btn reference-launch-btn">
+                  <i class="fas fa-book-open"></i> ${genericLabel}
                 </a>
               </div>
             `
