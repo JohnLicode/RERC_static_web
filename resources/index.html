@@ -118,12 +118,26 @@
         <div class="resources-image-grid">
             <div id="requirementsContainer" class="resources-image-container" role="button" tabindex="0" aria-label="Open research requirements overview">
                 <div class="image-title">
-                    <h3>Research Requirements Overview</h3>
+                    <h3>Research Requirements</h3>
                     <p>Click to view the detailed requirements and eligibility criteria for RERC research applications</p>
                     <div class="image-cta">Open overview <i class="fas fa-arrow-right"></i></div>
                 </div>
                 <div class="clickable-image-wrapper">
                     <img src="/assets/images/requirements.webp" alt="RERC research requirements overview" id="requirementsImage" />
+                    <div class="image-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rightsContainer" class="resources-image-container" role="button" tabindex="0" aria-label="Open rights of the participants overview">
+                <div class="image-title">
+                    <h3>Rights of the Participants</h3>
+                    <p>Click to view the rights and protections afforded to research participants</p>
+                    <div class="image-cta">Open overview <i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="clickable-image-wrapper">
+                    <img src="/assets/images/APPROVED.png" alt="Rights of the Participants" id="rightsImage" />
                     <div class="image-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
@@ -211,7 +225,25 @@
     <div id="requirementsLightbox" class="requirements-lightbox">
         <div class="lightbox-content">
             <span class="lightbox-close">&times;</span>
-            <img src="/assets/images/requirements.webp" alt="RERC research requirements overview" id="lightboxRequirementsImg" />
+            <div class="lightbox-image-wrapper">
+                <img src="/assets/images/requirements.webp" alt="RERC research requirements overview" id="lightboxRequirementsImg" />
+            </div>
+            <div class="lightbox-caption">
+                Research requirements overview for RERC applications
+            </div>
+        </div>
+    </div>
+
+    <!-- Rights of the Participants Lightbox -->
+    <div id="rightsLightbox" class="requirements-lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <div class="lightbox-image-wrapper">
+                <img src="/assets/images/APPROVED.png" alt="Rights of the Participants" id="lightboxRightsImg" />
+            </div>
+            <div class="lightbox-caption">
+                Source: <a href="https://ethics.healthresearch.ph/images/sampledata/APPROVED.png" target="_blank" rel="noopener noreferrer">ethics.healthresearch.ph</a>
+            </div>
         </div>
     </div>
 
