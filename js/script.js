@@ -2206,6 +2206,13 @@ document.addEventListener('DOMContentLoaded', function() {
             reqResetImageTransform();
         });
 
+      requirementsContainer.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          requirementsContainer.click();
+        }
+      });
+
         if (lightboxClose) {
             lightboxClose.addEventListener('click', function() {
                 requirementsLightbox.style.display = 'none';
