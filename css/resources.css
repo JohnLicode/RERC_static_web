@@ -343,22 +343,41 @@ html {
     border-bottom: 1px solid #e9ecef; /* Subtle separation */
 }
 
-.resources-image-container {
-    max-width: 600px;
-    width: 100%;
-    background: white;
-    border-radius: 12px;
-    cursor: pointer;
+.resources-image-grid {
+  width: 100%;
+  max-width: 1080px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
 
-    box-shadow: 0 4px 20px rgba(26, 95, 63, 0.08); /* Subtle green tint */
-    border: 1px solid #e9ecef;
-    transition: all 0.3s ease;
+.resources-image-container {
+  max-width: none;
+  width: 100%;
+  min-height: 145px;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(26, 95, 63, 0.08); /* Subtle green tint */
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .resources-image-container:hover {
     box-shadow: 0 12px 32px rgba(26, 95, 63, 0.2);
     transform: translateY(-4px);
     border-color: rgba(26, 95, 63, 0.2);
+}
+
+.approved-protocols-card {
+  cursor: default;
+}
+
+.approved-protocols-card .clickable-image-wrapper {
+  display: none;
 }
 
 /* Desktop hover effects */
@@ -373,10 +392,14 @@ html {
 }
 
 .image-title {
-    padding: 24px;
-    text-align: center;
-    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    border-bottom: 1px solid #e9ecef;
+  padding: 24px;
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-bottom: 1px solid #e9ecef;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .image-title h3 {
@@ -512,6 +535,11 @@ html {
     .resources-image-section {
         padding: 30px 15px;
     }
+
+  .resources-image-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
     
     .resources-image-container {
         max-width: 100%;
@@ -547,6 +575,11 @@ html {
     .resources-image-section {
         padding: 20px 10px;
     }
+
+  .resources-image-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
     
     .resources-image-container {
         max-width: 100%;
