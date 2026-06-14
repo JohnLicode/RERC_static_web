@@ -335,7 +335,7 @@ html {
 
 /* Resources Image Section - Refined Design */
 .resources-image-section {
-    padding: 40px 20px;
+  padding: 28px 20px;
     background-color: #ffffff; /* Match body background */
     display: flex;
     justify-content: center;
@@ -348,14 +348,14 @@ html {
   max-width: 1080px;
   display: grid;
   grid-template-columns: repeat(2, minmax(260px, 1fr));
-  gap: 20px;
+  gap: 14px;
   align-items: stretch;
 }
 
 .resources-image-container {
   max-width: none;
   width: 100%;
-  min-height: 145px;
+  min-height: 118px;
   background: white;
   border-radius: 12px;
   cursor: pointer;
@@ -395,7 +395,7 @@ html {
 }
 
 .image-title {
-  padding: 24px;
+  padding: 18px 20px;
   text-align: center;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   border-bottom: 1px solid #e9ecef;
@@ -407,9 +407,9 @@ html {
 
 .image-title h3 {
     color: #1a5f3f; /* Match site's primary color */
-    font-size: 1.4rem;
+  font-size: 1.22rem;
     font-weight: 600;
-    margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
     cursor: pointer;
     transition: all 0.3s ease;
     letter-spacing: -0.01em;
@@ -426,30 +426,30 @@ html {
 
 .image-title p {
     color: #6c757d; /* Subtle gray for description */
-    font-size: 0.9rem;
-    line-height: 1.4;
+  font-size: 0.83rem;
+  line-height: 1.35;
     margin: 0;
     font-style: normal; /* Remove italic for cleaner look */
 }
 
 .image-cta {
-  margin-top: 12px;
+  margin-top: 8px;
   display: inline-flex;
   align-self: center;
   align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
+  gap: 5px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(26, 95, 63, 0.08);
   color: #1a5f3f;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
 .image-cta i {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .clickable-image-wrapper {
@@ -556,7 +556,7 @@ html {
 /* Tablet Responsive */
 @media (max-width: 768px) {
     .resources-image-section {
-        padding: 30px 15px;
+    padding: 22px 15px;
     }
 
   .resources-image-grid {
@@ -1187,10 +1187,6 @@ html {
 
   .burger-menu {
     display: flex;
-  }
-
-  body.mobile-nav-open {
-    
   }
 }
 
