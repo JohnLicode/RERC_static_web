@@ -368,10 +368,12 @@ html {
   flex-direction: column;
 }
 
-.resources-image-container:hover {
-    box-shadow: 0 12px 32px rgba(26, 95, 63, 0.2);
-    transform: translateY(-4px);
-    border-color: rgba(26, 95, 63, 0.2);
+@media (hover: hover) {
+    .resources-image-container:hover {
+        box-shadow: 0 12px 32px rgba(26, 95, 63, 0.2);
+        transform: translateY(-4px);
+        border-color: rgba(26, 95, 63, 0.2);
+    }
 }
 
 .approved-protocols-card {

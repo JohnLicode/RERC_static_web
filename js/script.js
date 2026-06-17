@@ -2201,7 +2201,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         requirementsContainer.addEventListener('click', function(e) {
             e.preventDefault();
-            requirementsLightbox.style.display = 'block';
+            requirementsLightbox.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             reqResetImageTransform();
             this.blur();
@@ -2338,6 +2338,108 @@ document.addEventListener('DOMContentLoaded', function() {
                         e.stopPropagation();
                     }
                 }
+            });
+
+            // MOBILE: pan (1-finger drag), pinch-to-zoom (2-finger), single-tap toggle zoom
+            let reqTouchDragStartX = 0, reqTouchDragStartY = 0;
+            let reqTouchDragOriginX = 0, reqTouchDragOriginY = 0;
+            let reqIsTouchDragging = false;
+            let reqPinching = false;
+            let reqPinchStartDist = 0, reqPinchStartScale = 1;
+
+            function reqGetPinchDist(touches) {
+                const dx = touches[0].clientX - touches[1].clientX;
+                const dy = touches[0].clientY - touches[1].clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+
+            lightboxRequirementsImg.addEventListener("touchstart", e => {
+                if (e.touches.length === 2) {
+                    reqPinching = true;
+                    reqIsTouchDragging = false;
+                    reqHasDragged = false;
+                    reqPinchStartDist = reqGetPinchDist(e.touches);
+                    reqPinchStartScale = reqScale;
+                    e.preventDefault();
+                } else if (e.touches.length === 1) {
+                    reqPinching = false;
+                    reqHasDragged = false;
+                    if (reqScale > 1) {
+                        reqIsTouchDragging = true;
+                        reqTouchDragStartX = e.touches[0].clientX;
+                        reqTouchDragStartY = e.touches[0].clientY;
+                        reqTouchDragOriginX = reqOriginX;
+                        reqTouchDragOriginY = reqOriginY;
+                        e.preventDefault();
+                    } else {
+                        reqIsTouchDragging = false;
+                    }
+                }
+            }, { passive: false });
+
+            lightboxRequirementsImg.addEventListener("touchmove", e => {
+                if (reqPinching && e.touches.length === 2) {
+                    e.preventDefault();
+                    const currentDist = reqGetPinchDist(e.touches);
+                    const ratio = currentDist / reqPinchStartDist;
+                    const newScale = Math.min(Math.max(reqPinchStartScale * ratio, 1), 4);
+                    const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                    const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                    const prevScale = reqScale;
+                    reqScale = newScale;
+                    if (reqScale > 1) {
+                        const rect = lightboxRequirementsImg.getBoundingClientRect();
+                        const imgCX = rect.left + rect.width / 2;
+                        const imgCY = rect.top  + rect.height / 2;
+                        reqOriginX = (reqOriginX - (cx - imgCX)) * (reqScale / prevScale) + (cx - imgCX);
+                        reqOriginY = (reqOriginY - (cy - imgCY)) * (reqScale / prevScale) + (cy - imgCY);
+                    } else {
+                        reqOriginX = 0; reqOriginY = 0;
+                    }
+                    reqLimitPan();
+                    reqUpdateTransform();
+                    lightboxRequirementsImg.style.cursor = reqScale > 1 ? 'grab' : 'zoom-in';
+                    reqHasDragged = true;
+                } else if (reqIsTouchDragging && e.touches.length === 1 && reqScale > 1) {
+                    e.preventDefault();
+                    const dx = e.touches[0].clientX - reqTouchDragStartX;
+                    const dy = e.touches[0].clientY - reqTouchDragStartY;
+                    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) reqHasDragged = true;
+                    reqOriginX = reqTouchDragOriginX + dx;
+                    reqOriginY = reqTouchDragOriginY + dy;
+                    reqLimitPan();
+                    reqUpdateTransform();
+                }
+            }, { passive: false });
+
+            lightboxRequirementsImg.addEventListener("touchend", e => {
+                if (reqPinching) {
+                    if (e.touches.length < 2) reqPinching = false;
+                    reqHasDragged = true;
+                    return;
+                }
+                if (reqIsTouchDragging) {
+                    reqIsTouchDragging = false;
+                    if (reqHasDragged) { reqHasDragged = false; return; }
+                }
+                if (!reqHasDragged && e.changedTouches.length === 1) {
+                    e.preventDefault();
+                    const touch = e.changedTouches[0];
+                    if (reqScale === 1) {
+                        const rect = lightboxRequirementsImg.getBoundingClientRect();
+                        const clickX = touch.clientX - rect.left - rect.width / 2;
+                        const clickY = touch.clientY - rect.top - rect.height / 2;
+                        reqScale = 2;
+                        reqOriginX = -clickX;
+                        reqOriginY = -clickY;
+                        reqLimitPan();
+                        reqUpdateTransform();
+                        lightboxRequirementsImg.style.cursor = 'grab';
+                    } else {
+                        reqResetImageTransform();
+                    }
+                }
+                reqHasDragged = false;
             });
 
             lightboxRequirementsImg.style.cursor = "zoom-in";
@@ -2514,6 +2616,108 @@ document.addEventListener('DOMContentLoaded', function() {
                         e.stopPropagation();
                     }
                 }
+            });
+
+            // MOBILE: pan (1-finger drag), pinch-to-zoom (2-finger), single-tap toggle zoom
+            let rightsTouchDragStartX = 0, rightsTouchDragStartY = 0;
+            let rightsTouchDragOriginX = 0, rightsTouchDragOriginY = 0;
+            let rightsIsTouchDragging = false;
+            let rightsPinching = false;
+            let rightsPinchStartDist = 0, rightsPinchStartScale = 1;
+
+            function rightsGetPinchDist(touches) {
+                const dx = touches[0].clientX - touches[1].clientX;
+                const dy = touches[0].clientY - touches[1].clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+
+            lightboxRightsImg.addEventListener("touchstart", e => {
+                if (e.touches.length === 2) {
+                    rightsPinching = true;
+                    rightsIsTouchDragging = false;
+                    rightsHasDragged = false;
+                    rightsPinchStartDist = rightsGetPinchDist(e.touches);
+                    rightsPinchStartScale = rightsScale;
+                    e.preventDefault();
+                } else if (e.touches.length === 1) {
+                    rightsPinching = false;
+                    rightsHasDragged = false;
+                    if (rightsScale > 1) {
+                        rightsIsTouchDragging = true;
+                        rightsTouchDragStartX = e.touches[0].clientX;
+                        rightsTouchDragStartY = e.touches[0].clientY;
+                        rightsTouchDragOriginX = rightsOriginX;
+                        rightsTouchDragOriginY = rightsOriginY;
+                        e.preventDefault();
+                    } else {
+                        rightsIsTouchDragging = false;
+                    }
+                }
+            }, { passive: false });
+
+            lightboxRightsImg.addEventListener("touchmove", e => {
+                if (rightsPinching && e.touches.length === 2) {
+                    e.preventDefault();
+                    const currentDist = rightsGetPinchDist(e.touches);
+                    const ratio = currentDist / rightsPinchStartDist;
+                    const newScale = Math.min(Math.max(rightsPinchStartScale * ratio, 1), 4);
+                    const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                    const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                    const prevScale = rightsScale;
+                    rightsScale = newScale;
+                    if (rightsScale > 1) {
+                        const rect = lightboxRightsImg.getBoundingClientRect();
+                        const imgCX = rect.left + rect.width / 2;
+                        const imgCY = rect.top  + rect.height / 2;
+                        rightsOriginX = (rightsOriginX - (cx - imgCX)) * (rightsScale / prevScale) + (cx - imgCX);
+                        rightsOriginY = (rightsOriginY - (cy - imgCY)) * (rightsScale / prevScale) + (cy - imgCY);
+                    } else {
+                        rightsOriginX = 0; rightsOriginY = 0;
+                    }
+                    rightsLimitPan();
+                    rightsUpdateTransform();
+                    lightboxRightsImg.style.cursor = rightsScale > 1 ? 'grab' : 'zoom-in';
+                    rightsHasDragged = true;
+                } else if (rightsIsTouchDragging && e.touches.length === 1 && rightsScale > 1) {
+                    e.preventDefault();
+                    const dx = e.touches[0].clientX - rightsTouchDragStartX;
+                    const dy = e.touches[0].clientY - rightsTouchDragStartY;
+                    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) rightsHasDragged = true;
+                    rightsOriginX = rightsTouchDragOriginX + dx;
+                    rightsOriginY = rightsTouchDragOriginY + dy;
+                    rightsLimitPan();
+                    rightsUpdateTransform();
+                }
+            }, { passive: false });
+
+            lightboxRightsImg.addEventListener("touchend", e => {
+                if (rightsPinching) {
+                    if (e.touches.length < 2) rightsPinching = false;
+                    rightsHasDragged = true;
+                    return;
+                }
+                if (rightsIsTouchDragging) {
+                    rightsIsTouchDragging = false;
+                    if (rightsHasDragged) { rightsHasDragged = false; return; }
+                }
+                if (!rightsHasDragged && e.changedTouches.length === 1) {
+                    e.preventDefault();
+                    const touch = e.changedTouches[0];
+                    if (rightsScale === 1) {
+                        const rect = lightboxRightsImg.getBoundingClientRect();
+                        const clickX = touch.clientX - rect.left - rect.width / 2;
+                        const clickY = touch.clientY - rect.top - rect.height / 2;
+                        rightsScale = 2;
+                        rightsOriginX = -clickX;
+                        rightsOriginY = -clickY;
+                        rightsLimitPan();
+                        rightsUpdateTransform();
+                        lightboxRightsImg.style.cursor = 'grab';
+                    } else {
+                        rightsResetImageTransform();
+                    }
+                }
+                rightsHasDragged = false;
             });
 
             lightboxRightsImg.style.cursor = "zoom-in";
