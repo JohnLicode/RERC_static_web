@@ -760,6 +760,9 @@ body.no-scroll {
   border: none;
   padding: 0;
   line-height: 1;
+  background-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 /* Lightbox image */

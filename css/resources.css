@@ -530,6 +530,9 @@ html {
     border: none;
     padding: 0;
     line-height: 1;
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 @media (hover: hover) {
