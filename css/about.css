@@ -218,10 +218,12 @@ html {
   font-weight: 700;
 }
 
-.nav-item:hover {
-  background: transparent;
-  color: #1a5f3f;
-  box-shadow: inset 0 -4px 0 #f16901;
+@media (hover: hover) {
+  .nav-item:hover {
+    background: transparent;
+    color: #1a5f3f;
+    box-shadow: inset 0 -4px 0 #f16901;
+  }
 }
 
 .nav-item.active {
@@ -303,11 +305,13 @@ html {
   transition: all 0.3s ease;
 }
 
-.mobile-nav-item:hover,
-.mobile-nav-item.active {
-  background: rgba(26, 95, 63, 0.05);
-  color: #1a5f3f;
-  box-shadow: inset 4px 0 0 #f16901;
+@media (hover: hover) {
+  .mobile-nav-item:hover,
+  .mobile-nav-item.active {
+    background: rgba(26, 95, 63, 0.05);
+    color: #1a5f3f;
+    box-shadow: inset 4px 0 0 #f16901;
+  }
 }
 
 /* Mobile Navigation Overlay */
@@ -1025,9 +1029,11 @@ html {
   transform: translateY(0);
 }
 
-#backToTop:hover {
-  background: #1a5f3f;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+@media (hover: hover) {
+  #backToTop:hover {
+    background: #1a5f3f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
 }
 

@@ -69,8 +69,10 @@ body.reference-page {
   transition: color 0.2s ease;
 }
 
-.reference-breadcrumbs a:hover {
-  color: var(--accent-orange);
+@media (hover: hover) {
+  .reference-breadcrumbs a:hover {
+    color: var(--accent-orange);
+  }
 }
 
 .breadcrumb-back {
@@ -87,10 +89,12 @@ body.reference-page {
   transition: all 0.2s ease;
 }
 
-.breadcrumb-back:hover {
-  background: rgba(26, 95, 63, 0.12);
-  color: var(--accent-orange);
-  transform: translateX(-2px);
+@media (hover: hover) {
+  .breadcrumb-back:hover {
+    background: rgba(26, 95, 63, 0.12);
+    color: var(--accent-orange);
+    transform: translateX(-2px);
+  }
 }
 
 .reference-hero-grid {
@@ -189,10 +193,12 @@ body.reference-page {
   box-shadow: none;
 }
 
-.primary-action:hover {
-  background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green));
-  transform: none;
-  box-shadow: none;
+@media (hover: hover) {
+  .primary-action:hover {
+    background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green));
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .secondary-action {
@@ -201,11 +207,13 @@ body.reference-page {
   border-color: rgba(26, 95, 63, 0.18);
 }
 
-.secondary-action:hover {
-  background: #ffffff;
-  color: var(--accent-orange);
-  border-color: rgba(241, 105, 1, 0.25);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .secondary-action:hover {
+    background: #ffffff;
+    color: var(--accent-orange);
+    border-color: rgba(241, 105, 1, 0.25);
+    transform: translateY(-1px);
+  }
 }
 .reference-card {
   padding: 1rem;
@@ -241,9 +249,11 @@ body.reference-page {
   word-break: break-word;
 }
 
-.source-note a:hover {
-  color: var(--accent-orange);
-  text-decoration: underline;
+@media (hover: hover) {
+  .source-note a:hover {
+    color: var(--accent-orange);
+    text-decoration: underline;
+  }
 }
 
 @media (max-width: 1080px) {

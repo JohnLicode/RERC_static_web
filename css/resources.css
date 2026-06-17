@@ -222,10 +222,12 @@ html {
   font-weight: 700;
 }
 
-.nav-item:hover {
-  background: transparent;
-  color: #1a5f3f;
-  box-shadow: inset 0 -4px 0 #f16901;
+@media (hover: hover) {
+  .nav-item:hover {
+    background: transparent;
+    color: #1a5f3f;
+    box-shadow: inset 0 -4px 0 #f16901;
+  }
 }
 
 .nav-item.active {
@@ -307,11 +309,13 @@ html {
   transition: all 0.3s ease;
 }
 
-.mobile-nav-item:hover,
-.mobile-nav-item.active {
-  background: rgba(26, 95, 63, 0.05);
-  color: #1a5f3f;
-  box-shadow: inset 4px 0 0 #f16901;
+@media (hover: hover) {
+  .mobile-nav-item:hover,
+  .mobile-nav-item.active {
+    background: rgba(26, 95, 63, 0.05);
+    color: #1a5f3f;
+    box-shadow: inset 4px 0 0 #f16901;
+  }
 }
 
 /* Mobile Navigation Overlay */
@@ -528,8 +532,10 @@ html {
     line-height: 1;
 }
 
-.lightbox-close:hover {
-    color: #f16901;
+@media (hover: hover) {
+  .lightbox-close:hover {
+      color: #f16901;
+  }
 }
 
 #lightboxRequirementsImg,
@@ -571,8 +577,10 @@ html {
     transition: color 0.2s ease;
 }
 
-.lightbox-caption a:hover {
-    color: #ddd;
+@media (hover: hover) {
+  .lightbox-caption a:hover {
+      color: #ddd;
+  }
 }
 
 /* Cursor states for different zoom levels */
@@ -805,8 +813,10 @@ html {
   pointer-events: none;
 }
 
-.search-btn:hover i {
-  color: #257c46; /* green on hover */
+@media (hover: hover) {
+  .search-btn:hover i {
+    color: #257c46; /* green on hover */
+  }
 }
 
 .search-btn:active i {
@@ -859,8 +869,10 @@ html {
     gap: 0.5rem;
 }
 
-.filter-tag:hover {
-    background: #eee;
+@media (hover: hover) {
+  .filter-tag:hover {
+      background: #eee;
+  }
 }
 
 .filter-tag.active {
@@ -899,9 +911,11 @@ html {
     transform: translateY(-2px); /* Keep bounce effect as static when open */
 }
 
-.forms-section:hover:not(:has(.section-header.active)) {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+@media (hover: hover) {
+  .forms-section:hover:not(:has(.section-header.active)) {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+  }
 }
 
 .forms-sections-container {
@@ -986,11 +1000,13 @@ html {
     box-shadow: 0 4px 15px rgba(15, 118, 110, 0.2);
   }
 
+@media (hover: hover) {
   .reference-card .download-btn:hover {
     color: #0f766e;
     border-color: #0f766e;
     box-shadow: 0 6px 20px rgba(15, 118, 110, 0.28);
   }
+}
 
   .reference-launch-card {
     display: flex;
@@ -1026,8 +1042,10 @@ html {
     white-space: nowrap;
   }
 
-.section-header:hover {
-    background: linear-gradient(135deg, #f0f8ff, #ffffff);
+@media (hover: hover) {
+  .section-header:hover {
+      background: linear-gradient(135deg, #f0f8ff, #ffffff);
+  }
 }
 
 .section-header.active {
@@ -1054,8 +1072,10 @@ html {
     color: #2E5730;
 }
 
-.form-card:hover {
-    background-color: #ffffff;
+@media (hover: hover) {
+  .form-card:hover {
+      background-color: #ffffff;
+  }
 }
 
 .form-card:last-child {
@@ -1106,16 +1126,18 @@ html {
     transition: transform 0.3s ease;
 }
 
-.download-btn:hover {
-    background: #ffffff;
-    color: #1a5f3f;
-    border-color: #1a5f3f;
-    box-shadow: 0 6px 20px rgba(26, 95, 63, 0.3);
-    transform: translateY(-2px);
-}
+@media (hover: hover) {
+  .download-btn:hover {
+      background: #ffffff;
+      color: #1a5f3f;
+      border-color: #1a5f3f;
+      box-shadow: 0 6px 20px rgba(26, 95, 63, 0.3);
+      transform: translateY(-2px);
+  }
 
-.download-btn:hover i {
-    transform: translateY(2px);
+  .download-btn:hover i {
+      transform: translateY(2px);
+  }
 }
 
 .download-btn:active {
@@ -1616,9 +1638,11 @@ html {
   transform: translateY(0);
 }
 
-#backToTop:hover {
-  background: #1a5f3f;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+@media (hover: hover) {
+  #backToTop:hover {
+    background: #1a5f3f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
 }
 

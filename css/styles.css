@@ -228,10 +228,12 @@ body.no-scroll {
   font-weight: 700;
 }
 
-.nav-item:hover {
-  background: transparent;
-  color: #1a5f3f;
-  box-shadow: inset 0 -4px 0 #f16901;
+@media (hover: hover) {
+  .nav-item:hover {
+    background: transparent;
+    color: #1a5f3f;
+    box-shadow: inset 0 -4px 0 #f16901;
+  }
 }
 
 .nav-item.active {
@@ -320,11 +322,13 @@ body.no-scroll {
   transition: all 0.3s ease;
 }
 
-.mobile-nav-item:hover,
-.mobile-nav-item.active {
-  background: rgba(26, 95, 63, 0.05);
-  color: #1a5f3f;
-  box-shadow: inset 4px 0 0 #f16901;
+@media (hover: hover) {
+  .mobile-nav-item:hover,
+  .mobile-nav-item.active {
+    background: rgba(26, 95, 63, 0.05);
+    color: #1a5f3f;
+    box-shadow: inset 4px 0 0 #f16901;
+  }
 }
 
 /* Mobile Navigation Overlay */
@@ -467,9 +471,11 @@ body.no-scroll {
   max-width: 200px;
 }
 
-.process-label:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(26, 95, 63, 0.4);
+@media (hover: hover) {
+  .process-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 95, 63, 0.4);
+  }
 }
 
 /* Carousel Styles */
@@ -489,8 +495,10 @@ body.no-scroll {
   transition: box-shadow 0.4s ease;
 }
 
-.carousel:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+@media (hover: hover) {
+  .carousel:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .carousel-container {
@@ -528,8 +536,10 @@ body.no-scroll {
   transition: transform 0.3s ease;
 }
 
-.carousel:hover .slide-caption {
-  transform: translateY(0);
+@media (hover: hover) {
+  .carousel:hover .slide-caption {
+    transform: translateY(0);
+  }
 }
 
 /* Navigation Arrows */
@@ -612,9 +622,11 @@ body.no-scroll {
   transform: scale(1.2);
 }
 
-.carousel-indicators .dot:hover {
-  background-color: rgba(112, 109, 109, 0.8);
-  transform: scale(1.1);
+@media (hover: hover) {
+  .carousel-indicators .dot:hover {
+    background-color: rgba(112, 109, 109, 0.8);
+    transform: scale(1.1);
+  }
 }
 
 /* Mobile Responsiveness for Carousel Section */
@@ -784,8 +796,10 @@ body.no-scroll {
   transition: background 0.3s ease;
 }
 
-.lightbox-prev:hover, .lightbox-next:hover {
-  background: rgba(255,255,255,0.4);
+@media (hover: hover) {
+  .lightbox-prev:hover, .lightbox-next:hover {
+    background: rgba(255,255,255,0.4);
+  }
 }
 
 .lightbox-prev { left: 20px; }
@@ -1041,9 +1055,11 @@ body.no-scroll {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.resource-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+@media (hover: hover) {
+  .resource-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
 }
 
 .resource-card h3 {
@@ -1081,16 +1097,18 @@ body.no-scroll {
   transition: transform 0.3s ease;
 }
 
-.download-btn:hover {
-  background: #ffffff;
-  color: #1a5f3f;
-  border-color: #1a5f3f;
-  box-shadow: 0 6px 20px rgba(26, 95, 63, 0.3);
-  transform: translateY(-2px);
-}
+@media (hover: hover) {
+  .download-btn:hover {
+    background: #ffffff;
+    color: #1a5f3f;
+    border-color: #1a5f3f;
+    box-shadow: 0 6px 20px rgba(26, 95, 63, 0.3);
+    transform: translateY(-2px);
+  }
 
-.download-btn:hover i {
-  transform: translateY(2px);
+  .download-btn:hover i {
+    transform: translateY(2px);
+  }
 }
 
 .download-btn:active {
@@ -1557,10 +1575,12 @@ body.no-scroll {
   transform: translateY(0);
 }
 
-#backToTop:hover {
-  background: #1a5f3f;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+@media (hover: hover) {
+  #backToTop:hover {
+    background: #1a5f3f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
 }
 
 
@@ -1652,12 +1672,14 @@ body.no-scroll {
   text-transform: uppercase;
 }
 
-.login-btn:hover {
-  background: #0c2b14;
-  color: #ffffff;
-  text-decoration: none;
-  box-shadow: 0 6px 20px rgba(12, 43, 20, 0.3);
-  border: 2px solid #0c2b14;
+@media (hover: hover) {
+  .login-btn:hover {
+    background: #0c2b14;
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(12, 43, 20, 0.3);
+    border: 2px solid #0c2b14;
+  }
 }
 
 .login-btn:active {
@@ -1679,23 +1701,25 @@ body.no-scroll {
   cursor: not-allowed;
 }
 
-.login-container:has(.login-btn.disabled):hover::after {
-  content: attr(data-tooltip);
-  content: 'Currently unavailable — PSU RERC is under moratorium';
-  position: absolute;
-  bottom: -36px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 6px 14px;
-  border-radius: 4px;
-  white-space: nowrap;
-  letter-spacing: 0;
-  text-transform: none;
-  z-index: 10;
+@media (hover: hover) {
+  .login-container:has(.login-btn.disabled):hover::after {
+    content: attr(data-tooltip);
+    content: 'Currently unavailable — PSU RERC is under moratorium';
+    position: absolute;
+    bottom: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 6px 14px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0;
+    text-transform: none;
+    z-index: 10;
+  }
 }
 
 .login-btn i {
@@ -1772,9 +1796,11 @@ body.no-scroll {
   border-left: 4px solid #1a5f3f; /* Green when open */
 }
 
-.faq-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .faq-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
 }
 
 .faq-question {
@@ -1787,8 +1813,10 @@ body.no-scroll {
   transition: all 0.3s ease;
 }
 
-.faq-question:hover {
-  background: linear-gradient(135deg, #f0f8ff, #ffffff);
+@media (hover: hover) {
+  .faq-question:hover {
+    background: linear-gradient(135deg, #f0f8ff, #ffffff);
+  }
 }
 
 .faq-question h4 {

@@ -73,9 +73,11 @@
   position: relative;
 }
 
-.footer-links a:hover {
-  text-decoration: none;
-  color: #ffffff;
+@media (hover: hover) {
+  .footer-links a:hover {
+    text-decoration: none;
+    color: #ffffff;
+  }
 }
 
 .footer-links a::after {
@@ -89,8 +91,10 @@
   transition: width 0.3s ease;
 }
 
-.footer-links a:hover::after {
-  width: 100%;
+@media (hover: hover) {
+  .footer-links a:hover::after {
+    width: 100%;
+  }
 }
 
 .footer-bottom {
