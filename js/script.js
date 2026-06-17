@@ -502,10 +502,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Swipe support
     let startX = 0, isSwipe = false;
-    carouselContainer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isSwipe = false; });
-    carouselContainer.addEventListener('touchmove', e => { if (Math.abs(e.touches[0].clientX - startX) > 10) isSwipe = true; });
+    carouselContainer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isSwipe = false; }, { passive: false });
+    carouselContainer.addEventListener('touchmove', e => {
+      const dx = Math.abs(e.touches[0].clientX - startX);
+      if (dx > 10) { isSwipe = true; e.preventDefault(); }
+    }, { passive: false });
     carouselContainer.addEventListener('touchend', e => {
       if (isSwipe) {
+        e.preventDefault();
         if (startX - e.changedTouches[0].clientX > 50) showSlide(index + 1);
         else if (e.changedTouches[0].clientX - startX > 50) showSlide(index - 1);
       }
@@ -2237,7 +2241,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && requirementsLightbox.style.display === 'block') {
+            if (e.key === 'Escape' && requirementsLightbox.style.display === 'flex') {
                 requirementsLightbox.style.display = 'none';
                 document.body.style.overflow = '';
                 reqResetImageTransform();
@@ -2364,16 +2368,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (e.touches.length === 1) {
                     reqPinching = false;
                     reqHasDragged = false;
+                    reqIsTouchDragging = false;
                     if (reqScale > 1) {
                         reqIsTouchDragging = true;
                         reqTouchDragStartX = e.touches[0].clientX;
                         reqTouchDragStartY = e.touches[0].clientY;
                         reqTouchDragOriginX = reqOriginX;
                         reqTouchDragOriginY = reqOriginY;
-                        e.preventDefault();
-                    } else {
-                        reqIsTouchDragging = false;
                     }
+                    e.preventDefault();
                 }
             }, { passive: false });
 
@@ -2420,9 +2423,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (reqIsTouchDragging) {
                     reqIsTouchDragging = false;
-                    if (reqHasDragged) { reqHasDragged = false; return; }
+                    if (reqHasDragged) { return; }
                 }
                 if (!reqHasDragged && e.changedTouches.length === 1) {
+                    reqHasDragged = true;
                     e.preventDefault();
                     const touch = e.changedTouches[0];
                     if (reqScale === 1) {
@@ -2439,7 +2443,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         reqResetImageTransform();
                     }
                 }
-                reqHasDragged = false;
             });
 
             lightboxRequirementsImg.style.cursor = "zoom-in";
@@ -2642,16 +2645,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (e.touches.length === 1) {
                     rightsPinching = false;
                     rightsHasDragged = false;
+                    rightsIsTouchDragging = false;
                     if (rightsScale > 1) {
                         rightsIsTouchDragging = true;
                         rightsTouchDragStartX = e.touches[0].clientX;
                         rightsTouchDragStartY = e.touches[0].clientY;
                         rightsTouchDragOriginX = rightsOriginX;
                         rightsTouchDragOriginY = rightsOriginY;
-                        e.preventDefault();
-                    } else {
-                        rightsIsTouchDragging = false;
                     }
+                    e.preventDefault();
                 }
             }, { passive: false });
 
@@ -2698,9 +2700,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (rightsIsTouchDragging) {
                     rightsIsTouchDragging = false;
-                    if (rightsHasDragged) { rightsHasDragged = false; return; }
+                    if (rightsHasDragged) { return; }
                 }
                 if (!rightsHasDragged && e.changedTouches.length === 1) {
+                    rightsHasDragged = true;
                     e.preventDefault();
                     const touch = e.changedTouches[0];
                     if (rightsScale === 1) {
@@ -2717,7 +2720,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         rightsResetImageTransform();
                     }
                 }
-                rightsHasDragged = false;
             });
 
             lightboxRightsImg.style.cursor = "zoom-in";

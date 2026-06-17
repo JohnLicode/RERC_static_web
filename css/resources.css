@@ -510,7 +510,6 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    touch-action: none; /* Prevent page zoom on touch */
 }
 
 .lightbox-close {
@@ -523,6 +522,10 @@ html {
     cursor: pointer;
     z-index: 10001;
     transition: color 0.2s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
 }
 
 .lightbox-close:hover {
@@ -538,7 +541,6 @@ html {
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
     cursor: zoom-in;
     transform-origin: center center;
-    transition: transform 0.1s ease-out;
     touch-action: none; /* Prevent page zoom on touch */
     user-select: none; /* Prevent image selection */
     border: none;
@@ -582,11 +584,6 @@ html {
 #lightboxRequirementsImg.zoomed:active,
 #lightboxRightsImg.zoomed:active {
     cursor: grabbing;
-}
-
-/* Prevent page zoom when Ctrl+scroll is used on lightbox */
-.requirements-lightbox * {
-    touch-action: none;
 }
 
 /* Tablet Responsive */
