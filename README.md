@@ -51,14 +51,9 @@ Upload the contents of this repository to the hosting document root. The
 document root must contain `index.html` and the folders `about`, `contacts`,
 `resources`, `assets`, `css`, and `js`.
 
-The deployable archive is:
-
-```text
-RERC-website-deployable.zip
-```
-
-That archive contains the website files only. It excludes Git history,
-Visual Studio Code settings, and handover documents.
+For a private deployment package, create an archive from the website files
+only. Do not commit deployment archives or private handover documents to this
+repository.
 
 After deployment, verify:
 
@@ -75,8 +70,8 @@ After deployment, verify:
 The website uses or references these external services:
 
 - Domain and DNS: `www.psurerc.com`
-- Hosting provider: record the provider and account owner in
-  `DOMAIN-HOSTING-TRANSFER.md`
+- Hosting provider: transfer details must be shared separately with the client
+  through a private channel
 - GitHub repository: access has already been provided to the client
 - EmailJS: used by the contact form in `contacts/index.html`
 - Font Awesome CDN
@@ -90,29 +85,18 @@ transferred separately.
 
 ## 6. Contact form
 
-The contact form uses EmailJS from `contacts/index.html`. Its current
-configuration is:
-
-| Setting | Value |
-|---|---|
-| Public key | `mCAeJBHmWgtuorjlH` |
-| Service ID | `service_hlsfmik` |
-| Contact-us template | `template_mu4p2yi` |
-| Auto-reply template | `template_sakmy3n` |
-
-The website sends the contact-us template. Configure the auto-reply template
-as the service's autoresponder or automation in the EmailJS dashboard; it
-should not be sent as a second browser request.
-
-The EmailJS public key, service ID, and template IDs are frontend
-configuration values, not a replacement for transferring the EmailJS account.
+The contact form uses EmailJS from `contacts/index.html`. EmailJS configuration
+details are intentionally not documented here. Transfer those details and
+the EmailJS project separately through a private channel or secure document.
+The website sends the contact-us template; configure the auto-reply template
+as the service's autoresponder or automation in the EmailJS dashboard.
 
 The client must receive ownership or administrator access to the EmailJS
 project, or a new EmailJS project must be created under the client's account.
 Send a test message after deployment and confirm which mailbox receives it.
 
-Do not put account passwords, private API keys, recovery codes, or other
-secrets in this repository or in this README.
+Do not put account passwords, EmailJS configuration details, private API keys,
+recovery codes, or other secrets in this repository or in this README.
 
 ## 7. Known limitations and exclusions
 
@@ -124,7 +108,7 @@ secrets in this repository or in this README.
 - Privacy Policy and Terms & Conditions links are placeholders and should be
   reviewed by the client before production use.
 
-## 8. Handover acceptance
+## 8. Handover
 
 The client should confirm that they can access:
 
@@ -136,6 +120,5 @@ The client should confirm that they can access:
 - The EmailJS project
 - Google Search Console
 
-The client should also confirm that the production site and contact form have
-been tested. The domain and hosting transfer record is maintained in
-`DOMAIN-HOSTING-TRANSFER.md`.
+Domain, hosting, DNS, SSL, EmailJS, and other access details must be shared
+separately from this public source repository.
